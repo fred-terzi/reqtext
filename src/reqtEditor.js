@@ -10,24 +10,39 @@ async function loadReqtData() {
     return data;
 }
 
+// Utility: Get console size
+function getConsoleSize() {
+    const width = process.stdout.columns || 80;
+    const height = process.stdout.rows || 24;
+    return { width, height };
+}
+
 // Utility: Render tree
 async function renderTree(data, selectedIndex = 0) {
     process.stdout.write('\x1Bc'); // Clear console
+    const { height } = getConsoleSize();
     const tree = await fhr.createAsciiTree(data, ['title', 'status']);
+    let linesPrinted = 0;
     if (Array.isArray(tree)) {
         tree.forEach((line, idx) => {
+            const { width } = getConsoleSize();
+            const displayLine = line.slice(0, width);
             if (idx === selectedIndex) {
-                // Invert color for selected line using ANSI escape code
-                process.stdout.write('\x1b[7m' + line + '\x1b[0m');
+                process.stdout.write('\x1b[7m' + displayLine + '\x1b[0m');
             } else {
-                process.stdout.write(line);
+                process.stdout.write(displayLine);
             }
+            linesPrinted++;
         });
     } else {
-        process.stdout.write(tree);
+        const { width } = getConsoleSize();
+        process.stdout.write(tree.slice(0, width));
+        linesPrinted = 1;
     }
-    process.stdout.write(`\n[Press q to quit, r to reload, arrows to navigate]\n`);
-    process.stdout.write(`[DEBUG] Selected index: ${selectedIndex}\n`);
+    // Fill blank lines if needed so menu is always at the bottom
+    // Move cursor to last row and print menu (inverted)
+    const menu = "↑↓: nav | r: reload | q: quit";
+    process.stdout.write(`\x1b[${height};1H\x1b[7m${menu}\x1b[0m`);
 }
 
 // Utility: Handle keypress
