@@ -1,6 +1,10 @@
 import fhr from "@terzitech/flathier";
 
 export default async function addItemHandler (data, ...args) {
+    if (!data || !Array.isArray(data) || data.length === 0) {
+        console.error("❌ No project data loaded. Did you run 'npx reqt init <project name>'?");
+        process.exit(1);
+    }
     // Join all arguments into a single string
     let argString = args.join("_");
     console.log(`Adding item with args: ${argString}`);

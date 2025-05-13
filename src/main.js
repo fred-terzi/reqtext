@@ -8,14 +8,6 @@ import fhr from '@terzitech/flathier';
 
 let data = [];
 
-// if .reqt.json file exists, load it
-try {
-  data = await fhr.loadData();
-}
-catch (error) {
-  console.warn('❌ Failed to load .reqt.json file:', error);
-}
-
 async function promptUser(question) {
   return new Promise((resolve) => {
     const rl = readline.createInterface({
@@ -51,11 +43,13 @@ const commandMap = {
   '-h': help,
   
   // Add item commands
-  add_item: async (...args) => addItemHandler(data, ...args),
+  add_item: async (...args) => {
+    await addItemHandler(data, ...args);
+  },
 
-  init: async (...args) => init(...args),
-
-
+  init: async (...args) => {
+    await init(...args);
+  },
 };
 
 export default async function mainLoop() {

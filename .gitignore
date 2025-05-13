@@ -1,0 +1,3 @@
+# ignore .reqt.json
+*.reqt.json
+/.reqt
