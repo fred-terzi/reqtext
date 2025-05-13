@@ -1,3 +1,3 @@
 import fhr from '@terzitech/flathier';
 
-fhr.init('ReqTextDemo', 'reqt')
+    fhr.init('ReqTextDemo', 'reqt');
