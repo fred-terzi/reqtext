@@ -13,7 +13,7 @@ async function loadReqtData() {
 // Utility: Render tree
 async function renderTree(data) {
     process.stdout.write('\x1Bc'); // Clear console
-    const tree = await fhr.createAsciiTree(data, ['title']);
+    const tree = await fhr.createAsciiTree(data, ['title', 'status']);
     if (Array.isArray(tree)) {
         tree.forEach(line => process.stdout.write(line));
     } else {
