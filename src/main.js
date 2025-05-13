@@ -1,31 +1,41 @@
-import readline from 'readline';
-import process from 'process';
+import readline from 'node:readline';
 
-readline.emitKeypressEvents(process.stdin);
-if (process.stdin.isTTY) {
-  process.stdin.setRawMode(true);
+function promptUser(question) {
+  return new Promise((resolve) => {
+    const rl = readline.createInterface({
+      input: process.stdin,
+      output: process.stdout
+    });
+    rl.question(question, (answer) => {
+      rl.close();
+      resolve(answer);
+    });
+  });
+}
+
+async function helloCommand() {
+  const name = await promptUser('What is your name? ');
+  console.log(`Hello, ${name}!`);
+}
+
+function versionCommand() {
+  console.log('reqtext version 1.0.0');
 }
 
 export default async function mainLoop() {
-  console.log('Press any key. Press Ctrl+C or q to exit.');
-
-  const keyMap = {
-    'q': () => {
-      console.log('Exiting...');
-      process.exit();
-    },
-    // Add more key handlers here, e.g.:
-    'a': () => { console.log('You pressed A!'); },
-  };
-
-  process.stdin.on('keypress', (str, key) => {
-    if (key.ctrl && key.name === 'c') {
-      process.exit();
-    }
-    if (keyMap[key.name]) {
-      keyMap[key.name]();
-    } else {
-      console.log(`You pressed: ${str}`);
-    }
-  });
+  const [, , command, ...args] = process.argv;
+  switch (command) {
+    case 'hello':
+      await helloCommand();
+      break;
+    case 'version':
+      versionCommand();
+      break;
+    default:
+      console.log('Usage: reqtext <command>');
+      console.log('Commands:');
+      console.log('  hello     Greet the user (prompts for name)');
+      console.log('  version   Show version');
+      break;
+  }
 }
