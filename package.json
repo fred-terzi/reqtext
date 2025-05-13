@@ -18,7 +18,7 @@
   },
   "homepage": "https://github.com/terzitech/reqtext#readme",
   "dependencies": {
-    "@terzitech/flathier": "^0.1.0-demo.1",
+    "@terzitech/flathier": "^0.1.0-demo.2",
     "enquirer": "^2.4.1"
   },
   "type": "module",
