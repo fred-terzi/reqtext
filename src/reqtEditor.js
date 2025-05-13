@@ -17,9 +17,10 @@ async function renderTree(data, selectedIndex = 0) {
     if (Array.isArray(tree)) {
         tree.forEach((line, idx) => {
             if (idx === selectedIndex) {
-                process.stdout.write('> ' + line); // Highlight selected
+                // Invert color for selected line using ANSI escape code
+                process.stdout.write('\x1b[7m' + line + '\x1b[0m');
             } else {
-                process.stdout.write('  ' + line);
+                process.stdout.write(line);
             }
         });
     } else {
