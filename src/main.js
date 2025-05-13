@@ -26,9 +26,11 @@ async function versionCommand() {
 }
 
 const commandMap = {
+  // Version command
   version: versionCommand,
   '--version': versionCommand,
   '-v': versionCommand,
+  // Help command
   help: help,
   '--help': help,
   '-h': help,
@@ -44,9 +46,6 @@ export default async function mainLoop() {
       cmd(...args);
     }
   } else {
-    console.log('Usage: reqtext <command>');
-    console.log('Commands:');
-    console.log('  hello     Greet the user (prompts for name)');
-    console.log('  version   Show version');
+    help();
   }
 }

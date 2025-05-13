@@ -6,6 +6,7 @@ Usage: reqtext <command>
 
 Commands:
     version, --version, -v   Show version
+    help, --help, -h         Show help
     `;
     console.log(helpText.trim());
 }
