@@ -6,6 +6,7 @@ import addAfterHandler from './commands/addAfter.Handler.js';
 import init from './commands/init.js';
 import deleteHandler from './commands/deleteHandler.js';
 import makeChildrenHandler from './commands/makeChildrenHandler.js';
+import makeSiblingHandler from './commands/makeSiblingHandler.js';
 
 import fhr from '@terzitech/flathier';
 
@@ -79,6 +80,14 @@ const commandMap = {
   },
   '-mc': async (...args) => {
     await makeChildrenHandler(...args);
+  },
+
+  // Make Sibling commands
+  make_sibling: async (...args) => {
+    await makeSiblingHandler(...args);
+  },
+  '-ms': async (...args) => {
+    await makeSiblingHandler(...args);
   },
 
 };

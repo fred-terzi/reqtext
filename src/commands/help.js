@@ -20,6 +20,9 @@ Commands:
 
     make_children, -mc       Make an item, and it's children, a child of the one before it
         Usage: reqtext make_children <outline_number>
+    
+    make_sibling, -ms        Make an item, and it's children, a sibling of the one before it
+        Usage: reqtext make_sibling <outline_number>
     `;
     console.log(helpText.trim());
 }
