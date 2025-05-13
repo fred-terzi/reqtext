@@ -1,4 +1,5 @@
 import fhr from "@terzitech/flathier";
+import readline from "readline";
 
 export default async function addAfterHandler(...args) {
     try {
@@ -9,8 +10,8 @@ export default async function addAfterHandler(...args) {
             console.error("❌ No project data loaded.\n Run 'npx reqt init <project name>'");
             process.exit(1);
         }
-        // Require at least two arguments: outline_number and item_name
-        if (args.length < 2) {
+        // Require at least the outline_number
+        if (args.length < 1) {
             console.error("Usage: reqtext add_after <outline_number> <item_name>");
             process.exit(1);
         }
@@ -20,8 +21,59 @@ export default async function addAfterHandler(...args) {
             console.error("❌ Invalid outline number. Must be a non-empty string.");
             process.exit(1);
         }
-        const itemName = args.slice(1).join(" ") || "New Item";
-
+        let itemName = args.slice(1).join(" ");
+        function stripAnsi(str) {
+            return str.replace(/\x1B\[[0-9;]*[A-Za-z]/g, '');
+        }
+        if (!itemName) {
+            // Custom TTY handler for item name input (only allows a-z, A-Z, 0-9)
+            if (process.stdin.isTTY) process.stdin.setRawMode(true);
+            process.stdin.resume();
+            process.stdout.write('Enter item name: ');
+            itemName = await new Promise(resolve => {
+                let input = '';
+                let ansiBuffer = '';
+                function onData(chunk) {
+                    const str = chunk.toString('utf8');
+                    // Handle Enter (\r or \n)
+                    if (str === '\r' || str === '\n') {
+                        process.stdin.off('data', onData);
+                        process.stdin.setRawMode(false);
+                        process.stdout.write('\n');
+                        resolve(input.length ? input : 'New Item');
+                        return;
+                    }
+                    // Handle Backspace (\x7f)
+                    if (str === '\x7f' || str === '\b') {
+                        if (input.length > 0) {
+                            input = input.slice(0, -1);
+                            process.stdout.write('\b \b');
+                        }
+                        return;
+                    }
+                    // Buffer ANSI escape sequences and ignore them
+                    if (str.startsWith('\x1B')) {
+                        ansiBuffer += str;
+                        // If buffer matches a full ANSI sequence, clear it
+                        if (/^\x1B\[[0-9;]*[A-Za-z]$/.test(ansiBuffer)) {
+                            ansiBuffer = '';
+                        }
+                        return;
+                    } else if (ansiBuffer.length > 0) {
+                        // If we get a non-escape char after starting an ANSI sequence, reset buffer
+                        ansiBuffer = '';
+                    }
+                    // Only allow a-z, A-Z, 0-9
+                    if (/^[a-zA-Z0-9]$/.test(str)) {
+                        input += str;
+                        process.stdout.write(str);
+                    }
+                }
+                process.stdin.on('data', onData);
+            });
+        } else {
+            itemName = stripAnsi(itemName);
+        }
         // Insert the new item after the specified outline number
         const updatedData = await fhr.addObject(data, outlineNumber, itemName);
         if (!updatedData) {
