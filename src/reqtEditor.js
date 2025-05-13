@@ -42,7 +42,11 @@ async function renderTree(data, selectedIndex = 0) {
     }
     // Fill blank lines if needed so menu is always at the bottom
     // Move cursor to last row and print menu (inverted)
-    const menu = "↑↓: nav | →: child | a: add | d: delete | r: reload | q: quit";
+    let menu = "↑↓: nav | →: child | ←: sibling | a: add | d: delete | r: reload | q: quit";
+    const { width } = getConsoleSize();
+    if (menu.length > width) {
+        menu = menu.slice(0, width);
+    }
     process.stdout.write(`\x1b[${height};1H\x1b[7m${menu}\x1b[0m`);
 }
 
@@ -89,6 +93,22 @@ const keyMap = {
             state.data = updatedData;
             await fhr.setData(updatedData); // Save the updated data array
             await fhr.saveData(updatedData); // Save the updated data array
+            await renderTree(state.data, state.selectedIndex);
+        }
+    },
+    '\u001b[D': async (state) => { // Left arrow key
+        // Make the currently selected item a sibling (promote) using flathier.promote
+        const selectedItem = state.data[state.selectedIndex];
+        if (!selectedItem) return;
+        const updatedData = await fhr.promote(state.data, selectedItem.outline);
+        if (updatedData && updatedData !== state.data) {
+            state.data = updatedData;
+            await fhr.setData(updatedData);
+            await fhr.saveData(updatedData);
+            // After promotion, keep the same index if possible
+            await renderTree(state.data, state.selectedIndex);
+        } else {
+            process.stdout.write(`\n⚠️  Could not promote item with outline #${selectedItem.outline}. It may already be at the root or not exist.\n`);
             await renderTree(state.data, state.selectedIndex);
         }
     },
