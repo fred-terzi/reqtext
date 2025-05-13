@@ -1,5 +1,7 @@
 import fhr from '@terzitech/flathier';
 import addAfterHandler from './commands/addAfterHandler.js';
+import enquirerPkg from 'enquirer';
+const { Input, Confirm } = enquirerPkg;
 
 // Utility: Load data
 async function loadReqtData() {
@@ -48,6 +50,16 @@ async function renderTree(data, selectedIndex = 0) {
         menu = menu.slice(0, width);
     }
     process.stdout.write(`\x1b[${height};1H\x1b[7m${menu}\x1b[0m`);
+}
+
+// Utility: Filter printable input and ignore ANSI escape codes
+function filterPrintable(input) {
+    // Ignore ANSI escape sequences (arrow keys, etc.)
+    if (/^\u001b\[[A-D]$/.test(input)) return '';
+    // Only allow printable ASCII characters
+    if (/^[\x20-\x7E]$/.test(input)) return input;
+    // Ignore everything else (control chars, etc.)
+    return '';
 }
 
 // Utility: Handle keypress
@@ -116,41 +128,46 @@ const keyMap = {
         // Use the addAfterHandler to add after the currently selected outline
         const selectedItem = state.data[state.selectedIndex];
         if (!selectedItem) return;
-        // Prompt for a new title (simple, synchronous prompt)
-        process.stdout.write('\nEnter new item title: ');
-        process.stdin.setRawMode(false);
-        process.stdin.once('data', async (input) => {
-            const title = input.toString().trim() || 'New Item';
-            process.stdin.setRawMode(true);
+        // Use enquirer for prompt
+        const prompt = new Input({
+            message: 'Enter new item title:',
+            initial: ''
+        });
+        try {
+            const title = (await prompt.run()).trim() || 'New Item';
             await addAfterHandler(selectedItem.outline, title);
             state.data = await loadReqtData();
-            await renderTree(state.data, state.selectedIndex + 1);
-        });
+            // Set selectedIndex to the new item's index (after the current)
+            state.selectedIndex = Math.min(state.selectedIndex + 1, state.data.length - 1);
+            await renderTree(state.data, state.selectedIndex);
+        } catch (err) {
+            // If prompt is cancelled, just re-render
+            await renderTree(state.data, state.selectedIndex);
+        }
     },
     'd': async (state) => {
         // Delete the currently selected item
         const selectedItem = state.data[state.selectedIndex];
         if (!selectedItem) return;
-        // Confirm deletion (optional, can be removed for instant delete)
-        process.stdout.write(`\nDelete item: '${selectedItem.title}'? (y/n): `);
-        process.stdin.setRawMode(false);
-        process.stdin.once('data', async (input) => {
-            const confirm = input.toString().trim().toLowerCase();
-            process.stdin.setRawMode(true);
-            if (confirm === 'y') {
-                // Remove the item from data
+        // Use enquirer for confirmation
+        const prompt = new Confirm({
+            message: `Delete item: '${selectedItem.title}'?`,
+            initial: false
+        });
+        try {
+            const confirm = await prompt.run();
+            if (confirm) {
                 state.data.splice(state.selectedIndex, 1);
-                // Save updated data
                 await fhr.saveData(state.data);
-                // Adjust selection: only decrement if out of bounds
                 if (state.selectedIndex >= state.data.length) {
                     state.selectedIndex = Math.max(0, state.data.length - 1);
                 }
-                await renderTree(state.data, state.selectedIndex);
-            } else {
-                await renderTree(state.data, state.selectedIndex);
             }
-        });
+            await renderTree(state.data, state.selectedIndex);
+        } catch (err) {
+            // If prompt is cancelled, just re-render
+            await renderTree(state.data, state.selectedIndex);
+        }
     },
     'k': async (state) => {
         // Move the currently selected item up using flathier.moveUp
@@ -206,7 +223,26 @@ export default async function reqtEditor() {
     process.stdin.resume();
     process.stdin.setEncoding('utf8');
 
-    process.stdin.on('data', async (key) => {
+    // Handler function reference for removal/restoration
+    let keyHandler = async (key) => {
         await handleKeypress(key, state);
-    });
+    };
+
+    process.stdin.on('data', keyHandler);
+
+    // Patch enquirer prompts to temporarily remove the key handler
+    const patchPrompt = (fn) => async (...args) => {
+        process.stdin.removeListener('data', keyHandler);
+        try {
+            await fn(...args);
+        } finally {
+            process.stdin.setRawMode(true);
+            process.stdin.resume();
+            process.stdin.on('data', keyHandler);
+        }
+    };
+
+    // Patch the 'a' and 'd' handlers to use the patchPrompt wrapper
+    keyMap['a'] = patchPrompt(keyMap['a']);
+    keyMap['d'] = patchPrompt(keyMap['d']);
 }

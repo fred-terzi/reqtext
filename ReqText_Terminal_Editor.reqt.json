@@ -47,7 +47,7 @@
   {
     "title": "NEVER Mark a reqt PASS without approval",
     "hier": 2,
-    "outline": "0.1.4",
+    "outline": "0.1.6",
     "status": "INSTRUCTs",
     "itemKey": 16,
     "description": "DESCRIPTION",
@@ -56,7 +56,7 @@
   {
     "title": "ALWAYS update documentation help, and menus",
     "hier": 2,
-    "outline": "0.1.5",
+    "outline": "0.1.7",
     "status": "INSTRUCTs",
     "itemKey": 5,
     "description": "ALWAYS update documentation, help, and menus after making changes to the code.",
@@ -86,7 +86,7 @@
     "outline": "1.1.1",
     "status": "TRIAGED",
     "itemKey": 17,
-    "description": "DESCRIPTION",
+    "description": "ANSI codes are displayed while in readline prompts.",
     "reqt_ID": "2025-05-13T20:06:31.490Z-a49af210"
   },
   {
@@ -108,18 +108,9 @@
     "itemKey": 8
   },
   {
-    "title": "Clear on Quit",
-    "hier": 1,
-    "outline": "1.4",
-    "status": "PASS",
-    "description": "After quiting clear the console.",
-    "reqt_ID": "2025-05-13T17:55:48.667Z-c7081fe7",
-    "itemKey": 10
-  },
-  {
     "title": "keypress a for add",
     "hier": 1,
-    "outline": "1.5",
+    "outline": "1.4",
     "status": "PASS",
     "description": "DESCRIPTION",
     "reqt_ID": "2025-05-13T18:02:52.899Z-6cd65aac",
@@ -128,7 +119,7 @@
   {
     "title": "Use the add after handler",
     "hier": 2,
-    "outline": "1.5.1",
+    "outline": "1.4.1",
     "status": "PASS",
     "description": "Use the same add after handler as the one in the main.js file.",
     "reqt_ID": "2025-05-13T18:05:15.134Z-0657c04f",
@@ -137,7 +128,7 @@
   {
     "title": "Delete Selected Item",
     "hier": 1,
-    "outline": "1.6",
+    "outline": "1.5",
     "status": "PASS",
     "itemKey": 13,
     "description": "Delete the currently selected item. --delete and -d are the commands.",
@@ -146,7 +137,7 @@
   {
     "title": "Make Selected Item a Child",
     "hier": 1,
-    "outline": "1.7",
+    "outline": "1.6",
     "status": "PASS",
     "itemKey": 14,
     "description": "Make the currently selected item a child of the one above it. use the right arrow key to do this.",
@@ -155,7 +146,7 @@
   {
     "title": "Use flathier.demote",
     "hier": 2,
-    "outline": "1.7.1",
+    "outline": "1.6.1",
     "status": "DESIGN",
     "itemKey": 15,
     "description": "Use the flather.demote function to demote the selected item.",
@@ -164,7 +155,7 @@
   {
     "title": "Make Selected Item a Sibling",
     "hier": 1,
-    "outline": "1.8",
+    "outline": "1.7",
     "status": "PASS",
     "itemKey": 18,
     "description": "Use the flathier.promote function to promote the selected item. \n \n Use the left arrow key to do this.",
@@ -173,10 +164,19 @@
   {
     "title": "Move Item Up",
     "hier": 1,
-    "outline": "1.9",
+    "outline": "1.8",
     "status": "PASS",
     "itemKey": 19,
     "description": "Use the flather.moveUp function to move the selected item up. \n \n Use k.",
     "reqt_ID": "2025-05-13T20:17:05.100Z-00fcc972"
+  },
+  {
+    "title": "Clear on Quit",
+    "hier": 0,
+    "outline": "2",
+    "status": "PASS",
+    "description": "After quiting clear the console.",
+    "reqt_ID": "2025-05-13T17:55:48.667Z-c7081fe7",
+    "itemKey": 10
   }
 ]

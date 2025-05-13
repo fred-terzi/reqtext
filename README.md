@@ -6,11 +6,10 @@ Reqtext is a Git-native, CLI first requirements and documentation framework mean
 - `↑`/`↓`: Navigate requirements
 - `k`: Move selected item up
 - `j`: Move selected item down
-- `→`: Make selected item a child of the one above
+- `→`: Demote selected item to child (indent)
 - `←`: Promote selected item to sibling (outdent)
 - `a`: Add a new item after the selected requirement (prompts for title)
 - `d`: Delete the selected item
 - `r`: Reload data
 - `q` or `Ctrl+C`: Quit and clear the console
 
-The editor uses only process.stdout.write for output and always updates the requirements tree in-place.
