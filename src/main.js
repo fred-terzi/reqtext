@@ -2,10 +2,11 @@ import readline from 'node:readline';
 import help from './commands/help.js';
 import getVersion from './utils/getVersion.js';
 import addItemHandler from './commands/addItemHandler.js';
+import init from './commands/init.js';
 
 import fhr from '@terzitech/flathier';
 
-const data = await fhr.loadData();
+
 
 async function promptUser(question) {
   return new Promise((resolve) => {
@@ -43,6 +44,8 @@ const commandMap = {
   
   // Add item commands
   add_item: async (...args) => addItemHandler(data, ...args),
+
+  init: async (...args) => init(...args),
 
 
 };

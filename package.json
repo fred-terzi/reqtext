@@ -20,5 +20,8 @@
   "dependencies": {
     "@terzitech/flathier": "^0.1.0-demo.1"
   },
-  "type": "module"
+  "type": "module",
+  "bin": {
+    "reqt": "bin/index.js"
+  }
 }
