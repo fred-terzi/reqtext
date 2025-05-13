@@ -1,18 +1,17 @@
 {
   "name": "reqtext",
   "version": "0.1.0-demo.1",
-  "description": "Reqtext is a Git-native, CLI first requirements and documentation framework meant to bring requirement management directly into your workflow.",
+  "description": "Reqtext is a Git-native, CLI first requirements and documentation framework meant to bring requirement management directly into your workflow. Human -and AI- readable.",
   "main": "index.js",
   "scripts": {
-    "start": "node bin/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node bin/index.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/terzitech/reqtext.git"
   },
   "author": "Joseph Terzi",
-  "license": "SEE LICENSE IN LICENSE",
+  "license": "PolyForm-Noncommercial-1.0.0",
   "bugs": {
     "url": "https://github.com/terzitech/reqtext/issues"
   },
@@ -24,5 +23,6 @@
   "type": "module",
   "bin": {
     "reqt": "bin/index.js"
-  }
+  },
+  "keywords": ["cli", "requirements", "documentation", "terminal", "editor", "Docucoding"]
 }
