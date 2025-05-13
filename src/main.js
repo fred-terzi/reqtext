@@ -2,7 +2,13 @@ import readline from 'node:readline';
 import help from './commands/help.js';
 import getVersion from './utils/getVersion.js';
 
-function promptUser(question) {
+import fhr from '@terzitech/flathier';
+
+const data = await fhr.loadData();
+console.log('Data loaded:', data);
+
+
+async function promptUser(question) {
   return new Promise((resolve) => {
     const rl = readline.createInterface({
       input: process.stdin,
