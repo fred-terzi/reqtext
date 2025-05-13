@@ -42,7 +42,9 @@ const commandMap = {
   '-h': help,
   
   // Add item commands
-  add_item: async (...args) => addItemHandler(data, 'END', ...args),
+  add_item: async (...args) => addItemHandler(data, ...args),
+
+
 };
 
 export default async function mainLoop() {

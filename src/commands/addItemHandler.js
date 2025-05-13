@@ -1,15 +1,14 @@
 import fhr from "@terzitech/flathier";
 
-export default async function addItemHandler (data, outlineNumber) {
-    // If outline === "END", add to the end of the list
-    if (outlineNumber === "END") {
-        // Get the template object
-        const templateObject = await fhr.getLastTemplateObject();
-        console.log('templateObject:', templateObject);
-        // Add the template object to the end of the data
-        data.push(templateObject);
-        // Save the data
-        await fhr.saveData(data);
-        console.log("Item added to the end of the list.");
-    }
+export default async function addItemHandler (data, ...args) {
+    // Join all arguments into a single string
+    const argString = args.join("_");
+    console.log(`Adding item with args: ${argString}`);
+
+    // Get the last item outline
+    const lastItemOutline = fhr.getLastItemOutline(data);
+
+    const updatedData = await fhr.addObject(data, lastItemOutline, argString);
+    // Save the updated data
+    await fhr.saveData(updatedData);
 }
