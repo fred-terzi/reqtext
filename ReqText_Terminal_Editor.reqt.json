@@ -33,5 +33,19 @@
     "outline": "0.4",
     "description": "Whenever possible run the scripts and/or test after making changes to the code and review the terminal output.",
     "reqt_ID": "2025-05-13T16:30:34.587Z-46f33013"
+  },
+  {
+    "title": "ReqText Terminal Editor Reqs",
+    "hier": 0,
+    "outline": "1",
+    "description": "This section contains the requirements for the ReqText Terminal Editor.",
+    "reqt_ID": "2025-05-13T16:34:07.461Z-1a9d3e4e"
+  },
+  {
+    "title": "Use the flathier-fhr- library",
+    "hier": 1,
+    "outline": "1.1",
+    "description": "Use 'import fhr from @terzitech/flathier'",
+    "reqt_ID": "2025-05-13T16:35:18.222Z-2553123d"
   }
 ]
