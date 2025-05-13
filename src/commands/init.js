@@ -12,7 +12,7 @@ export default async function init(...args) {
     const argString = args.join('_');
     // use fhr.init with the argString
     try {
-        await fhr.init(argString, 'reqt');
+        await fhr.init(argString, 'reqt', 'reqt');
     }
     catch (error) {
         console.error('Initialization failed:', error);

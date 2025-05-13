@@ -23,6 +23,9 @@ Commands:
     
     make_sibling, -ms        Make an item, and it's children, a sibling of the one before it
         Usage: reqtext make_sibling <outline_number>
+
+    edit_title, -et          Edit the title of an item by outline number
+        Usage: reqtext edit_title <outline_number> <new_title>
     `;
     console.log(helpText.trim());
 }
