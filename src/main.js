@@ -2,7 +2,7 @@ import readline from 'node:readline';
 import help from './commands/help.js';
 import getVersion from './utils/getVersion.js';
 import addItemHandler from './commands/addItemHandler.js';
-import addAfterHandler from './commands/addAfter.Handler.js';
+import addAfterHandler from './commands/addAfterHandler.js';
 import init from './commands/init.js';
 import deleteHandler from './commands/deleteHandler.js';
 import makeChildrenHandler from './commands/makeChildrenHandler.js';
