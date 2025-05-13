@@ -1,12 +1,11 @@
 import readline from 'node:readline';
 import help from './commands/help.js';
 import getVersion from './utils/getVersion.js';
+import addItemHandler from './commands/addItemHandler.js';
 
 import fhr from '@terzitech/flathier';
 
 const data = await fhr.loadData();
-console.log('Data loaded:', data);
-
 
 async function promptUser(question) {
   return new Promise((resolve) => {
@@ -43,12 +42,7 @@ const commandMap = {
   '-h': help,
   
   // Add item commands
-  add_item: addItemCommand,
-  '--add-item': addItemCommand,
-  '-a': addItemCommand,
-  add_after: addAfterCommand,
-  '--add-after': addAfterCommand,
-  '-aa': addAfterCommand,
+  add_item: async (...args) => addItemHandler(data, 'END', ...args),
 };
 
 export default async function mainLoop() {
