@@ -47,7 +47,7 @@
   {
     "title": "NEVER Mark a reqt PASS without approval",
     "hier": 2,
-    "outline": "0.1.6",
+    "outline": "0.1.4",
     "status": "INSTRUCTs",
     "itemKey": 16,
     "description": "DESCRIPTION",
@@ -56,7 +56,7 @@
   {
     "title": "ALWAYS update documentation help, and menus",
     "hier": 2,
-    "outline": "0.1.7",
+    "outline": "0.1.5",
     "status": "INSTRUCTs",
     "itemKey": 5,
     "description": "ALWAYS update documentation, help, and menus after making changes to the code.",
@@ -135,9 +135,18 @@
     "reqt_ID": "2025-05-13T19:08:09.340Z-7dc7a66e"
   },
   {
-    "title": "Make Selected Item a Child",
+    "title": "Move Item Up",
     "hier": 1,
     "outline": "1.6",
+    "status": "PASS",
+    "itemKey": 19,
+    "description": "Use the flather.moveUp function to move the selected item up. \n \n Use k.",
+    "reqt_ID": "2025-05-13T20:17:05.100Z-00fcc972"
+  },
+  {
+    "title": "Make Selected Item a Child",
+    "hier": 1,
+    "outline": "1.7",
     "status": "PASS",
     "itemKey": 14,
     "description": "Make the currently selected item a child of the one above it. use the right arrow key to do this.",
@@ -146,7 +155,7 @@
   {
     "title": "Use flathier.demote",
     "hier": 2,
-    "outline": "1.6.1",
+    "outline": "1.7.1",
     "status": "DESIGN",
     "itemKey": 15,
     "description": "Use the flather.demote function to demote the selected item.",
@@ -155,25 +164,16 @@
   {
     "title": "Make Selected Item a Sibling",
     "hier": 1,
-    "outline": "1.7",
+    "outline": "1.8",
     "status": "PASS",
     "itemKey": 18,
     "description": "Use the flathier.promote function to promote the selected item. \n \n Use the left arrow key to do this.",
     "reqt_ID": "2025-05-13T20:07:35.893Z-0a38583c"
   },
   {
-    "title": "Move Item Up",
-    "hier": 1,
-    "outline": "1.8",
-    "status": "PASS",
-    "itemKey": 19,
-    "description": "Use the flather.moveUp function to move the selected item up. \n \n Use k.",
-    "reqt_ID": "2025-05-13T20:17:05.100Z-00fcc972"
-  },
-  {
     "title": "Clear on Quit",
-    "hier": 0,
-    "outline": "2",
+    "hier": 1,
+    "outline": "1.9",
     "status": "PASS",
     "description": "After quiting clear the console.",
     "reqt_ID": "2025-05-13T17:55:48.667Z-c7081fe7",
