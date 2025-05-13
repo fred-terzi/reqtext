@@ -9,7 +9,7 @@ export default async function addItemHandler (...args) {
         process.exit(1);
     }
     // Join all arguments into a single string
-    let argString = args.join("_");
+    let argString = args.join(" ");
 
     // If argString is empty, use new item
     if (argString === "") {

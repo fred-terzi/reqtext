@@ -19,7 +19,7 @@ export default async function addAfterHandler(...args) {
         console.error("❌ Invalid outline number. Must be a non-empty string.");
         process.exit(1);
     }
-    const itemName = args.slice(1).join("_") || "New Item";
+    const itemName = args.slice(1).join(" ") || "New Item";
 
     // Insert the new item after the specified outline number
     const updatedData = await fhr.addObject(data, outlineNumber, itemName);
