@@ -44,6 +44,7 @@ const commandMap = {
   
   // Add item commands
   add_item: async (...args) => {
+    data = await fhr.loadData();
     await addItemHandler(data, ...args);
   },
 
