@@ -1,4 +1,5 @@
 import readline from 'node:readline';
+import help from './commands/help.js';
 
 function promptUser(question) {
   return new Promise((resolve) => {
@@ -13,18 +14,16 @@ function promptUser(question) {
   });
 }
 
-async function helloCommand() {
-  const name = await promptUser('What is your name? ');
-  console.log(`Hello, ${name}!`);
-}
 
 function versionCommand() {
   console.log('reqtext version 1.0.0');
 }
 
 const commandMap = {
-  hello: helloCommand,
-  version: versionCommand
+  version: versionCommand,
+  '--version': versionCommand,
+  '-v': versionCommand,
+  help: help
 };
 
 export default async function mainLoop() {
