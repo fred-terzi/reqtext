@@ -14,6 +14,7 @@ import { loadData, saveData, setData  } from '../src/dataHandler.js';
 // Utility functions
 import getLastItemOutline from '../src/utils/getLastItemOutline.js';
 import getLastTemplateObject from '../src/utils/getItemTemplate.js';
+import editTitle from '../src/utils/editTitle.js';
 
 const flathier = {
   init,
@@ -28,7 +29,8 @@ const flathier = {
   moveDown,
   moveUp,
   createAsciiTree,
-  setData
+  setData,
+  editTitle
 };
 
 export default flathier;

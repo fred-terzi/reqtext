@@ -7,6 +7,7 @@ import init from './commands/init.js';
 import deleteHandler from './commands/deleteHandler.js';
 import makeChildrenHandler from './commands/makeChildrenHandler.js';
 import makeSiblingHandler from './commands/makeSiblingHandler.js';
+import editTitleHandler from './commands/editTitleHandler.js';
 
 import fhr from '@terzitech/flathier';
 
@@ -88,6 +89,14 @@ const commandMap = {
   },
   '-ms': async (...args) => {
     await makeSiblingHandler(...args);
+  },
+
+  // Edit Title command
+  edit_title: async (...args) => {
+    await editTitleHandler(...args);
+  },
+  '-et': async (...args) => {
+    await editTitleHandler(...args);
   },
 
 };
