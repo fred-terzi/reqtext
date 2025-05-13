@@ -6,7 +6,13 @@ Usage: reqtext <command>
 
 Commands:
     version, --version, -v   Show version
+
     help, --help, -h         Show help
+
+    add_item, -a             Add an item to the end of the project
+
+    add_after, -aa           Add an item after a specified outline number
+
     `;
     console.log(helpText.trim());
 }

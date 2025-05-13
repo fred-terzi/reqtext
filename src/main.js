@@ -30,10 +30,19 @@ const commandMap = {
   version: versionCommand,
   '--version': versionCommand,
   '-v': versionCommand,
+
   // Help command
   help: help,
   '--help': help,
   '-h': help,
+  
+  // Add item commands
+  add_item: addItemCommand,
+  '--add-item': addItemCommand,
+  '-a': addItemCommand,
+  add_after: addAfterCommand,
+  '--add-after': addAfterCommand,
+  '-aa': addAfterCommand,
 };
 
 export default async function mainLoop() {
