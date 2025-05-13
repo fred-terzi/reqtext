@@ -117,39 +117,12 @@
     "itemKey": 12
   },
   {
-    "title": "Delete Item",
-    "hier": 2,
-    "outline": "1.5.2",
-    "status": "In Dev",
+    "title": "Delete Selected Item",
+    "hier": 1,
+    "outline": "1.6",
+    "status": "PASS",
     "itemKey": 13,
-    "description": "Delete the currently selected item.",
-    "reqt_ID": "PLACEHOLDER"
-  },
-  {
-    "title": "Teset",
-    "hier": 2,
-    "outline": "1.5.3",
-    "status": "NEW",
-    "itemKey": 14,
-    "description": "DESCRIPTION",
-    "reqt_ID": "PLACEHOLDER"
-  },
-  {
-    "title": "New Item",
-    "hier": 2,
-    "outline": "1.5.4",
-    "status": "NEW",
-    "itemKey": 15,
-    "description": "DESCRIPTION",
-    "reqt_ID": "PLACEHOLDER"
-  },
-  {
-    "title": "New Item",
-    "hier": 2,
-    "outline": "1.5.5",
-    "status": "NEW",
-    "itemKey": 16,
-    "description": "DESCRIPTION",
-    "reqt_ID": "2025-05-13T19:02:15.700Z-690ab437"
+    "description": "Delete the currently selected item. --delete and -d are the commands.",
+    "reqt_ID": "2025-05-13T19:08:09.340Z-7dc7a66e"
   }
 ]

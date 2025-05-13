@@ -42,7 +42,7 @@ async function renderTree(data, selectedIndex = 0) {
     }
     // Fill blank lines if needed so menu is always at the bottom
     // Move cursor to last row and print menu (inverted)
-    const menu = "↑↓: nav | a: add | r: reload | q: quit";
+    const menu = "↑↓: nav | a: add | d: delete | r: reload | q: quit";
     process.stdout.write(`\x1b[${height};1H\x1b[7m${menu}\x1b[0m`);
 }
 
@@ -90,6 +90,31 @@ const keyMap = {
             await addAfterHandler(selectedItem.outline, title);
             state.data = await loadReqtData();
             await renderTree(state.data, state.selectedIndex + 1);
+        });
+    },
+    'd': async (state) => {
+        // Delete the currently selected item
+        const selectedItem = state.data[state.selectedIndex];
+        if (!selectedItem) return;
+        // Confirm deletion (optional, can be removed for instant delete)
+        process.stdout.write(`\nDelete item: '${selectedItem.title}'? (y/n): `);
+        process.stdin.setRawMode(false);
+        process.stdin.once('data', async (input) => {
+            const confirm = input.toString().trim().toLowerCase();
+            process.stdin.setRawMode(true);
+            if (confirm === 'y') {
+                // Remove the item from data
+                state.data.splice(state.selectedIndex, 1);
+                // Save updated data
+                await fhr.saveData(state.data);
+                // Adjust selection: only decrement if out of bounds
+                if (state.selectedIndex >= state.data.length) {
+                    state.selectedIndex = Math.max(0, state.data.length - 1);
+                }
+                await renderTree(state.data, state.selectedIndex);
+            } else {
+                await renderTree(state.data, state.selectedIndex);
+            }
         });
     }
 };
