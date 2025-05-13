@@ -8,6 +8,8 @@ import deleteHandler from './commands/deleteHandler.js';
 import makeChildrenHandler from './commands/makeChildrenHandler.js';
 import makeSiblingHandler from './commands/makeSiblingHandler.js';
 import editTitleHandler from './commands/editTitleHandler.js';
+import reqtEditor from './reqtEditor.js';
+
 
 import fhr from '@terzitech/flathier';
 
@@ -50,7 +52,10 @@ const commandMap = {
   init: async (...args) => {
   await init(...args);
   },
-  
+
+  editor: async (...args) => {
+    await reqtEditor(...args);
+  },
   // Add item commands
   add_item: async (...args) => {
     await addItemHandler(...args);
