@@ -42,7 +42,7 @@ async function renderTree(data, selectedIndex = 0) {
     }
     // Fill blank lines if needed so menu is always at the bottom
     // Move cursor to last row and print menu (inverted)
-    const menu = "↑↓: nav | r: reload | q: quit";
+    const menu = "↑↓: nav | a: add | r: reload | q: quit";
     process.stdout.write(`\x1b[${height};1H\x1b[7m${menu}\x1b[0m`);
 }
 

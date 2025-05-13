@@ -40,6 +40,15 @@
     "status": "INSTRUCTs"
   },
   {
+    "title": "ALWAYS update documentation and help menus",
+    "hier": 2,
+    "outline": "0.1.4",
+    "status": "INSTRUCTs",
+    "proj_ID": 2,
+    "description": "ALWAYS update documentation, help, and menus after making changes to the code.",
+    "reqt_ID": "PLACEHOLDER"
+  },
+  {
     "title": "ReqText Terminal Editor Reqs",
     "hier": 0,
     "outline": "1",

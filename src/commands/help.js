@@ -26,6 +26,12 @@ Commands:
 
     edit_title, -et          Edit the title of an item by outline number
         Usage: reqtext edit_title <outline_number> <new_title>
+
+Terminal Editor Keybindings:
+    ↑/↓        Navigate requirements
+    a          Add a new item after the selected requirement (prompts for title)
+    r          Reload data
+    q, Ctrl+C  Quit and clear the console
     `;
     console.log(helpText.trim());
 }
