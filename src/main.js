@@ -4,6 +4,7 @@ import getVersion from './utils/getVersion.js';
 import addItemHandler from './commands/addItemHandler.js';
 import addAfterHandler from './commands/addAfter.Handler.js';
 import init from './commands/init.js';
+import deleteHandler from './commands/deleteHandler.js';
 
 import fhr from '@terzitech/flathier';
 
@@ -61,6 +62,14 @@ const commandMap = {
   },
   '-aa': async (...args) => {
     await addAfterHandler(...args);
+  },
+
+  // Delete commands
+  delete: async (...args) => {
+    await deleteHandler(...args);
+  },
+  '-d': async (...args) => {
+    await deleteHandler(...args);
   },
 
 
