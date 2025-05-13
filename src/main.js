@@ -6,7 +6,15 @@ import init from './commands/init.js';
 
 import fhr from '@terzitech/flathier';
 
+let data = [];
 
+// if .reqt.json file exists, load it
+try {
+  data = await fhr.loadData();
+}
+catch (error) {
+  console.warn('❌ Failed to load .reqt.json file:', error);
+}
 
 async function promptUser(question) {
   return new Promise((resolve) => {
