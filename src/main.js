@@ -59,6 +59,9 @@ const commandMap = {
   add_after: async (...args) => {
     await addAfterHandler(...args);
   },
+  '-aa': async (...args) => {
+    await addAfterHandler(...args);
+  },
 
 
 
