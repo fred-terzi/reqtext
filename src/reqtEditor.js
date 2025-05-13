@@ -42,7 +42,7 @@ async function renderTree(data, selectedIndex = 0) {
     }
     // Fill blank lines if needed so menu is always at the bottom
     // Move cursor to last row and print menu (inverted)
-    let menu = "↑↓: nav | →: child | ←: sibling | a: add | d: delete | r: reload | q: quit";
+    let menu = "↑↓: nav | →: child | ←: sibling | k: up | j: down | a: add | d: delete | r: reload | q: quit";
     const { width } = getConsoleSize();
     if (menu.length > width) {
         menu = menu.slice(0, width);
@@ -151,6 +151,38 @@ const keyMap = {
                 await renderTree(state.data, state.selectedIndex);
             }
         });
+    },
+    'k': async (state) => {
+        // Move the currently selected item up using flathier.moveUp
+        const selectedItem = state.data[state.selectedIndex];
+        if (!selectedItem) return;
+        const updatedData = await fhr.moveUp(state.data, selectedItem.outline);
+        if (updatedData && updatedData !== state.data) {
+            state.data = updatedData;
+            await fhr.setData(updatedData);
+            await fhr.saveData(updatedData);
+            // Move selection up if possible
+            state.selectedIndex = Math.max(0, state.selectedIndex - 1);
+            await renderTree(state.data, state.selectedIndex);
+        } else {
+            await renderTree(state.data, state.selectedIndex);
+        }
+    },
+    'j': async (state) => {
+        // Move the currently selected item down using flathier.moveDown
+        const selectedItem = state.data[state.selectedIndex];
+        if (!selectedItem) return;
+        const updatedData = await fhr.moveDown(state.data, selectedItem.outline);
+        if (updatedData && updatedData !== state.data) {
+            state.data = updatedData;
+            await fhr.setData(updatedData);
+            await fhr.saveData(updatedData);
+            // Move selection down if possible
+            state.selectedIndex = Math.min(state.data.length - 1, state.selectedIndex + 1);
+            await renderTree(state.data, state.selectedIndex);
+        } else {
+            await renderTree(state.data, state.selectedIndex);
+        }
     }
 };
 

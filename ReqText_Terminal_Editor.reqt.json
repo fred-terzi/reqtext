@@ -90,22 +90,22 @@
     "reqt_ID": "2025-05-13T20:06:31.490Z-a49af210"
   },
   {
-    "title": "ONLY use std.out in the editor",
-    "hier": 1,
-    "outline": "1.2",
-    "description": "In the renderer console.log cannot be used, only std.out. There are newline characters already in the tree.",
-    "reqt_ID": "2025-05-13T16:56:11.002Z-03da0058",
-    "status": "DESIGN",
-    "itemKey": 8
-  },
-  {
     "title": "Navigation",
     "hier": 1,
-    "outline": "1.3",
+    "outline": "1.2",
     "status": "PASS",
     "description": "Navigation in the editor is done using the arrow keys.",
     "reqt_ID": "2025-05-13T17:10:47.344Z-0e651941",
     "itemKey": 9
+  },
+  {
+    "title": "ONLY use std.out in the editor",
+    "hier": 1,
+    "outline": "1.3",
+    "description": "In the renderer console.log cannot be used, only std.out. There are newline characters already in the tree.",
+    "reqt_ID": "2025-05-13T16:56:11.002Z-03da0058",
+    "status": "DESIGN",
+    "itemKey": 8
   },
   {
     "title": "Clear on Quit",
@@ -169,5 +169,14 @@
     "itemKey": 18,
     "description": "Use the flathier.promote function to promote the selected item. \n \n Use the left arrow key to do this.",
     "reqt_ID": "2025-05-13T20:07:35.893Z-0a38583c"
+  },
+  {
+    "title": "Move Item Up",
+    "hier": 1,
+    "outline": "1.9",
+    "status": "PASS",
+    "itemKey": 19,
+    "description": "Use the flather.moveUp function to move the selected item up. \n \n Use k.",
+    "reqt_ID": "2025-05-13T20:17:05.100Z-00fcc972"
   }
 ]
