@@ -1,5 +1,6 @@
 import readline from 'node:readline';
 import help from './commands/help.js';
+import getVersion from './utils/getVersion.js';
 
 function promptUser(question) {
   return new Promise((resolve) => {
@@ -14,16 +15,23 @@ function promptUser(question) {
   });
 }
 
-
-function versionCommand() {
-  console.log('reqtext version 1.0.0');
+async function versionCommand() {
+  // Get the version from package.json using es modules
+  const version = await getVersion();
+  if (version) {
+    console.log(`Version: ${version}`);
+  } else {
+    console.log('Version not found');
+  }
 }
 
 const commandMap = {
   version: versionCommand,
   '--version': versionCommand,
   '-v': versionCommand,
-  help: help
+  help: help,
+  '--help': help,
+  '-h': help,
 };
 
 export default async function mainLoop() {
