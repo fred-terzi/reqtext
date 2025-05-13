@@ -25,16 +25,16 @@
   },
   {
     "title": "ALWAYS add graceful debugging to console",
-    "hier": 1,
-    "outline": "0.2",
+    "hier": 2,
+    "outline": "0.1.2",
     "description": "Instructions for graceful debugging in the console so that AI can easily view the code behaviour.",
     "reqt_ID": "2025-05-13T16:30:10.724Z-4d9c32cb",
     "status": "INSTRUCTs"
   },
   {
     "title": "ALWAYS run scripts and/or test after Changes",
-    "hier": 1,
-    "outline": "0.3",
+    "hier": 2,
+    "outline": "0.1.3",
     "description": "Whenever possible run the scripts and/or test after making changes to the code and review the terminal output.",
     "reqt_ID": "2025-05-13T16:30:34.587Z-46f33013",
     "status": "INSTRUCTs"

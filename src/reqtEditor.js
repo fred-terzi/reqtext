@@ -11,15 +11,22 @@ async function loadReqtData() {
 }
 
 // Utility: Render tree
-async function renderTree(data) {
+async function renderTree(data, selectedIndex = 0) {
     process.stdout.write('\x1Bc'); // Clear console
     const tree = await fhr.createAsciiTree(data, ['title', 'status']);
     if (Array.isArray(tree)) {
-        tree.forEach(line => process.stdout.write(line));
+        tree.forEach((line, idx) => {
+            if (idx === selectedIndex) {
+                process.stdout.write('> ' + line); // Highlight selected
+            } else {
+                process.stdout.write('  ' + line);
+            }
+        });
     } else {
         process.stdout.write(tree);
     }
-    process.stdout.write('\n[Press q to quit, r to reload]\n');
+    process.stdout.write(`\n[Press q to quit, r to reload, arrows to navigate]\n`);
+    process.stdout.write(`[DEBUG] Selected index: ${selectedIndex}\n`);
 }
 
 // Utility: Handle keypress
@@ -38,12 +45,26 @@ const keyMap = {
     },
     'r': async (state) => {
         state.data = await loadReqtData();
-        await renderTree(state.data);
+        await renderTree(state.data, state.selectedIndex);
+    },
+    'up': async (state) => {
+        state.selectedIndex = Math.max(0, state.selectedIndex - 1);
+        await renderTree(state.data, state.selectedIndex);
+    },
+    'down': async (state) => {
+        // Count lines in tree
+        const tree = await fhr.createAsciiTree(state.data, ['title', 'status']);
+        const maxIdx = Array.isArray(tree) ? tree.length - 1 : 0;
+        state.selectedIndex = Math.min(maxIdx, state.selectedIndex + 1);
+        await renderTree(state.data, state.selectedIndex);
     }
     // Add more key handlers here as needed
 };
 
 async function handleKeypress(key, state) {
+    // Arrow key codes
+    if (key === '\u001b[A') return await keyMap['up'](state); // Up arrow
+    if (key === '\u001b[B') return await keyMap['down'](state); // Down arrow
     if (keyMap[key]) {
         await keyMap[key](state);
     } else {
@@ -53,8 +74,8 @@ async function handleKeypress(key, state) {
 }
 
 export default async function reqtEditor() {
-    const state = { data: await loadReqtData() };
-    await renderTree(state.data);
+    const state = { data: await loadReqtData(), selectedIndex: 0 };
+    await renderTree(state.data, state.selectedIndex);
 
     process.stdin.setRawMode(true);
     process.stdin.resume();
