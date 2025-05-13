@@ -50,12 +50,14 @@ const keyMap = {
     'q': async (state) => {
         process.stdin.setRawMode(false);
         process.stdin.pause();
+        process.stdout.write('\x1Bc'); // Clear console on exit
         process.stdout.write('\nExiting editor.\n');
         process.exit(0);
     },
     '\u0003': async (state) => { // Ctrl+C
         process.stdin.setRawMode(false);
         process.stdin.pause();
+        process.stdout.write('\x1Bc'); // Clear console on exit
         process.stdout.write('\nExiting editor.\n');
         process.exit(0);
     },

@@ -70,5 +70,14 @@
     "status": "PASS",
     "description": "Navigation in the editor is done using the arrow keys.",
     "reqt_ID": "2025-05-13T17:10:47.344Z-0e651941"
+  },
+  {
+    "title": "Clear on Quit",
+    "hier": 1,
+    "outline": "1.4",
+    "status": "PASS",
+    "proj_id": "PLACEHOLDER",
+    "description": "After quiting clear the console.",
+    "reqt_ID": "2025-05-13T17:55:48.667Z-c7081fe7"
   }
 ]
