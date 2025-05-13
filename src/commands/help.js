@@ -17,6 +17,9 @@ Commands:
 
     delete, -d               Delete an item by outline number
         Usage: reqtext delete <outline_number>
+
+    make_children, -mc       Make an item, and it's children, a child of the one before it
+        Usage: reqtext make_children <outline_number>
     `;
     console.log(helpText.trim());
 }

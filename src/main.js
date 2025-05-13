@@ -5,6 +5,7 @@ import addItemHandler from './commands/addItemHandler.js';
 import addAfterHandler from './commands/addAfter.Handler.js';
 import init from './commands/init.js';
 import deleteHandler from './commands/deleteHandler.js';
+import makeChildrenHandler from './commands/makeChildrenHandler.js';
 
 import fhr from '@terzitech/flathier';
 
@@ -72,7 +73,13 @@ const commandMap = {
     await deleteHandler(...args);
   },
 
-
+  // Make Children commands
+  make_children: async (...args) => {
+    await makeChildrenHandler(...args);
+  },
+  '-mc': async (...args) => {
+    await makeChildrenHandler(...args);
+  },
 
 };
 
