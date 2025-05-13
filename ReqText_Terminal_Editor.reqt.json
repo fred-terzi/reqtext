@@ -76,8 +76,23 @@
     "hier": 1,
     "outline": "1.4",
     "status": "PASS",
-    "proj_id": "PLACEHOLDER",
     "description": "After quiting clear the console.",
     "reqt_ID": "2025-05-13T17:55:48.667Z-c7081fe7"
+  },
+  {
+    "title": "keypress a for add",
+    "hier": 1,
+    "outline": "1.5",
+    "status": "In Dev",
+    "description": "DESCRIPTION",
+    "reqt_ID": "2025-05-13T18:02:52.899Z-6cd65aac"
+  },
+  {
+    "title": "Use the add after handler",
+    "hier": 1,
+    "outline": "1.6",
+    "status": "DESIGN",
+    "description": "Use the same add after handler as the one in the main.js file.",
+    "reqt_ID": "2025-05-13T18:05:15.134Z-0657c04f"
   }
 ]
