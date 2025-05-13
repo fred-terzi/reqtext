@@ -1,4 +1,5 @@
 import fhr from '@terzitech/flathier';
+import addAfterHandler from './commands/addAfterHandler.js';
 
 // Utility: Load data
 async function loadReqtData() {
@@ -75,8 +76,22 @@ const keyMap = {
         const maxIdx = Array.isArray(tree) ? tree.length - 1 : 0;
         state.selectedIndex = Math.min(maxIdx, state.selectedIndex + 1);
         await renderTree(state.data, state.selectedIndex);
+    },
+    'a': async (state) => {
+        // Use the addAfterHandler to add after the currently selected outline
+        const selectedItem = state.data[state.selectedIndex];
+        if (!selectedItem) return;
+        // Prompt for a new title (simple, synchronous prompt)
+        process.stdout.write('\nEnter new item title: ');
+        process.stdin.setRawMode(false);
+        process.stdin.once('data', async (input) => {
+            const title = input.toString().trim() || 'New Item';
+            process.stdin.setRawMode(true);
+            await addAfterHandler(selectedItem.outline, title);
+            state.data = await loadReqtData();
+            await renderTree(state.data, state.selectedIndex + 1);
+        });
     }
-    // Add more key handlers here as needed
 };
 
 async function handleKeypress(key, state) {

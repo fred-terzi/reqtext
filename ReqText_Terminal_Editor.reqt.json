@@ -83,16 +83,25 @@
     "title": "keypress a for add",
     "hier": 1,
     "outline": "1.5",
-    "status": "In Dev",
+    "status": "PASS",
     "description": "DESCRIPTION",
     "reqt_ID": "2025-05-13T18:02:52.899Z-6cd65aac"
   },
   {
     "title": "Use the add after handler",
-    "hier": 1,
-    "outline": "1.6",
-    "status": "DESIGN",
+    "hier": 2,
+    "outline": "1.5.1",
+    "status": "PASS",
     "description": "Use the same add after handler as the one in the main.js file.",
     "reqt_ID": "2025-05-13T18:05:15.134Z-0657c04f"
+  },
+  {
+    "title": "Add New",
+    "hier": 2,
+    "outline": "1.5.2",
+    "status": "NEW",
+    "proj_ID": 1,
+    "description": "DESCRIPTION",
+    "reqt_ID": "PLACEHOLDER"
   }
 ]
