@@ -42,7 +42,7 @@ async function renderTree(data, selectedIndex = 0) {
     }
     // Fill blank lines if needed so menu is always at the bottom
     // Move cursor to last row and print menu (inverted)
-    const menu = "↑↓: nav | a: add | d: delete | r: reload | q: quit";
+    const menu = "↑↓: nav | →: child | a: add | d: delete | r: reload | q: quit";
     process.stdout.write(`\x1b[${height};1H\x1b[7m${menu}\x1b[0m`);
 }
 
@@ -76,6 +76,21 @@ const keyMap = {
         const maxIdx = Array.isArray(tree) ? tree.length - 1 : 0;
         state.selectedIndex = Math.min(maxIdx, state.selectedIndex + 1);
         await renderTree(state.data, state.selectedIndex);
+    },
+    '\u001b[C': async (state) => { // Right arrow key
+        // Make the currently selected item a child of the one above it using flathier.demote
+        if (state.selectedIndex <= 0) return; // Can't demote the first item
+        const selectedItem = state.data[state.selectedIndex];
+        const aboveItem = state.data[state.selectedIndex - 1];
+        if (!selectedItem || !aboveItem) return;
+        // Use flathier.demote
+        const updatedData = await fhr.demote(state.data, selectedItem.outline);
+        if (updatedData) {
+            state.data = updatedData;
+            await fhr.setData(updatedData); // Save the updated data array
+            await fhr.saveData(updatedData); // Save the updated data array
+            await renderTree(state.data, state.selectedIndex);
+        }
     },
     'a': async (state) => {
         // Use the addAfterHandler to add after the currently selected outline
