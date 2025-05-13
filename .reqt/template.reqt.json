@@ -4,7 +4,7 @@
     "hier": "0",
     "outline": "0",
     "status": "In Dev",
-    "proj_ID": "PLACEHOLDER",
+    "itemKey": "PLACEHOLDER",
     "description": "DESCRIPTION",
     "reqt_ID": "PLACEHOLDER"
   },
@@ -13,7 +13,7 @@
     "hier": "0",
     "outline": "1",
     "status": "NEW",
-    "proj_ID": "PLACEHOLDER",
+    "itemKey": "PLACEHOLDER",
     "description": "DESCRIPTION",
     "reqt_ID": "PLACEHOLDER"
   }
