@@ -22,20 +22,24 @@ function versionCommand() {
   console.log('reqtext version 1.0.0');
 }
 
+const commandMap = {
+  hello: helloCommand,
+  version: versionCommand
+};
+
 export default async function mainLoop() {
   const [, , command, ...args] = process.argv;
-  switch (command) {
-    case 'hello':
-      await helloCommand();
-      break;
-    case 'version':
-      versionCommand();
-      break;
-    default:
-      console.log('Usage: reqtext <command>');
-      console.log('Commands:');
-      console.log('  hello     Greet the user (prompts for name)');
-      console.log('  version   Show version');
-      break;
+  const cmd = commandMap[command];
+  if (cmd) {
+    if (cmd.constructor.name === 'AsyncFunction') {
+      await cmd(...args);
+    } else {
+      cmd(...args);
+    }
+  } else {
+    console.log('Usage: reqtext <command>');
+    console.log('Commands:');
+    console.log('  hello     Greet the user (prompts for name)');
+    console.log('  version   Show version');
   }
 }
