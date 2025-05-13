@@ -1,6 +1,9 @@
 import fhr from "@terzitech/flathier";
 
-export default async function addItemHandler (data, ...args) {
+export default async function addItemHandler (...args) {
+    // Load the data
+    const data = await fhr.loadData();
+    // Check if data is loaded
     if (!data || !Array.isArray(data) || data.length === 0) {
         console.error("❌ No project data loaded.\n Run 'npx reqt init <project name>'");
         process.exit(1);

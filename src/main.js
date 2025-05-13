@@ -2,6 +2,7 @@ import readline from 'node:readline';
 import help from './commands/help.js';
 import getVersion from './utils/getVersion.js';
 import addItemHandler from './commands/addItemHandler.js';
+import addAfterHandler from './commands/addAfter.Handler.js';
 import init from './commands/init.js';
 
 import fhr from '@terzitech/flathier';
@@ -41,16 +42,26 @@ const commandMap = {
   help: help,
   '--help': help,
   '-h': help,
+
+  init: async (...args) => {
+  await init(...args);
+  },
   
   // Add item commands
   add_item: async (...args) => {
-    data = await fhr.loadData();
-    await addItemHandler(data, ...args);
+    await addItemHandler(...args);
+  },
+  '-a': async (...args) => {
+    await addItemHandler(...args);
   },
 
-  init: async (...args) => {
-    await init(...args);
+  // Add After commands
+  add_after: async (...args) => {
+    await addAfterHandler(...args);
   },
+
+
+
 };
 
 export default async function mainLoop() {

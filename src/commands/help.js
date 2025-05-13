@@ -12,7 +12,7 @@ Commands:
     add_item, -a             Add an item to the end of the project
 
     add_after, -aa           Add an item after a specified outline number
-
+        Usage: reqtext add_after <outline_number> <item_name>
     `;
     console.log(helpText.trim());
 }
