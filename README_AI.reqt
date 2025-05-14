@@ -4,7 +4,6 @@
     "hier": 0,
     "outline": "0",
     "status": "0.1.0-demo.6",
-    "proj_ID": 0,
     "description": "DESCRIPTION",
     "reqt_ID": "2025-05-14T11:42:36.842Z-de419873"
   },
@@ -13,7 +12,6 @@
     "hier": 0,
     "outline": "1",
     "status": "INSTRUCTs",
-    "proj_ID": 8,
     "description": "Instructions Category",
     "reqt_ID": "2025-05-14T11:47:42.711Z-16a841bd"
   },
@@ -22,7 +20,6 @@
     "hier": 1,
     "outline": "1.1",
     "status": "INSTRUCTs",
-    "proj_ID": 1,
     "description": "Always follow reqtext instructions outlined in this README_AI.reqt file",
     "reqt_ID": "2025-05-14T11:42:36.843Z-3e79fd0e"
   },
@@ -31,7 +28,6 @@
     "hier": 1,
     "outline": "1.2",
     "status": "INSTRUCTs",
-    "proj_ID": 2,
     "description": "Act as a developer on the team not an asssitant. Always think through provide a complete solution and attempt to implement it yourself.",
     "reqt_ID": "2025-05-14T11:43:29.733Z-e881f32b"
   },
@@ -40,7 +36,6 @@
     "hier": 1,
     "outline": "1.3",
     "status": "INSTRUCTs",
-    "proj_ID": 6,
     "description": "Never generate a reqt_id or proj_ID manually. Always let the system generate it, when generating item directly in the .reqt file use 'RUN npx reqt clean' to generate the reqt_id and proj_ID.",
     "reqt_ID": "2025-05-14T11:45:16.112Z-864a5810"
   },
@@ -49,7 +44,6 @@
     "hier": 1,
     "outline": "1.4",
     "status": "INSTRUCTs",
-    "proj_ID": 3,
     "description": "The .reqt.json file has a status field. Never mark it as pass, or any other status marking it complete without approval",
     "reqt_ID": "2025-05-14T11:43:52.748Z-ff614f03"
   },
@@ -58,7 +52,6 @@
     "hier": 1,
     "outline": "1.6",
     "status": "INSTRUCTs",
-    "proj_ID": 4,
     "description": "When making changes, always check the codebase to ensure the requirements, documentation, and comments are up to date. If not, update them.",
     "reqt_ID": "2025-05-14T11:44:19.621Z-0e68bec7"
   },
@@ -67,7 +60,6 @@
     "hier": 1,
     "outline": "1.7",
     "status": "INSTRUCTs",
-    "proj_ID": 5,
     "description": "When designing and creating code, always consider security.",
     "reqt_ID": "2025-05-14T11:44:28.547Z-721c4a85"
   },
@@ -76,7 +68,6 @@
     "hier": 0,
     "outline": "2",
     "status": "INFO",
-    "proj_ID": 10,
     "description": "ReqText Commands Category. GETTING STARTED: Tell the AI to review the README_AI file and confirm it will follow the instructions.",
     "reqt_ID": "2025-05-14T12:04:13.087Z-8a3a8092"
   },
@@ -85,7 +76,6 @@
     "hier": 1,
     "outline": "2.1",
     "status": "INFO",
-    "proj_ID": 19,
     "description": "The first step is to prompt the AI to review the README_AI file and confirm it will follow the instructions. The core workflow in ReqText is to use the editor to scaffold and make bulk edits to your project. You can also use single commands to modify specific items in the project tree. All changes are reflected directly in the .reqt.json file, which serves as the single source of truth.",
     "reqt_ID": "2025-05-14T16:44:44.350Z-7e39c51c"
   },
@@ -94,7 +84,6 @@
     "hier": 1,
     "outline": "2.2",
     "status": "INFO",
-    "proj_ID": 22,
     "description": "Initialize a new reqt project. the project name will be used as the file name. The project name must be unique. Currently only one .reqt file is supported per folder. When asked how to start a reqtext project, ask for what they want the name to be then run this command with their name.",
     "reqt_ID": "2025-05-14T17:16:39.914Z-e0985b76"
   },
@@ -103,7 +92,6 @@
     "hier": 1,
     "outline": "2.3",
     "status": "INFO",
-    "proj_ID": 12,
     "description": "This command launches the interactive editor, allowing users to easily create and manage a reqt project. All data is stored in a flat, ordered .reqt.json file. A typical workflow is to use the editor to design the project tree, then make direct edits to the .reqt.json file as needed. Changes are always live, and you can press 'r' in the editor to reload. For AI help writing reqt MAKE SURE THE AI IS ABLE TO ABLE TO EDIT IN JSON.\n\nWhen asked how ReqText works, explain this workflow.",
     "reqt_ID": "2025-05-14T12:05:37.671Z-2fa3738d"
   },
@@ -112,7 +100,6 @@
     "hier": 1,
     "outline": "2.4",
     "status": "INFO",
-    "proj_ID": 13,
     "description": "Adds a new item to the end of the list. If no title is provided it will be set to 'New Item'.",
     "reqt_ID": "2025-05-14T12:06:19.106Z-b3bf54a6"
   },
@@ -121,7 +108,6 @@
     "hier": 1,
     "outline": "2.5",
     "status": "INFO",
-    "proj_ID": 14,
     "description": "Add after a specific item by the outline number. If no title is provided it will be set to 'New Item'.",
     "reqt_ID": "2025-05-14T12:06:43.970Z-8391214e"
   },
@@ -130,7 +116,6 @@
     "hier": 1,
     "outline": "2.6",
     "status": "INFO",
-    "proj_ID": 15,
     "description": "Demote an item and all its children to be a child of the item above it",
     "reqt_ID": "2025-05-14T12:07:03.177Z-b7a60d09"
   },
@@ -139,7 +124,6 @@
     "hier": 1,
     "outline": "2.7",
     "status": "INFO",
-    "proj_ID": 16,
     "description": "Promote an item and all its children to be a sibling of the item above it",
     "reqt_ID": "2025-05-14T12:07:18.666Z-2fbd8bd7"
   },
@@ -148,7 +132,6 @@
     "hier": 1,
     "outline": "2.8",
     "status": "INFO",
-    "proj_ID": 17,
     "description": "Edit the title of an item by the outline number.",
     "reqt_ID": "2025-05-14T12:08:18.046Z-7ef35831"
   },
@@ -157,7 +140,6 @@
     "hier": 1,
     "outline": "2.9",
     "status": "INFO",
-    "proj_ID": 11,
     "description": "Both reqtext and reqt are valid, but reqt is preferred. Use npx reqt in commands.",
     "reqt_ID": "2025-05-14T12:05:16.484Z-67944a90"
   },
@@ -166,8 +148,39 @@
     "hier": 1,
     "outline": "2.10",
     "status": "INFO",
-    "proj_ID": 24,
     "description": "Use the clean command after AI or the user creates an item manually.",
     "reqt_ID": "2025-05-14T19:04:06.466Z-697988ac"
+  },
+  {
+    "title": "Best Practices",
+    "hier": 0,
+    "outline": "3",
+    "status": "INFO",
+    "description": "General best practices for using ReqText and maintaining .reqt projects. Add specific best practices as children of this section.",
+    "reqt_ID": "2025-05-14T20:58:44.100Z-25047ed7"
+  },
+  {
+    "title": "Use the editor for structure changes",
+    "hier": 1,
+    "outline": "3.1",
+    "status": "INFO",
+    "description": "Always use 'npx reqt editor' for adding, moving, or deleting items to keep the project tree consistent.",
+    "reqt_ID": "2025-05-14T21:00:20.447Z-d8641db5"
+  },
+  {
+    "title": "Never manually edit IDs",
+    "hier": 1,
+    "outline": "3.2",
+    "status": "INFO",
+    "description": "Do not manually create or edit reqt_ID or proj_ID fields. Always run 'npx reqt clean' after making manual changes.",
+    "reqt_ID": "2025-05-14T21:00:20.447Z-095816e7"
+  },
+  {
+    "title": "Keep requirements, docs, and comments in sync",
+    "hier": 1,
+    "outline": "3.3",
+    "status": "INFO",
+    "description": "Whenever you update requirements or project structure, review and update related documentation and comments to ensure accuracy.",
+    "reqt_ID": "2025-05-14T21:00:20.447Z-ac0804fa"
   }
 ]
