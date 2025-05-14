@@ -49,12 +49,36 @@ npx reqt [command] [options]
 #### Common Commands
 
 ```bash
-npx reqt init <Your Project>   # Initialize a new reqt project
-npx reqt editor                # Launch the interactive tree editor
-npx reqt -a <Item Name>        # Add new item
+npx reqt init <project name>     # Initialize a new reqt project
+npx reqt editor                  # Launch the interactive tree editor
+npx reqt -a "New Item"            # Add a new item to the end
 ```
 
 > ✅ Both `reqtext` and `reqt` are valid commands. For convenience, `reqt` is the preferred shorthand throughout this guide.
+
+---
+
+## CLI Reference
+
+### General Commands
+
+| Command                      | Description                            |
+| ---------------------------- | -------------------------------------- |
+| `version`, `--version`, `-v` | Show version number                    |
+| `help`, `--help`, `-h`       | Show help text                         |
+| `init <project name>`        | Initialize a new ReqText project       |
+| `editor`                     | Launch the interactive terminal editor |
+
+### Item Management Commands
+
+| Command                | Description                             | Usage Example                         |
+| ---------------------- | --------------------------------------- | ------------------------------------- |
+| `add_item`, `-a`       | Add an item to the end of the project   | `reqt add_item "New Item"`            |
+| `add_after`, `-aa`     | Add an item after a specific outline ID | `reqt add_after 1.2 "New Subitem"`    |
+| `delete`, `-d`         | Delete an item by outline number        | `reqt delete 1.3`                     |
+| `make_children`, `-mc` | Demote an item (and its children)       | `reqt make_children 1.2`              |
+| `make_sibling`, `-ms`  | Promote an item (and its children)      | `reqt make_sibling 1.2`               |
+| `edit_title`, `-et`    | Edit the title of an item by outline ID | `reqt edit_title 1.2 "Updated Title"` |
 
 ---
 
@@ -62,7 +86,7 @@ npx reqt -a <Item Name>        # Add new item
 
 The terminal editor provides an interactive tree view to create, navigate, and structure your `.reqt` items. It's the primary interface for building your requirement hierarchy quickly and visually.
 
-### Sample Output from `reqt edit`
+### Sample Output from `reqt editor`
 
 ```bash
     0: ReqText_Demo - In Dev
@@ -89,3 +113,9 @@ The terminal editor provides an interactive tree view to create, navigate, and s
 | `e`            | Edit item title                 |
 | `r`            | Reload data                     |
 | `q` / `Ctrl+C` | Quit and clear console          |
+
+---
+
+## Learn More
+
+Visit [terzitech.dev](https://terzitech.dev) for documentation, updates, and blog posts.
