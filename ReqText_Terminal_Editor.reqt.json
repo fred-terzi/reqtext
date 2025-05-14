@@ -171,9 +171,18 @@
     "reqt_ID": "2025-05-13T20:07:35.893Z-0a38583c"
   },
   {
-    "title": "Clear on Quit",
+    "title": "Edit Selected Item Title",
     "hier": 1,
     "outline": "1.9",
+    "status": "NEW",
+    "itemKey": 20,
+    "description": "`e` key press edit the selected item title.",
+    "reqt_ID": "2025-05-14T00:23:01.571Z-5bc5f9fc"
+  },
+  {
+    "title": "Clear on Quit",
+    "hier": 1,
+    "outline": "1.10",
     "status": "PASS",
     "description": "After quiting clear the console.",
     "reqt_ID": "2025-05-13T17:55:48.667Z-c7081fe7",

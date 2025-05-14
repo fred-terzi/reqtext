@@ -200,6 +200,27 @@ const keyMap = {
         } else {
             await renderTree(state.data, state.selectedIndex);
         }
+    },
+    'e': async (state) => {
+        process.stdout.write('[DEBUG] e key pressed\n'); // Debug print
+        // Edit the title of the currently selected item
+        const selectedItem = state.data[state.selectedIndex];
+        if (!selectedItem) return;
+        const prompt = new Input({
+            message: `Edit title for '${selectedItem.title}':`,
+            initial: selectedItem.title
+        });
+        try {
+            const newTitle = (await prompt.run()).trim();
+            if (newTitle && newTitle !== selectedItem.title) {
+                selectedItem.title = newTitle; // Directly update the title
+                await fhr.saveData(state.data);
+            }
+            await renderTree(state.data, state.selectedIndex);
+        } catch (err) {
+            // If prompt is cancelled, just re-render
+            await renderTree(state.data, state.selectedIndex);
+        }
     }
 };
 
@@ -245,4 +266,5 @@ export default async function reqtEditor() {
     // Patch the 'a' and 'd' handlers to use the patchPrompt wrapper
     keyMap['a'] = patchPrompt(keyMap['a']);
     keyMap['d'] = patchPrompt(keyMap['d']);
+    keyMap['e'] = patchPrompt(keyMap['e']);
 }
