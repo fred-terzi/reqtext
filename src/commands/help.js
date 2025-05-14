@@ -21,6 +21,8 @@ Commands:
         Usage: reqtext make_sibling <outline_number>
     edit_title, -et          Edit the title of an item by outline number
         Usage: reqtext edit_title <outline_number> <new_title>
+    clean                    Ensure all items have valid reqt_ID and proj_ID
+        Usage: reqtext clean [file]
 
 Terminal Editor Keybindings:
     ↑/↓        Navigate requirements

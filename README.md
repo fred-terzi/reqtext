@@ -30,6 +30,8 @@ Thank you for checking out ReqText. Happy Docucoding!
 
 — *Joseph Terzi*
 
+## Quick Start Guide
+
 ## Installation
 
 > Ensure Node.js is installed before proceeding. You can download it from [nodejs.org](https://nodejs.org/).
@@ -51,7 +53,8 @@ npx reqt [command] [options]
 ```bash
 npx reqt init <project name>     # Initialize a new reqt project
 npx reqt editor                  # Launch the interactive tree editor
-npx reqt -a "New Item"            # Add a new item to the end
+npx reqt -a "New Item"           # Add a new item to the end
+npx reqt clean                   # Ensure all items have valid reqt_ID and proj_ID
 ```
 
 > ✅ Both `reqtext` and `reqt` are valid commands. For convenience, `reqt` is the preferred shorthand throughout this guide.
@@ -68,6 +71,7 @@ npx reqt -a "New Item"            # Add a new item to the end
 | `help`, `--help`, `-h`       | Show help text                         |
 | `init <project name>`        | Initialize a new ReqText project       |
 | `editor`                     | Launch the interactive terminal editor |
+| `clean`                      | Ensure all items have valid reqt_ID and proj_ID |
 
 ### Item Management Commands
 
