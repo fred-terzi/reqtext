@@ -141,10 +141,10 @@ export default async function init(fileName = 'FlatHierFormat', customExt = '.fh
     // Create working copy with custom IDs
     const workingCopy = cleanedTemplate.map((item, index) => {
       const newItem = { ...item };
-      // Set proj_id to index (0 for first, 1 for second, etc.)
-      newItem.proj_id = index;
-      // If customID is not 'unqiue_id', replace unique_id with customID
-      if (customID !== 'unqiue_id') {
+      // Set proj_ID to index (0 for first, 1 for second, etc.)
+      newItem.proj_ID = index;
+      // If customID is not 'unique_id', replace unique_id with customID
+      if (customID !== 'unique_id') {
         delete newItem.unique_id;
         const customIDText = `${customID}_ID`;
         newItem[customIDText] = generateUniqueId();

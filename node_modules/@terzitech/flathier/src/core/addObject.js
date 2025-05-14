@@ -50,6 +50,9 @@ export default async function addObject(data, outlineNumber, newTitle) {
       newObject.itemKey = maxItemKey + 1;
     }
   });
+  // Assign proj_ID as one higher than the current highest proj_ID
+  const maxProjId = Math.max(...data.map(item => Number(item.proj_ID) || 0), 0);
+  newObject.proj_ID = maxProjId + 1;
   newObject.title = newTitle;
 
   // 3. Insert and update selection
