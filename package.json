@@ -22,7 +22,8 @@
   },
   "type": "module",
   "bin": {
-    "reqt": "bin/index.js"
+    "reqt": "bin/index.js",
+    "reqtext": "bin/index.js"
   },
   "keywords": ["cli", "requirements", "documentation", "terminal", "editor", "Docucoding"]
 }
