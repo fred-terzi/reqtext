@@ -212,10 +212,14 @@ const keyMap = {
         try {
             const confirm = await prompt.run();
             if (confirm) {
-                state.data.splice(state.selectedIndex, 1);
-                await fhr.saveData(state.data);
-                if (state.selectedIndex >= state.data.length) {
-                    state.selectedIndex = Math.max(0, state.data.length - 1);
+                // Use fhr.deleteObject to delete the item and recompute outlines
+                const updatedData = await fhr.deleteObject(state.data, selectedItem.outline);
+                if (updatedData) {
+                    state.data = updatedData;
+                    await fhr.saveData(state.data);
+                    if (state.selectedIndex >= state.data.length) {
+                        state.selectedIndex = Math.max(0, state.data.length - 1);
+                    }
                 }
             }
             await renderTree(state.data, state.selectedIndex, true);
