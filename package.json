@@ -25,5 +25,12 @@
     "reqt": "bin/index.js",
     "reqtext": "bin/index.js"
   },
-  "keywords": ["cli", "requirements", "documentation", "terminal", "editor", "Docucoding"]
+  "keywords": [
+    "cli",
+    "requirements",
+    "documentation",
+    "terminal",
+    "editor",
+    "Docucoding"
+  ]
 }
