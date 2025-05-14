@@ -284,7 +284,9 @@ async function handleKeypress(key, state) {
 
 export default async function reqtEditor() {
     const state = { data: await loadReqtData(), selectedIndex: 0 };
-    await renderTree(state.data, state.selectedIndex);
+    let firstRender = true;
+    await renderTree(state.data, state.selectedIndex, firstRender);
+    firstRender = false;
 
     process.stdin.setRawMode(true);
     process.stdin.resume();
