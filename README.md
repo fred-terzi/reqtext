@@ -30,27 +30,39 @@ Thank you for checking out ReqText. Happy Docucoding!
 
 — *Joseph Terzi*
 
-
 ## Installation
 
-> If you do not have Node.js installed, please install it first. You can download it from [nodejs.org](https://nodejs.org/).
+> Ensure Node.js is installed before proceeding. You can download it from [nodejs.org](https://nodejs.org/).
 
-### Local installation:
+### Local Installation
+
 ```bash
 npm install @terzitech/reqtext
 ```
-Usage:
+
+### Usage
+
 ```bash
-npx reqt <command> <args>
+npx reqt [command] [options]
 ```
 
-> NOTE: Both `reqtext` and `reqt` are valid, but `reqt` is shorter and more convenient.
+#### Common Commands
+
+```bash
+npx reqt init <Your Project>   # Initialize a new reqt project
+npx reqt editor                # Launch the interactive tree editor
+npx reqt -a <Item Name>        # Add new item
+```
+
+> ✅ Both `reqtext` and `reqt` are valid commands. For convenience, `reqt` is the preferred shorthand throughout this guide.
+
+---
 
 ## Terminal Editor
 
-The terminal editor is meant to be your starting point. It quickly allows you to create and modify your reqt item's order and hierarchy. Once your reqt items are in place, you can use `reqt` commands to modify any individual item.
+The terminal editor provides an interactive tree view to create, navigate, and structure your `.reqt` items. It's the primary interface for building your requirement hierarchy quickly and visually.
 
-### Example Editor View: 
+### Sample Output from `reqt edit`
 
 ```bash
     0: ReqText_Demo - In Dev
@@ -62,16 +74,18 @@ The terminal editor is meant to be your starting point. It quickly allows you to
         │   └── 1.2.1: Design Detail - DESIGN
         └── 1.3: Feature 2 - NEW
 ```
+
+---
+
 ## Terminal Editor Keybindings
 
-- `↑`/`↓`: Navigate requirements
-- `k`: Move selected item up
-- `j`: Move selected item down
-- `→`: Demote selected item to child (indent)
-- `←`: Promote selected item to sibling (outdent)
-- `a`: Add a new item after current selection
-- `d`: Delete the selected item
-- `e`: Edit the selected item's title
-- `r`: Reload data
-- `q` or `Ctrl+C`: Quit and clear the console
-
+| Key            | Action                          |
+| -------------- | ------------------------------- |
+| `↑` / `↓`      | Navigate requirements           |
+| `k` / `j`      | Move item up/down               |
+| `→` / `←`      | Demote/Promote (indent/outdent) |
+| `a`            | Add new item after current      |
+| `d`            | Delete selected item            |
+| `e`            | Edit item title                 |
+| `r`            | Reload data                     |
+| `q` / `Ctrl+C` | Quit and clear console          |
