@@ -40,6 +40,7 @@ function calculateWindow(selectedIndex, totalItems, windowHeight) {
 let lastRenderedLines = [];
 async function renderTree(data, selectedIndex = 0, forceFullClear = false) {
     const { height, width } = getConsoleSize();
+    process.stdout.write('\x1b[?25l'); // Hide cursor at start of render
     if (forceFullClear) {
         process.stdout.write('\x1Bc'); // Full clear
     }
@@ -83,6 +84,8 @@ async function renderTree(data, selectedIndex = 0, forceFullClear = false) {
     process.stdout.write(`\x1b[${height};1H`);
     process.stdout.write('\x1b[2K');
     process.stdout.write(`\x1b[7m${menu}\x1b[0m`);
+    // Move cursor to bottom right (after menu)
+    process.stdout.write(`\x1b[${height};${width}H`);
     // Save last rendered lines
     lastRenderedLines = visibleLines.slice();
 }
@@ -103,6 +106,7 @@ const keyMap = {
         process.stdin.setRawMode(false);
         process.stdin.pause();
         process.stdout.write('\x1Bc'); // Clear console on exit
+        process.stdout.write('\x1b[?25h'); // Show cursor
         process.stdout.write('\nExiting ReqText Editor.\n');
         process.exit(0);
     },
@@ -110,6 +114,7 @@ const keyMap = {
         process.stdin.setRawMode(false);
         process.stdin.pause();
         process.stdout.write('\x1Bc'); // Clear console on exit
+        process.stdout.write('\x1b[?25h'); // Show cursor
         process.stdout.write('\nExiting ReqText Editor.\n');
         process.exit(0);
     },
@@ -302,9 +307,11 @@ export default async function reqtEditor() {
     // Patch enquirer prompts to temporarily remove the key handler
     const patchPrompt = (fn) => async (...args) => {
         process.stdin.removeListener('data', keyHandler);
+        process.stdout.write('\x1b[?25h'); // Show cursor for prompt
         try {
             await fn(...args);
         } finally {
+            process.stdout.write('\x1b[?25l'); // Hide cursor after prompt
             process.stdin.setRawMode(true);
             process.stdin.resume();
             process.stdin.on('data', keyHandler);
