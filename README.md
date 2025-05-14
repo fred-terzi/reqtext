@@ -1,12 +1,35 @@
 # ReqText by Terzi Tech
 
-ReqText is a Git-native, CLI first requirements and documentation framework meant to bring requirement management directly into your workflow. The requirements can be easily created and modified in hierachical trees, but they are stored in a flat, ordered structure. This allows for easy human -and AI- readability. As well as easy version control and diffing.
+**ReqText** is a Git-native, CLI-first requirements and documentation framework that brings requirement management directly into your development workflow. Requirements are edited as hierarchical trees but stored in a flat, ordered structure—making them easy to version, diff, and understand by both humans and AI.
 
-## Docucoding with ReqText
+---
 
-Docucoding in a new to approach code requirements and documentation. The requirements live in your workspace with the same tools used for creating and managing them. 
+## 🧠 Docucoding with ReqText
 
-Docucoding with AI revolutionizes how we interact with it. Rather than crafting a single starting prompt going back and forth; ReqText is a complete requirements and PM framework that your chosen AI can learn and maintain. In the era of AI Agents, ReqText brings the information and structure needed to turn AI from an assistant into a true developer.
+**Docucoding** is a new approach to writing and managing code requirements. With ReqText, your requirements live *in your workspace*, alongside your code, using the same tools.
+
+AI-enhanced docucoding transforms how we work with AI. Instead of writing long prompts and iterating manually, ReqText provides a structured framework your chosen AI can understand and update. In the era of AI agents, ReqText gives them the project context they need to go from helpful assistant to actual team member.
+
+---
+
+## 📄 Introducing `README_AI.reqt`
+
+ReqText naturally centralizes your requirements, documentation, design intent, and project status in a unified format. While this powers your human-readable docs, it’s also instantly usable by AI.
+
+The `README_AI.reqt` file acts as a *living prompt*—a clear, structured file that helps your AI tools understand not just ReqText itself, but the project you're building with it.
+
+---
+
+## 👋 A Note from the Developer
+
+This project is in early demo release because I believe the core functionality and methodology are ready for real-world feedback.
+
+I’m actively working on new features and refinements. Your feedback is invaluable—please [open an issue](https://github.com/terzitech/reqtext/issues) with any bugs, requests, or ideas. Issues always take top priority.
+
+Thank you for checking out ReqText. Happy Docucoding!
+
+— *Joseph Terzi*
+
 
 ## Installation
 
