@@ -11,16 +11,20 @@ async function cleanHandler() {
   // Load items from file
   const items = await fhr.loadData();
   let changed = false;
-  const updatedItems = items.map(item => {
+  const updatedItems = await Promise.all(items.map(async item => {
     let updated = { ...item };
     if (!updated.reqt_ID || typeof updated.reqt_ID !== 'string' || updated.reqt_ID === 'GENERATE_WITH_CLEAN') {
-      updated.reqt_ID = fhr.generateUniqueId();
+      updated.reqt_ID = await fhr.generateUniqueId();
       changed = true;
     }
     return updated;
-  });
+  }));
   if (changed) {
-    await fhr.saveData(updatedItems);
+    fhr.setData(updatedItems); // Set the updated items as cachedData
+    await fhr.saveData();
+    console.log('Clean complete: All items have valid reqt_IDs.');
+  } else {
+    console.log('Clean complete: No changes were necessary. All items already have valid reqt_IDs.');
   }
 
 }
