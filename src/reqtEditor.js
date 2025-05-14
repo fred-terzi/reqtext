@@ -42,7 +42,7 @@ async function renderTree(data, selectedIndex = 0, forceFullClear = false) {
     const { height, width } = getConsoleSize();
     process.stdout.write('\x1b[?25l'); // Hide cursor at start of render
     if (forceFullClear) {
-        process.stdout.write('\x1Bc'); // Full clear
+        process.stdout.write('\x1b[3J\x1b[2J\x1b[H'); // Clear scrollback, screen, and move cursor to top-left
     }
     const tree = await fhr.createAsciiTree(data, ['title', 'status']);
     let lines = Array.isArray(tree) ? tree.map(line => line.slice(0, width)) : [tree.slice(0, width)];
@@ -105,16 +105,18 @@ const keyMap = {
     'q': async (state) => {
         process.stdin.setRawMode(false);
         process.stdin.pause();
-        process.stdout.write('\x1Bc'); // Clear console on exit
+        process.stdout.write('\x1b[?1049l'); // Exit alternate screen buffer
         process.stdout.write('\x1b[?25h'); // Show cursor
+        process.stdout.write('\x1Bc'); // Clear console on exit
         process.stdout.write('\nExiting ReqText Editor.\n');
         process.exit(0);
     },
     '\u0003': async (state) => { // Ctrl+C
         process.stdin.setRawMode(false);
         process.stdin.pause();
-        process.stdout.write('\x1Bc'); // Clear console on exit
+        process.stdout.write('\x1b[?1049l'); // Exit alternate screen buffer
         process.stdout.write('\x1b[?25h'); // Show cursor
+        process.stdout.write('\x1Bc'); // Clear console on exit
         process.stdout.write('\nExiting ReqText Editor.\n');
         process.exit(0);
     },
@@ -288,6 +290,8 @@ async function handleKeypress(key, state) {
 }
 
 export default async function reqtEditor() {
+    // Enter alternate screen buffer
+    process.stdout.write('\x1b[?1049h');
     const state = { data: await loadReqtData(), selectedIndex: 0 };
     let firstRender = true;
     await renderTree(state.data, state.selectedIndex, firstRender);
