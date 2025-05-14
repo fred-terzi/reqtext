@@ -26,7 +26,8 @@ function cleanReqtFile(filePath) {
 
   items = items.map(item => {
     let updated = { ...item };
-    if (!updated.reqt_ID || typeof updated.reqt_ID !== 'string') {
+    // Clean if reqt_ID is missing, not a string, or set to 'GENERATE_WITH_CLEAN'
+    if (!updated.reqt_ID || typeof updated.reqt_ID !== 'string' || updated.reqt_ID === 'GENERATE_WITH_CLEAN') {
       updated.reqt_ID = generateReqtId();
       changed = true;
     }
