@@ -150,37 +150,5 @@
     "status": "INFO",
     "description": "Use the clean command after AI or the user creates an item manually.",
     "reqt_ID": "2025-05-14T19:04:06.466Z-697988ac"
-  },
-  {
-    "title": "Best Practices",
-    "hier": 0,
-    "outline": "3",
-    "status": "INFO",
-    "description": "General best practices for using ReqText and maintaining .reqt projects. Add specific best practices as children of this section.",
-    "reqt_ID": "2025-05-14T20:58:44.100Z-25047ed7"
-  },
-  {
-    "title": "Use the editor for structure changes",
-    "hier": 1,
-    "outline": "3.1",
-    "status": "INFO",
-    "description": "Always use 'npx reqt editor' for adding, moving, or deleting items to keep the project tree consistent.",
-    "reqt_ID": "2025-05-14T21:00:20.447Z-d8641db5"
-  },
-  {
-    "title": "Never manually edit IDs",
-    "hier": 1,
-    "outline": "3.2",
-    "status": "INFO",
-    "description": "Do not manually create or edit reqt_ID or proj_ID fields. Always run 'npx reqt clean' after making manual changes.",
-    "reqt_ID": "2025-05-14T21:00:20.447Z-095816e7"
-  },
-  {
-    "title": "Keep requirements, docs, and comments in sync",
-    "hier": 1,
-    "outline": "3.3",
-    "status": "INFO",
-    "description": "Whenever you update requirements or project structure, review and update related documentation and comments to ensure accuracy.",
-    "reqt_ID": "2025-05-14T21:00:20.447Z-ac0804fa"
   }
 ]
