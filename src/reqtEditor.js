@@ -20,36 +20,71 @@ function getConsoleSize() {
     return { width, height };
 }
 
+// Utility: Calculate window for scrolling
+function calculateWindow(selectedIndex, totalItems, windowHeight) {
+    if (totalItems <= windowHeight) {
+        return { start: 0, end: totalItems };
+    }
+    let half = Math.floor(windowHeight / 2);
+    let start = Math.max(0, selectedIndex - half);
+    let end = start + windowHeight;
+    if (end > totalItems) {
+        end = totalItems;
+        start = Math.max(0, end - windowHeight);
+    }
+    return { start, end };
+}
+
 // Utility: Render tree
-async function renderTree(data, selectedIndex = 0) {
-    process.stdout.write('\x1Bc'); // Clear console
-    const { height } = getConsoleSize();
+// Implements diff-based rendering for minimal flicker
+let lastRenderedLines = [];
+async function renderTree(data, selectedIndex = 0, forceFullClear = false) {
+    const { height, width } = getConsoleSize();
+    if (forceFullClear) {
+        process.stdout.write('\x1Bc'); // Full clear
+    }
     const tree = await fhr.createAsciiTree(data, ['title', 'status']);
-    let linesPrinted = 0;
-    if (Array.isArray(tree)) {
-        tree.forEach((line, idx) => {
-            const { width } = getConsoleSize();
-            const displayLine = line.slice(0, width);
-            if (idx === selectedIndex) {
-                process.stdout.write('\x1b[7m' + displayLine + '\x1b[0m');
-            } else {
-                process.stdout.write(displayLine);
-            }
-            linesPrinted++;
-        });
-    } else {
-        const { width } = getConsoleSize();
-        process.stdout.write(tree.slice(0, width));
-        linesPrinted = 1;
+    let lines = Array.isArray(tree) ? tree.map(line => line.slice(0, width)) : [tree.slice(0, width)];
+    // Calculate window for scrolling
+    const windowHeight = height - 1; // Reserve last line for menu
+    const totalItems = lines.length;
+    const { start, end } = calculateWindow(selectedIndex, totalItems, windowHeight);
+    const visibleLines = lines.slice(start, end);
+    // Highlight the selected item (relative to window)
+    const relSelected = selectedIndex - start;
+    for (let i = 0; i < visibleLines.length; i++) {
+        if (i === relSelected) {
+            visibleLines[i] = '\x1b[7m' + visibleLines[i] + '\x1b[0m';
+        }
     }
-    // Fill blank lines if needed so menu is always at the bottom
-    // Move cursor to last row and print menu (inverted)
+    // Pad lines to fill the screen (except last line for menu)
+    while (visibleLines.length < windowHeight) {
+        visibleLines.push('');
+    }
+    // Prepare menu line
     let menu = "↑↓: nav | →: child | ←: sibling | k: up | j: down | a: add | d: delete | r: reload | q: quit";
-    const { width } = getConsoleSize();
-    if (menu.length > width) {
-        menu = menu.slice(0, width);
+    if (menu.length > width) menu = menu.slice(0, width);
+    // Diff and update only changed lines
+    for (let i = 0; i < visibleLines.length; i++) {
+        const prev = lastRenderedLines[i] || '';
+        const curr = visibleLines[i];
+        if (forceFullClear || prev !== curr) {
+            process.stdout.write(`\x1b[${i + 1};1H`); // Move to line
+            process.stdout.write('\x1b[2K'); // Clear line
+            process.stdout.write(curr);
+        }
     }
-    process.stdout.write(`\x1b[${height};1H\x1b[7m${menu}\x1b[0m`);
+    // Clear any extra lines from previous render
+    for (let i = visibleLines.length; i < lastRenderedLines.length; i++) {
+        process.stdout.write(`\x1b[${i + 1};1H`);
+        process.stdout.write('\x1b[2K');
+    }
+    // Always update menu line
+    process.stdout.write(`\x1b[${height};1H`);
+    process.stdout.write('\x1b[2K');
+    process.stdout.write(`\x1b[7m${menu}\x1b[0m`);
+    // Save last rendered lines
+    lastRenderedLines = visibleLines.slice();
 }
 
 // Utility: Filter printable input and ignore ANSI escape codes
@@ -80,7 +115,7 @@ const keyMap = {
     },
     'r': async (state) => {
         state.data = await loadReqtData();
-        await renderTree(state.data, state.selectedIndex);
+        await renderTree(state.data, state.selectedIndex, true);
     },
     'up': async (state) => {
         state.selectedIndex = Math.max(0, state.selectedIndex - 1);
@@ -105,7 +140,7 @@ const keyMap = {
             state.data = updatedData;
             await fhr.setData(updatedData); // Save the updated data array
             await fhr.saveData(updatedData); // Save the updated data array
-            await renderTree(state.data, state.selectedIndex);
+            await renderTree(state.data, state.selectedIndex, true);
         }
     },
     '\u001b[D': async (state) => { // Left arrow key
@@ -118,16 +153,20 @@ const keyMap = {
             await fhr.setData(updatedData);
             await fhr.saveData(updatedData);
             // After promotion, keep the same index if possible
-            await renderTree(state.data, state.selectedIndex);
+            await renderTree(state.data, state.selectedIndex, true);
         } else {
             process.stdout.write(`\n⚠️  Could not promote item with outline #${selectedItem.outline}. It may already be at the root or not exist.\n`);
-            await renderTree(state.data, state.selectedIndex);
+            await renderTree(state.data, state.selectedIndex, true);
         }
     },
     'a': async (state) => {
         // Use the addAfterHandler to add after the currently selected outline
         const selectedItem = state.data[state.selectedIndex];
         if (!selectedItem) return;
+        // Move cursor to line above menu and clear it
+        const { height } = getConsoleSize();
+        process.stdout.write(`\x1b[${height - 1};1H`);
+        process.stdout.write('\x1b[2K');
         // Use enquirer for prompt
         const prompt = new Input({
             message: 'Enter new item title:',
@@ -139,16 +178,20 @@ const keyMap = {
             state.data = await loadReqtData();
             // Set selectedIndex to the new item's index (after the current)
             state.selectedIndex = Math.min(state.selectedIndex + 1, state.data.length - 1);
-            await renderTree(state.data, state.selectedIndex);
+            await renderTree(state.data, state.selectedIndex, true);
         } catch (err) {
             // If prompt is cancelled, just re-render
-            await renderTree(state.data, state.selectedIndex);
+            await renderTree(state.data, state.selectedIndex, true);
         }
     },
     'd': async (state) => {
         // Delete the currently selected item
         const selectedItem = state.data[state.selectedIndex];
         if (!selectedItem) return;
+        // Move cursor to line above menu and clear it
+        const { height } = getConsoleSize();
+        process.stdout.write(`\x1b[${height - 1};1H`);
+        process.stdout.write('\x1b[2K');
         // Use enquirer for confirmation
         const prompt = new Confirm({
             message: `Delete item: '${selectedItem.title}'?`,
@@ -163,10 +206,10 @@ const keyMap = {
                     state.selectedIndex = Math.max(0, state.data.length - 1);
                 }
             }
-            await renderTree(state.data, state.selectedIndex);
+            await renderTree(state.data, state.selectedIndex, true);
         } catch (err) {
             // If prompt is cancelled, just re-render
-            await renderTree(state.data, state.selectedIndex);
+            await renderTree(state.data, state.selectedIndex, true);
         }
     },
     'k': async (state) => {
@@ -180,9 +223,9 @@ const keyMap = {
             await fhr.saveData(updatedData);
             // Move selection up if possible
             state.selectedIndex = Math.max(0, state.selectedIndex - 1);
-            await renderTree(state.data, state.selectedIndex);
+            await renderTree(state.data, state.selectedIndex, true);
         } else {
-            await renderTree(state.data, state.selectedIndex);
+            await renderTree(state.data, state.selectedIndex, true);
         }
     },
     'j': async (state) => {
@@ -196,16 +239,19 @@ const keyMap = {
             await fhr.saveData(updatedData);
             // Move selection down if possible
             state.selectedIndex = Math.min(state.data.length - 1, state.selectedIndex + 1);
-            await renderTree(state.data, state.selectedIndex);
+            await renderTree(state.data, state.selectedIndex, true);
         } else {
-            await renderTree(state.data, state.selectedIndex);
+            await renderTree(state.data, state.selectedIndex, true);
         }
     },
     'e': async (state) => {
-        process.stdout.write('[DEBUG] e key pressed\n'); // Debug print
         // Edit the title of the currently selected item
         const selectedItem = state.data[state.selectedIndex];
         if (!selectedItem) return;
+        // Move cursor to line above menu and clear it
+        const { height } = getConsoleSize();
+        process.stdout.write(`\x1b[${height - 1};1H`);
+        process.stdout.write('\x1b[2K');
         const prompt = new Input({
             message: `Edit title for '${selectedItem.title}':`,
             initial: selectedItem.title
@@ -216,10 +262,10 @@ const keyMap = {
                 selectedItem.title = newTitle; // Directly update the title
                 await fhr.saveData(state.data);
             }
-            await renderTree(state.data, state.selectedIndex);
+            await renderTree(state.data, state.selectedIndex, true);
         } catch (err) {
             // If prompt is cancelled, just re-render
-            await renderTree(state.data, state.selectedIndex);
+            await renderTree(state.data, state.selectedIndex, true);
         }
     }
 };
