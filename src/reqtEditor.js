@@ -154,12 +154,17 @@ const keyMap = {
         // Make the currently selected item a sibling (promote) using flathier.promote
         const selectedItem = state.data[state.selectedIndex];
         if (!selectedItem) return;
+        const promotedId = selectedItem.reqt_ID;
         const updatedData = await fhr.promote(state.data, selectedItem.outline);
         if (updatedData && updatedData !== state.data) {
             state.data = updatedData;
             await fhr.setData(updatedData);
             await fhr.saveData(updatedData);
-            // After promotion, keep the same index if possible
+            // After promotion, move selection to the promoted item by reqt_ID
+            const newIdx = state.data.findIndex(item => item.reqt_ID === promotedId);
+            if (newIdx !== -1) {
+                state.selectedIndex = newIdx;
+            }
             await renderTree(state.data, state.selectedIndex, true);
         } else {
             process.stdout.write(`\n⚠️  Could not promote item with outline #${selectedItem.outline}. It may already be at the root or not exist.\n`);
