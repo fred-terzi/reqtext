@@ -32,11 +32,11 @@
     "reqt_ID": "2025-05-14T11:43:29.733Z-e881f32b"
   },
   {
-    "title": "NEVER generate a reqt_id or proj_ID manually",
+    "title": "NEVER generate a reqt_id manually",
     "hier": 1,
     "outline": "1.3",
     "status": "INSTRUCTs",
-    "description": "Never generate a reqt_id or proj_ID manually. Always let the system generate it, when generating item directly in the .reqt file use 'RUN npx reqt clean' to generate the reqt_id and proj_ID.",
+    "description": "Never generate a reqt_id manually. Always let the system generate it, when generating item directly in the .reqt file use 'RUN npx reqt clean' to generate the reqt_id.",
     "reqt_ID": "2025-05-14T11:45:16.112Z-864a5810"
   },
   {

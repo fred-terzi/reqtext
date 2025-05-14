@@ -22,7 +22,7 @@ Commands:
     edit_title, -et          Edit the title of an item by outline number
         Usage: reqtext edit_title <outline_number> <new_title>
     clean                    Ensure all items have valid reqt_ID and proj_ID
-        Usage: reqtext clean [file]
+        Usage: reqtext clean
 
 Terminal Editor Keybindings:
     ↑/↓        Navigate requirements

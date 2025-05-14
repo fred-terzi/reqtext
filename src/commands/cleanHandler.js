@@ -3,10 +3,13 @@
 import fhr from '@terzitech/flathier';
 
 /**
- * Cleans an array of reqt items, ensuring each has a valid reqt_ID.
- * Returns { items: updatedItems, changed: boolean }
+ * Cleans a reqt file: loads items, ensures each has a valid reqt_ID, and saves if changed.
+ * @param {string} filePath - Path to the reqt JSON file
+ * @returns {Promise<{changed: boolean, items: array}>}
  */
-function cleanReqtItems(items) {
+async function cleanHandler() {
+  // Load items from file
+  const items = await fhr.loadData();
   let changed = false;
   const updatedItems = items.map(item => {
     let updated = { ...item };
@@ -16,7 +19,10 @@ function cleanReqtItems(items) {
     }
     return updated;
   });
-  return { items: updatedItems, changed };
+  if (changed) {
+    await fhr.saveData(updatedItems);
+  }
+
 }
 
-export default cleanReqtItems;
+export default cleanHandler;
