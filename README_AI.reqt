@@ -54,15 +54,6 @@
     "reqt_ID": "2025-05-14T11:43:52.748Z-ff614f03"
   },
   {
-    "title": "PRINCIPLE; 1 Function in 1 Folder with 1 Test",
-    "hier": 1,
-    "outline": "1.5",
-    "status": "INSTRUCTs",
-    "proj_ID": 18,
-    "description": "Whenever possible only create one function inside a folder. Simple helper functions are allows, but should be marked as such. Each function should have it's own test to ensure it works. And the test needs to be maintained for automated regression testing during future development.\n\n This is a principle, not a rule. If you need to break it, make sure you have a good reason and document it in the reqt.json file.",
-    "reqt_ID": "2025-05-14T16:42:45.614Z-2a6f53cb"
-  },
-  {
     "title": "ALWAYS keep reqt, docs, and comments updated",
     "hier": 1,
     "outline": "1.6",
@@ -95,17 +86,8 @@
     "outline": "2.1",
     "status": "INFO",
     "proj_ID": 19,
-    "description": "The core workflow in ReqText is to use the editor to scaffold and make bulk edits to your project. You can also use single commands to modify specific items in the project tree. All changes are reflected directly in the .reqt.json file, which serves as the single source of truth.",
+    "description": "The first step is to prompt the AI to review the README_AI file and confirm it will follow the instructions. The core workflow in ReqText is to use the editor to scaffold and make bulk edits to your project. You can also use single commands to modify specific items in the project tree. All changes are reflected directly in the .reqt.json file, which serves as the single source of truth.",
     "reqt_ID": "2025-05-14T16:44:44.350Z-7e39c51c"
-  },
-  {
-    "title": "First Prompt",
-    "hier": 2,
-    "outline": "2.1.1",
-    "status": "INFO",
-    "proj_ID": 20,
-    "description": "The first prompt is to ask the AI to review the README_AI file and confirm it will follow the instructions. Ensure when asked how ReqText works to explain the core workflow.",
-    "reqt_ID": "2025-05-14T16:48:07.456Z-1acc3494"
   },
   {
     "title": "npx reqt init <project name>",

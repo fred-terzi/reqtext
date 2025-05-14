@@ -313,6 +313,17 @@ export default async function reqtEditor() {
 
     process.stdin.on('data', keyHandler);
 
+    // --- Add resize handler ---
+    // Debounce to avoid excessive rerenders
+    let resizeTimeout = null;
+    const resizeHandler = () => {
+        if (resizeTimeout) clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+            renderTree(state.data, state.selectedIndex, true);
+        }, 50);
+    };
+    process.stdout.on('resize', resizeHandler);
+
     // Patch enquirer prompts to temporarily remove the key handler
     const patchPrompt = (fn) => async (...args) => {
         process.stdin.removeListener('data', keyHandler);
@@ -331,4 +342,12 @@ export default async function reqtEditor() {
     keyMap['a'] = patchPrompt(keyMap['a']);
     keyMap['d'] = patchPrompt(keyMap['d']);
     keyMap['e'] = patchPrompt(keyMap['e']);
+
+    // --- Clean up resize handler on exit ---
+    const cleanup = () => {
+        process.stdout.off('resize', resizeHandler);
+    };
+    process.on('exit', cleanup);
+    process.on('SIGINT', cleanup);
+    process.on('SIGTERM', cleanup);
 }
