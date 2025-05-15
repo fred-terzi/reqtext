@@ -4,6 +4,8 @@ Design Reqs:
 
 ALWAYS USE ES MODULES, never require.
 
+ALWAYS USE .sh for test scripts for the CLI.
+
 ## High Level 
 
 Needs to be human readable and easy to understand.
