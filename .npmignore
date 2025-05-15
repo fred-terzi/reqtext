@@ -1,3 +1,5 @@
 .git
 .reqt
 node_modules
+tests
+codeReviews
