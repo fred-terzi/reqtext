@@ -30,7 +30,7 @@ If you already have Node.js installed and use an AI Agent with terminal access t
 
 ### 1. Install ReqText
 ```bash
-npx reqt init my-app
+npm install @terzitech/reqtext
 ```
 
 ### 2. Add `README_AI.reqt` as AI Context and Prompt the AI
