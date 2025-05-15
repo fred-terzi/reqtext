@@ -40,9 +40,17 @@
     "reqt_ID": "2025-05-14T11:45:16.112Z-864a5810"
   },
   {
-    "title": "NEVER mark an item PASS without approval",
+    "title": "NEVER Delete a req_id mark in the markdown files",
     "hier": 1,
     "outline": "1.4",
+    "status": "NEW",
+    "description": "In the reqt.md never delete a reqt_id comment mark. This is essential for the system to track changes and maintain the integrity of the project and to save the changes in the .reqt.md to the reqt.json",
+    "reqt_ID": "2025-05-15T03:33:49.818Z-411ea201-reqt"
+  },
+  {
+    "title": "NEVER mark an item PASS without approval",
+    "hier": 1,
+    "outline": "1.5",
     "status": "INSTRUCTs",
     "description": "The .reqt.json file has a status field. Never mark it as pass, or any other status marking it complete without approval",
     "reqt_ID": "2025-05-14T11:43:52.748Z-ff614f03"

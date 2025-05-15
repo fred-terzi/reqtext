@@ -1,6 +1,1 @@
 node_modules
-# ignore .reqt folder
-.reqt
-
-# ignore .reqt.json files
-*.reqt.json
