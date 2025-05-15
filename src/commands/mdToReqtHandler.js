@@ -4,6 +4,7 @@
 
 import fs from 'fs';
 import path from 'path';
+import enquirer from 'enquirer';
 import { getCurrentReqtFilePath } from '../utils/getCurrentReqtFilePath.js';
 
 function parseHeader(headerLine) {
@@ -21,7 +22,17 @@ function parseHeader(headerLine) {
     return { hier, outline, title };
 }
 
-function mdToReqt() {
+async function promptOverwrite(filePath) {
+    const { confirm } = await enquirer.prompt({
+        type: 'confirm',
+        name: 'confirm',
+        message: `This will overwrite any unsaved change in the reqt.json, Overwrite?`,
+        initial: false
+    });
+    return confirm;
+}
+
+async function mdToReqt() {
     // 1. Get md file path (same as current reqt, but .md)
     const reqtFilePath = getCurrentReqtFilePath();
     const reqtName = path.basename(reqtFilePath, path.extname(reqtFilePath));
@@ -69,9 +80,17 @@ function mdToReqt() {
             });
         }
     }
-    // 3. Write to .json file
+    // 3. Prompt before overwriting if file exists
+    if (fs.existsSync(jsonFilePath)) {
+        const ok = await promptOverwrite(jsonFilePath);
+        if (!ok) {
+            console.log('Aborted. No changes made.');
+            return;
+        }
+    }
+    // 4. Write to .json file
     fs.writeFileSync(jsonFilePath, JSON.stringify(items, null, 2), 'utf-8');
-    console.log(`reqt.json file created: ${jsonFilePath}`);
+    console.log(`reqt.json file updated: ${jsonFilePath}`);
 }
 
 export default mdToReqt;

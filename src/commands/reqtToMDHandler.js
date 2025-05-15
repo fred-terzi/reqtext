@@ -4,8 +4,19 @@
 import fs from 'fs';
 import path from 'path';
 import { getCurrentReqtFilePath } from '../utils/getCurrentReqtFilePath.js';
+import enquirer from 'enquirer';
 
-function reqtToMD() {
+async function promptOverwrite(filePath) {
+    const { confirm } = await enquirer.prompt({
+        type: 'confirm',
+        name: 'confirm',
+        message: `This will overwrite any unsaved change in the reqt.md, Overwrite?`,
+        initial: false
+    });
+    return confirm;
+}
+
+async function reqtToMD() {
     // 1. Get reqt file path from utility
     const reqtFilePath = getCurrentReqtFilePath();
     // 2. Read the .reqt file
@@ -13,7 +24,16 @@ function reqtToMD() {
     const reqtName = path.basename(reqtFilePath, path.extname(reqtFilePath));
     const mdFilePath = path.join(path.dirname(reqtFilePath), `${reqtName}.md`);
 
-    // 3. Build Markdown content
+    // 3. Prompt before overwriting if file exists
+    if (fs.existsSync(mdFilePath)) {
+        const ok = await promptOverwrite(mdFilePath);
+        if (!ok) {
+            console.log('Aborted. No changes made.');
+            return;
+        }
+    }
+
+    // 4. Build Markdown content
     let mdContent = '';
     for (const item of reqtData) {
         // Markdown comment with reqt_id
@@ -35,9 +55,9 @@ function reqtToMD() {
         if (item.description) mdContent += `${item.description}\n`;
         mdContent += '\n';
     }
-    // 4. Write to .md file
+    // 5. Write to .md file
     fs.writeFileSync(mdFilePath, mdContent, 'utf-8');
-    console.log(`Markdown file created: ${mdFilePath}`);
+    console.log(`Markdown file generated: ${mdFilePath}`);
 }
 
 export default reqtToMD;
