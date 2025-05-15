@@ -1,3 +1,24 @@
+/**
+ * Initializes a new ReqText project.
+ *
+ * This function implements the logic described in the Mermaid flowchart:
+ *
+ *   1. User runs: npx reqt init <project name>
+ *   2. Checks if arguments are provided. If not, shows usage and exits. (A -> B -> C)
+ *   3. Joins arguments into a project name string. (B -> D)
+ *   4. Checks for existing .reqt.json files in the current directory. (D -> E)
+ *   5. If files exist, prompts the user to confirm creating/switching to a new file. (E -> F)
+ *      - If declined, aborts. (F -> G)
+ *      - If confirmed, continues. (F -> H)
+ *   6. If no files exist, continues. (E -> H)
+ *   7. Calls fhr.init with the project name and type 'reqt'. (H -> I)
+ *   8. Handles success or error. (I -> J/K)
+ *
+ * This ensures only one .reqt.json file per folder and provides user interaction for safe project initialization.
+ *
+ * @param {...string} args - The project name and any additional arguments.
+ * @returns {Promise<void>} Resolves when initialization is complete or aborted.
+ */
 import fhr from '@terzitech/flathier';
 import fs from 'fs';
 import enquirer from 'enquirer';
@@ -35,7 +56,9 @@ export default async function init(...args) {
     }
     // use fhr.init with the argString
     try {
-        await fhr.init(argString, 'reqt', 'reqt');
+        await fhr.init(argString, 'reqt');
+        // 
+
     }
     catch (error) {
         console.error('Initialization failed:', error);

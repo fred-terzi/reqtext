@@ -53,5 +53,18 @@ flowchart TD
 
 Only use node.js for testing. No external libraries. This makes it easier to run tests in any environment especially since the AI can quickly evaluate printed statements with sophicasted testing reports.
 
-
-
+## Init Change Request
+```mermaid
+flowchart TD
+    A[User runs: npx reqt init <project name>] --> B{Arguments Provided?}
+    B -- No --> C[Show usage message and exit]
+    B -- Yes --> D[Join args into project name]
+    D --> E[Check for existing .reqt.json files in cwd]
+    E -- Files exist --> F[Prompt user to confirm switch/create new file]
+    F -- User declines --> G[Abort, no changes made]
+    F -- User confirms --> H[Continue]
+    E -- No files exist --> H
+    H --> I[Call fhr.init with project name and reqt type]
+    I -- Success --> J[Initialization complete]
+    I -- Error --> K[Show error message]
+```
