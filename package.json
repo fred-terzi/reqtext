@@ -4,7 +4,8 @@
   "description": "Reqtext is a Git-native, CLI first requirements and documentation framework meant to bring requirement management directly into your workflow. Human -and AI- readable.",
   "main": "index.js",
   "scripts": {
-    "start": "node bin/index.js"
+    "start": "node bin/index.js",
+    "clean": "sh tests/clean_reqt.sh"
   },
   "repository": {
     "type": "git",
