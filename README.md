@@ -1,3 +1,5 @@
+---
+
 # ReqText by Terzi Tech
 
 **ReqText** is a Git-native, CLI-first requirements and documentation framework that brings requirement management directly into your development workflow. Requirements are edited as hierarchical trees but stored in a flat, ordered structure—making them easy to version, diff, and understand by both humans and AI.
@@ -132,6 +134,28 @@ The terminal editor provides an interactive tree view to create, navigate, and s
 | `q` / `Ctrl+C` | Quit and clear console          |
 
 ---
+
+
+## 🔥New Command: reqtmd
+
+You can now convert a .reqt JSON file to Markdown using:
+
+```
+npx reqt reqtmd 
+```
+This command will create a Markdown file with the same name as the .reqt file, but with a .md extension. The Markdown file will be created in the same directory as the .reqt file.
+
+**Stored Data** vs **Markdown Generated**
+
+
+```
+<!-- reqt_id: 2025-05-15T02:20:36.769Z-f5df13f7-reqt -->
+## 1.1: ReqT Demo Item
+**Status:** NEW
+
+---
+Demo the stored data vs the markdown generated.
+```
 
 ## Learn More
 
