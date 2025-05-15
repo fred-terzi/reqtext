@@ -17,6 +17,11 @@ async function cleanHandler() {
 
   const updatedItems = await Promise.all(items.map(async item => {
     let updated = { ...item };
+    // Ensure reqt_ID field exists and is valid
+    if (!('reqt_ID' in updated) || !updated.reqt_ID || typeof updated.reqt_ID !== 'string' || updated.reqt_ID === 'GENERATE_WITH_CLEAN' || updated.reqt_ID === 'PLACEHOLDER') {
+      updated.reqt_ID = await fhr.generateUniqueId();
+      changed = true;
+    }
     // Find all keys that match the customExt _ID pattern
     for (const key of Object.keys(updated)) {
       const keyUpper = key.toUpperCase();
