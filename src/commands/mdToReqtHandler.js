@@ -33,10 +33,12 @@ async function promptOverwrite(filePath) {
 }
 
 async function mdToReqt() {
-    // 1. Get md file path (same as current reqt, but .md)
+    // 1. Get reqt file path from utility
     const reqtFilePath = getCurrentReqtFilePath();
     const reqtName = path.basename(reqtFilePath, path.extname(reqtFilePath));
-    const mdFilePath = path.join(path.dirname(reqtFilePath), `${reqtName}.md`);
+    // Look for the markdown file in the root directory
+    const workspaceRoot = path.resolve('.');
+    const mdFilePath = path.join(workspaceRoot, `${reqtName}.md`);
     const jsonFilePath = path.join(path.dirname(reqtFilePath), `${reqtName}.json`);
 
     // 2. Read the .md file
