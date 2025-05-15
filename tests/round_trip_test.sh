@@ -19,4 +19,7 @@ node tests/addAfterHandler.unit.test.js
 echo "[5] Running editTitleHandler.integration.sh (edit title command)"
 bash tests/editTitleHandler.integration.sh
 
-echo "[6] Round trip test complete."
+echo "[6] Running makeChildrenHandler.integration.sh (make children command)"
+bash tests/makeChildrenHandler.integration.sh
+
+echo "[7] Round trip test complete."
