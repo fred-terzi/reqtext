@@ -47,8 +47,7 @@ flowchart TD
 
 ## Testing Design
 
-Only use node.js for testing. No external libraries.
-
+Only use node.js for testing. No external libraries. This makes it easier to run tests in any environment especially since the AI can quickly evaluate printed statements with sophicasted testing reports.
 
 
 
