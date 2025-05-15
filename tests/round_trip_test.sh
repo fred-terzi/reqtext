@@ -16,4 +16,7 @@ node tests/addItemHandler.unit.test.js
 echo "[4] Running addAfterHandler.unit.test.js (add item after outline)"
 node tests/addAfterHandler.unit.test.js
 
-echo "[5] Round trip test complete."
+echo "[5] Running editTitleHandler.integration.sh (edit title command)"
+bash tests/editTitleHandler.integration.sh
+
+echo "[6] Round trip test complete."
