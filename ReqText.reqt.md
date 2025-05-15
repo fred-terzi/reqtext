@@ -1,5 +1,9 @@
 # ReqText CLI Architecture
 
+Design Reqs:
+
+ALWAYS USE ES MODULES, never require.
+
 ## High Level 
 
 Needs to be human readable and easy to understand.
