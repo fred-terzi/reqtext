@@ -22,4 +22,7 @@ bash tests/editTitleHandler.integration.sh
 echo "[6] Running makeChildrenHandler.integration.sh (make children command)"
 bash tests/makeChildrenHandler.integration.sh
 
-echo "[7] Round trip test complete."
+echo "[7] Running makeSiblingHandler.integration.sh (make sibling command)"
+bash tests/makeSiblingHandler.integration.sh
+
+echo "[8] Round trip test complete."
