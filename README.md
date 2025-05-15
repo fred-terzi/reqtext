@@ -1,10 +1,10 @@
----
+
 
 # ReqText by Terzi Tech
 
 **ReqText** is a Git-native, CLI-first requirements and documentation framework that brings requirement management directly into your development workflow. Requirements are edited as hierarchical trees but stored in a flat, ordered structure—making them easy to version, diff, and understand by both humans and AI.
 
----
+
 
 ## 🧠 Docucoding with ReqText
 
