@@ -4,7 +4,7 @@
     "hier": 0,
     "outline": "0",
     "status": "0.1.0-demo.6",
-    "description": "DESCRIPTION",
+    "description": "This REAME_AI is only meant for AI. These instructions are meant for AI coding tools. Instrunctions for human developers are in the README.md file and are different than these.",
     "reqt_ID": "2025-05-14T11:42:36.842Z-de419873"
   },
   {
@@ -36,7 +36,7 @@
     "hier": 1,
     "outline": "1.3",
     "status": "INSTRUCTs",
-    "description": "Never generate a reqt_id manually. Always let the system generate it, when generating item directly in the .reqt file use 'RUN npx reqt clean' to generate the reqt_id.",
+    "description": "Never generate a reqt_id manually. Always let the system generate it, when generating item directly in the .reqt file use usage 'npx reqt clean' to generate the reqt_id. This is only required when manually creating items if the AI does it. If the user does it via the editor or direct command the reqt_id will be generated automatically.",
     "reqt_ID": "2025-05-14T11:45:16.112Z-864a5810"
   },
   {
@@ -46,14 +46,6 @@
     "status": "INSTRUCTs",
     "description": "The .reqt.json file has a status field. Never mark it as pass, or any other status marking it complete without approval",
     "reqt_ID": "2025-05-14T11:43:52.748Z-ff614f03"
-  },
-  {
-    "title": "ALWAYS run reqt clean after changes to reqt",
-    "hier": 1,
-    "outline": "1.5",
-    "status": "INSTRUCTs",
-    "description": "Whenever directly changing the .reqt.json file, always run 'npx reqt clean' after to ensure the reqt_id is generated and the file is in a valid state.",
-    "reqt_ID": "2025-05-14T23:44:54.655Z-3f9a62b0-reqt"
   },
   {
     "title": "ALWAYS keep reqt, docs, and comments updated",

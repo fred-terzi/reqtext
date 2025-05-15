@@ -63,7 +63,7 @@ async function renderTree(data, selectedIndex = 0, forceFullClear = false) {
         visibleLines.push('');
     }
     // Prepare menu line
-    let menu = "↑↓: nav | →: child | ←: sibling | k: up | j: down | a: add | d: delete | r: reload | q: quit";
+    let menu = "↑↓: nav | a: add | e: edit title | →: Demote | ←: Promote | k: item up | j: item down | d: delete | r: reload | q: quit";
     if (menu.length > width) menu = menu.slice(0, width);
     // Diff and update only changed lines
     for (let i = 0; i < visibleLines.length; i++) {
