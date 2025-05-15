@@ -22,7 +22,9 @@ async function reqtToMD() {
     // 2. Read the .reqt file
     const reqtData = JSON.parse(fs.readFileSync(reqtFilePath, 'utf-8'));
     const reqtName = path.basename(reqtFilePath, path.extname(reqtFilePath));
-    const mdFilePath = path.join(path.dirname(reqtFilePath), `${reqtName}.md`);
+    // Write the markdown file to the root of the workspace
+    const workspaceRoot = path.resolve('.');
+    const mdFilePath = path.join(workspaceRoot, `${reqtName}.md`);
 
     // 3. Prompt before overwriting if file exists
     if (fs.existsSync(mdFilePath)) {
