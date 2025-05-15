@@ -29,15 +29,19 @@ ReqText turns your codebase into a living, teachable system—ready for instant 
 If you already have Node.js installed and use an AI Agent with terminal access try this: 
 
 ### 1. Install ReqText
-<pre> ```bash npx reqt init my-app ``` </pre>
+```bash
+npx reqt init my-app
+```
 
 ### 2. Add `README_AI.reqt` as AI Context and Prompt the AI
-<pre> bash
+```bash
 Read this and follow ReqText Docucoding instructions.
-```</pre>
+```
 
 ### 3. Start Docucoding
-<pre> ```bash Create a new ReqText project and teach me how to use it. ```</pre>
+```bash
+Create a new ReqText project and teach me how to use it.
+```
 
 >  **A Note from Joe:** I've had great success with this approach using VS Code and Github Copilot. I have not yet been able to try with other AI integrated IDEs, I can't wait to see what you all come up with!
 
