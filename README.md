@@ -136,9 +136,9 @@ The terminal editor provides an interactive tree view to create, navigate, and s
 ---
 
 
-## 🔥New Command: reqtmd
+## 🔥New Command: reqtmd and mdreqt
 
-You can now convert a .reqt JSON file to Markdown using:
+You can now convert a .reqt.json and .reqt.md file over to your .reqt.json! The CLI will prompt if you have want to overwrite the file or not but you have the freedom to edit from the CLI, from the markdown or have your AI agent edit the json. Future features for diffs and merging are on the way!
 
 ```
 npx reqt reqtmd 
