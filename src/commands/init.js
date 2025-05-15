@@ -61,7 +61,7 @@ export default async function init(...args) {
     }
     // use fhr.init with the argString
     try {
-        await fhr.init(argString, 'reqt');
+        await fhr.init(argString, '.reqt');
         // 
 
     }
