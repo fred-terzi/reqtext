@@ -24,7 +24,7 @@ ReqText turns your codebase into a living, teachable system—ready for instant 
 
 ---
 
-## Quick Start for npm and AI Coders
+## 🚀 Quick Start for npm and AI Coders
 
 If you already have Node.js installed and use an AI Agent with terminal access try this: 
 
