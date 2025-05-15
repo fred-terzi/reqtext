@@ -16,21 +16,21 @@ function reqtToMD() {
     // 3. Build Markdown content
     let mdContent = '';
     for (const item of reqtData) {
-        // Exclude items with hier values not 0 or 1
-        if (item.hier !== 0 && item.hier !== '0' && item.hier !== 1 && item.hier !== '1') continue;
         // Markdown comment with reqt_id
         mdContent += `<!-- reqt_id: ${item.reqt_ID} -->\n`;
-        // Header level
-        let header = '#';
-        if (item.hier === 0 || item.hier === '0') header = '#';
-        else if (item.hier === 1 || item.hier === '1') header = '##';
-        else header = '###';
+        // Header level logic per requirements
+        let header = '';
+        if ((item.hier === 0 || item.hier === '0') && (item.outline === 0 || item.outline === '0')) {
+            header = '#'; // Project root
+        } else if (item.hier === 0 || item.hier === '0') {
+            header = '##'; // Other hier=0
+        } else {
+            header = '###'; // All other hier levels
+        }
         // Outline number and title
         mdContent += `${header} ${item.outline}: ${item.title}\n`;
         // Status bolded
         if (item.status) mdContent += `**Status:** ${item.status}\n\n`;
-        // Add a horizontal rule after status
-        mdContent += `---\n`;
         // Description
         if (item.description) mdContent += `${item.description}\n`;
         mdContent += '\n';
