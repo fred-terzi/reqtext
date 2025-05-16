@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node bin/index.js",
-    "clean": "sh tests/clean_reqt.sh"
+    "clean": "sh tests/clean_reqt.sh",
+    "parser": "node src/reqtParsers/reqtToMarkdown.mjs src/reqtParsers/template.reqt.json"
   },
   "repository": {
     "type": "git",
