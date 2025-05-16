@@ -1,12 +1,10 @@
 [
   {
-    "title": "Markdown_Syntax_Design",
+    "title": "makesiblingtest",
     "hier": "0",
     "outline": "0",
     "status": "NEW",
-    "requirement": "REQUIREMENT",
-    "acceptance": "ACCEPTANCE",
-    "details": "DETAILS",
+    "description": "PLACEHOLDER",
     "test_exists": false,
     "test_passed": false,
     "reqt_ID": "PLACEHOLDER"
@@ -16,9 +14,7 @@
     "hier": "0",
     "outline": "1",
     "status": "NEW",
-    "requirement": "REQUIREMENT",
-    "acceptance": "ACCEPTANCE",
-    "details": "DETAILS",
+    "description": "PLACEHOLDER",
     "test_exists": false,
     "test_passed": false,
     "reqt_ID": "PLACEHOLDER"

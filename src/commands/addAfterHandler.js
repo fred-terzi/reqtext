@@ -1,5 +1,4 @@
 import fhr from "@terzitech/flathier";
-import readline from "readline";
 
 export default async function addAfterHandler(...args) {
     try {

@@ -10,9 +10,7 @@ import makeSiblingHandler from './commands/makeSiblingHandler.js';
 import editTitleHandler from './commands/editTitleHandler.js';
 import reqtEditor from './reqtEditor.js';
 import cleanHandler from './commands/cleanHandler.js';
-import reqtToMD from './commands/reqtToMDHandler.js';
 
-import fhr from '@terzitech/flathier';
 
 let data = [];
 
