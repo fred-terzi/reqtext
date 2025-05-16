@@ -28,26 +28,24 @@ export function parseReqtBlocks(md) {
       requirement: getField('Req', 'Requirement'),
       acceptance: getField('Accept', 'Acceptance'),
       details: getField('Det', 'Details'),
-      status,
-      test_exists,
-      test_passed,
+      // Make extracted table values uneditable from markdown
+    //   status,
+    //   test_exists,
+    //   test_passed,
     };
   }
   return updates;
 }
 
-async function main() {
-  // Get JSON file path from config
-  const jsonPath = getCurrentReqtFilePath();
-  // Derive Markdown file path from JSON file name (replace .json with .md, keep same base name, but in project root)
-  const mdPath = path.resolve(
-    process.cwd(),
-    path.basename(jsonPath, path.extname(jsonPath)) + '.md'
-  );
-  // Read files
+/**
+ * Update a reqt JSON array with data parsed from a Markdown file.
+ * @param {string} jsonPath Path to the reqt JSON file
+ * @param {string} mdPath Path to the Markdown file
+ * @returns {Promise<Array>} The updated JSON array
+ */
+async function updateReqtFromMarkdown(jsonPath, mdPath) {
   const md = await fs.readFile(mdPath, 'utf8');
   const json = JSON.parse(await fs.readFile(jsonPath, 'utf8'));
-  // Parse and update
   const updates = parseReqtBlocks(md);
   for (const item of json) {
     const update = updates[item.reqt_ID];
@@ -55,6 +53,19 @@ async function main() {
       Object.assign(item, update);
     }
   }
+  return json;
 }
 
-main();
+// CLI entry point for direct execution
+if (import.meta && import.meta.url && process.argv[1] === path.resolve(process.argv[1])) {
+  (async () => {
+    const jsonPath = getCurrentReqtFilePath();
+    const mdPath = path.resolve(
+      process.cwd(),
+      path.basename(jsonPath, path.extname(jsonPath)) + '.md'
+    );
+    await updateReqtFromMarkdown(jsonPath, mdPath);
+  })();
+}
+
+export default updateReqtFromMarkdown;
