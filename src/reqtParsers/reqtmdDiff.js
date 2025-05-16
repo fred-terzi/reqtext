@@ -25,12 +25,14 @@ async function main() {
       const mdVal = (mdItem[field] || '').trim();
       if (jsonVal !== mdVal) {
         foundDiff = true;
-        console.log(`${item.outline}: ${item.title}:\nfield: ${field}`);
-        console.log('--- JSON ---');
-        console.log(jsonVal);
-        console.log('--- MD ---');
-        console.log(mdVal);
+        console.log(`\nDiffs in: ${item.outline} - ${item.title}:`);
         console.log('============');
+        console.log(`Field: ${field}\n`);
+        console.log('\n--- JSON ---');
+        console.log(jsonVal);
+        console.log('\n--- MD ---');
+        console.log(mdVal);
+
       }
     }
   }
