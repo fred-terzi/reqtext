@@ -7,7 +7,8 @@ import { getCurrentReqtFilePath } from '../utils/getCurrentReqtFilePath.js';
  * @param {string} md Markdown file contents
  * @returns {Object} Map of reqt_id to extracted fields
  */
-function parseReqtBlocks(md) {
+// Export parseReqtBlocks for reuse in reqtmdDiff.js
+export function parseReqtBlocks(md) {
   const blockRegex = /<!-- reqt_id: (.*?) --start-->([\s\S]*?)<!-- reqt_id: \1 --end-->/g;
   const updates = {};
   let match;
@@ -54,8 +55,6 @@ async function main() {
       Object.assign(item, update);
     }
   }
-  await fs.writeFile(jsonPath, JSON.stringify(json, null, 2), 'utf8');
-  console.log('JSON updated from Markdown!');
 }
 
 main();
