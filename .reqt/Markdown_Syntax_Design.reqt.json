@@ -7,8 +7,8 @@
     "requirement": "REQUIREMENT",
     "acceptance": "ACCEPTANCE",
     "details": "DETAILS",
-    "test_exists": false,
-    "test_passed": false,
+    "test_exists": "false",
+    "test_passed": "false",
     "reqt_ID": "2025-05-16T18:35:39.336Z-f3e09597-.reqt"
   },
   {
@@ -19,8 +19,8 @@
     "requirement": "REQUIREMENT",
     "acceptance": "ACCEPTANCE",
     "details": "DETAILS",
-    "test_exists": false,
-    "test_passed": false,
+    "test_exists": "false",
+    "test_passed": "false",
     "reqt_ID": "2025-05-16T18:35:39.337Z-2a6c0621-.reqt"
   },
   {
@@ -31,8 +31,8 @@
     "requirement": "REQUIREMENT",
     "acceptance": "ACCEPTANCE",
     "details": "DETAILS",
-    "test_exists": false,
-    "test_passed": false,
+    "test_exists": "false",
+    "test_passed": "false",
     "reqt_ID": "2025-05-16T18:36:01.136Z-860ac224-.reqt"
   },
   {
@@ -40,11 +40,11 @@
     "hier": "0",
     "outline": "3",
     "status": "NEW",
-    "requirement": "REQUIREMENT",
+    "requirement": "Test changing requirements",
     "acceptance": "ACCEPTANCE",
-    "details": "DETAILS",
-    "test_exists": false,
-    "test_passed": false,
+    "details": "Teset Changes",
+    "test_exists": "true",
+    "test_passed": "false",
     "reqt_ID": "2025-05-16T18:36:09.628Z-0445c215-.reqt"
   }
 ]

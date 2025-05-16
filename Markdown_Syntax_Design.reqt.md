@@ -101,7 +101,7 @@
     <th>Status</th><th>Test Exists</th><th>Test Passed</th>
   </tr>
   <tr>
-    <td>NEW</td><td>false</td><td>false</td>
+    <td>NEW</td><td>true</td><td>false</td>
   </tr>
 </table>
 <!-- reqt Table Non-Editable-->
@@ -109,7 +109,7 @@
 <!-- reqt_Req_field-->
 **Requirement:**
 
- REQUIREMENT
+ Test changing requirements
 
 <!-- reqt_Accept_field-->
 **Acceptance:**
@@ -119,5 +119,5 @@
 <!-- reqt_Det_field-->
 **Details:**
 
- DETAILS
+ Teset Changes
 <!-- reqt_id: 2025-05-16T18:36:09.628Z-0445c215-.reqt --end-->

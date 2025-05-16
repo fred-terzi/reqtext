@@ -72,11 +72,11 @@ async function main() {
 
   const markdownBlocks = reqts.map(reqtToMarkdown).join('\n\n');
 
-  // Save to file named after the root item's title (first item's title)
+  // Save to file named after the root item's title (first item's title), with .reqt.md extension
   const rootTitle = reqts[0]?.title || 'output';
   // Sanitize filename: remove/replace problematic characters
   const safeTitle = rootTitle.replace(/[^a-zA-Z0-9-_]/g, '_');
-  const outPath = `${safeTitle}.md`;
+  const outPath = `${safeTitle}.reqt.md`;
   await fs.writeFile(outPath, markdownBlocks, 'utf8');
   console.log(`Markdown saved to ${outPath}`);
 }
