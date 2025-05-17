@@ -12,10 +12,6 @@ const { Input, Confirm } = enquirerPkg;
 async function loadReqtData() {
     try {
         const data = await getData();
-        if (!data) {
-            process.stdout.write('No reqt file found.\nRun npx reqt init <project name>.\n');
-            process.exit(1);
-        }
         return data;
     } catch (err) {
         if (err.message === 'NO_CONFIG_REQT' || err.message === 'NO_SOT_FILE') {
@@ -299,6 +295,16 @@ export default async function reqtEditor() {
     process.stdin.resume();
     process.stdin.setEncoding('utf8');
 
+    // --- Clean up resize handler and restore terminal on exit ---
+    const cleanup = () => {
+        process.stdout.write('\x1b[?1049l'); // Exit alternate screen buffer
+        process.stdout.write('\x1b[?25h');   // Show cursor
+        process.stdout.off('resize', resizeHandler);
+    };
+    process.on('exit', cleanup);
+    process.on('SIGINT', () => { cleanup(); process.exit(0); });
+    process.on('SIGTERM', () => { cleanup(); process.exit(0); });
+
     // Handler function reference for removal/restoration
     let keyHandler = async (key) => {
         await handleKeypress(key, state);
@@ -336,11 +342,10 @@ export default async function reqtEditor() {
     keyMap['d'] = patchPrompt(keyMap['d']);
     keyMap['e'] = patchPrompt(keyMap['e']);
 
-    // --- Clean up resize handler on exit ---
-    const cleanup = () => {
-        process.stdout.off('resize', resizeHandler);
-    };
-    process.on('exit', cleanup);
-    process.on('SIGINT', cleanup);
-    process.on('SIGTERM', cleanup);
+    // --- Ensure cleanup is called before any process.exit() in keyMap ---
+    // Patch keyMap quit/exit handlers to call cleanup first
+    const originalQ = keyMap['q'];
+    keyMap['q'] = async (state) => { cleanup(); await originalQ(state); };
+    const originalCtrlC = keyMap['\u0003'];
+    keyMap['\u0003'] = async (state) => { cleanup(); await originalCtrlC(state); };
 }
