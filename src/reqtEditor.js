@@ -15,8 +15,9 @@ async function loadReqtData() {
         return data;
     } catch (err) {
         if (err.message === 'NO_CONFIG_REQT' || err.message === 'NO_SOT_FILE') {
-            process.stdout.write('⚠️  No ReqText project found.\nRun npx reqt init <project name> to initialize a project.\n');
-            process.exit(1);
+            // Just throw a special error, don't print or exit here
+            err.friendly = true;
+            throw err;
         } else {
             throw err;
         }
@@ -52,7 +53,7 @@ async function renderTree(data, selectedIndex = 0, forceFullClear = false) {
     const { height, width } = getConsoleSize();
     process.stdout.write('\x1b[?25l'); // Hide cursor at start of render
     if (forceFullClear) {
-        process.stdout.write('\x1b[3J\x1b[2J\x1b[H'); // Clear scrollback, screen, and move cursor to top-left
+        process.stdout.write('\x1b[2J\x1b[H'); // Only clear visible screen, not scrollback
     }
     const tree = await fhr.createAsciiTree(data, ['title', 'status']);
     let lines = Array.isArray(tree) ? tree.map(line => line.slice(0, width)) : [tree.slice(0, width)];
@@ -284,9 +285,43 @@ async function handleKeypress(key, state) {
 }
 
 export default async function reqtEditor() {
-    // Enter alternate screen buffer
+    // Enter alternate screen buffer FIRST
     process.stdout.write('\x1b[?1049h');
-    const state = { data: await loadReqtData(), selectedIndex: 0 };
+
+    // --- Clean up resize handler and restore terminal on exit ---
+    // Define cleanup BEFORE any try/catch that might use it
+    let resizeTimeout = null;
+    const resizeHandler = () => {
+        if (resizeTimeout) clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+            renderTree(state?.data, state?.selectedIndex, true);
+        }, 50);
+    };
+    const cleanup = () => {
+        process.stdout.write('\x1b[?1049l'); // Exit alternate screen buffer
+        process.stdout.write('\x1b[?25h');   // Show cursor
+        process.stdout.off('resize', resizeHandler);
+        process.stdin.setRawMode(false);
+        process.stdin.pause();
+        process.stdout.write('\n'); // Ensure prompt is on a new line
+    };
+    process.on('exit', cleanup);
+    process.on('SIGINT', () => { cleanup(); process.exit(0); });
+    process.on('SIGTERM', () => { cleanup(); process.exit(0); });
+
+    let state;
+    try {
+        state = { data: await loadReqtData(), selectedIndex: 0 };
+    } catch (err) {
+        cleanup();
+        process.stdout.write('\x1b[E'); // Move cursor to beginning of next line in the main buffer before printing error
+        if (err.friendly) {
+            process.stdout.write('⚠️  No ReqText project found.\nRun npx reqt init <project name> to initialize a project.\n');
+        } else {
+            process.stdout.write('Unexpected error: ' + (err && err.message ? err.message : String(err)) + '\n');
+        }
+        process.exit(1);
+    }
     let firstRender = true;
     await renderTree(state.data, state.selectedIndex, firstRender);
     firstRender = false;
@@ -296,14 +331,14 @@ export default async function reqtEditor() {
     process.stdin.setEncoding('utf8');
 
     // --- Clean up resize handler and restore terminal on exit ---
-    const cleanup = () => {
-        process.stdout.write('\x1b[?1049l'); // Exit alternate screen buffer
-        process.stdout.write('\x1b[?25h');   // Show cursor
-        process.stdout.off('resize', resizeHandler);
-    };
-    process.on('exit', cleanup);
-    process.on('SIGINT', () => { cleanup(); process.exit(0); });
-    process.on('SIGTERM', () => { cleanup(); process.exit(0); });
+    // (Moved cleanup definition above for use in error path)
+    // const cleanup = () => {
+    //     process.stdout.write('\x1b[?1049l'); // Exit alternate screen buffer
+    //     process.stdout.write('\x1b[?25h');   // Show cursor
+    //     process.stdout.off('resize', resizeHandler);
+    //     process.stdin.setRawMode(false);
+    //     process.stdin.pause();
+    // };
 
     // Handler function reference for removal/restoration
     let keyHandler = async (key) => {
@@ -314,14 +349,14 @@ export default async function reqtEditor() {
 
     // --- Add resize handler ---
     // Debounce to avoid excessive rerenders
-    let resizeTimeout = null;
-    const resizeHandler = () => {
-        if (resizeTimeout) clearTimeout(resizeTimeout);
-        resizeTimeout = setTimeout(() => {
-            renderTree(state.data, state.selectedIndex, true);
-        }, 50);
-    };
-    process.stdout.on('resize', resizeHandler);
+    // let resizeTimeout = null;
+    // const resizeHandler = () => {
+    //     if (resizeTimeout) clearTimeout(resizeTimeout);
+    //     resizeTimeout = setTimeout(() => {
+    //         renderTree(state.data, state.selectedIndex, true);
+    //     }, 50);
+    // };
+    // process.stdout.on('resize', resizeHandler);
 
     // Patch enquirer prompts to temporarily remove the key handler
     const patchPrompt = (fn) => async (...args) => {
