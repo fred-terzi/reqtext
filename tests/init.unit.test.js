@@ -87,9 +87,20 @@ async function testInitCreatesAllFiles() {
         passed = false;
     } else {
         const sot = JSON.parse(fs.readFileSync(sotPath, 'utf8'));
-        if (!Array.isArray(sot) || sot.length !== 0) {
-            console.error('SoT file is not an empty array');
+        // Expect the SoT file to contain a single project item with correct fields
+        if (!Array.isArray(sot) || sot.length !== 1) {
+            console.error('SoT file does not contain a single project item');
             passed = false;
+        } else {
+            const item = sot[0];
+            if (!item.title || !item.reqt_ID) {
+                console.error('Project item missing title or reqt_ID');
+                passed = false;
+            }
+            if (item.status !== 'NEW') {
+                console.error('Project item status is not NEW');
+                passed = false;
+            }
         }
     }
     // No cleanup after test
