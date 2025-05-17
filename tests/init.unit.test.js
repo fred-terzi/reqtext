@@ -39,6 +39,69 @@ async function testInitCreatesFields() {
     cleanFiles(testName);
 }
 
+// Additional test for new init logic (projectTitle as SoT file, config, template)
+async function testInitCreatesAllFiles() {
+    const testName = 'TestProject';
+    const cwd = process.cwd();
+    const reqtDir = path.join(cwd, '.reqt');
+    const configPath = path.join(reqtDir, 'config.reqt.json');
+    const templatePath = path.join(reqtDir, 'itemTemplate.reqt.json');
+    const sotFileName = `${testName}.reqt.json`;
+    const sotPath = path.join(reqtDir, sotFileName);
+
+    // Clean up before test
+    if (fs.existsSync(configPath)) fs.unlinkSync(configPath);
+    if (fs.existsSync(templatePath)) fs.unlinkSync(templatePath);
+    if (fs.existsSync(sotPath)) fs.unlinkSync(sotPath);
+    if (fs.existsSync(reqtDir)) fs.rmdirSync(reqtDir, { recursive: true });
+
+    // Mock prompt to always confirm overwrite
+    const mockPrompt = async () => ({ overwrite: true });
+    await init(testName, mockPrompt);
+
+    let passed = true;
+    if (!fs.existsSync(reqtDir)) {
+        console.error('.reqt directory not created');
+        passed = false;
+    }
+    if (!fs.existsSync(configPath)) {
+        console.error('config.reqt.json not created');
+        passed = false;
+    } else {
+        const config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+        if (config.projectTitle !== testName) {
+            console.error('projectTitle not set correctly in config');
+            passed = false;
+        }
+        if (config.sotPath !== `./.reqt/${sotFileName}`) {
+            console.error('sotPath not set correctly in config');
+            passed = false;
+        }
+    }
+    if (!fs.existsSync(templatePath)) {
+        console.error('itemTemplate.reqt.json not created');
+        passed = false;
+    }
+    if (!fs.existsSync(sotPath)) {
+        console.error('SoT file not created');
+        passed = false;
+    } else {
+        const sot = JSON.parse(fs.readFileSync(sotPath, 'utf8'));
+        if (!Array.isArray(sot) || sot.length !== 0) {
+            console.error('SoT file is not an empty array');
+            passed = false;
+        }
+    }
+    // No cleanup after test
+    if (passed) {
+        console.log('PASS: init creates all required files and sets config fields correctly');
+    } else {
+        console.error('FAIL: init did not create all required files or set config fields');
+        process.exit(1);
+    }
+}
+
 (async () => {
     await testInitCreatesFields();
+    await testInitCreatesAllFiles();
 })();

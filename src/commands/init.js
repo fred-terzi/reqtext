@@ -19,53 +19,79 @@
  * @param {...string} args - The project name and any additional arguments.
  * @returns {Promise<void>} Resolves when initialization is complete or aborted.
  */
-import fhr from '@terzitech/flathier';
 import fs from 'fs';
 import enquirer from 'enquirer';
+import path from 'path';
 const { prompt } = enquirer;
 
 export default async function init(...args) {
-    // Support dependency injection for promptFn (for testability)
     let promptFn = prompt;
     if (args.length && typeof args[args.length - 1] === 'function') {
         promptFn = args.pop();
     }
-    // If no arguments are provided, show a a usage message
     if (args.length === 0) {
         console.log("Usage: npx reqt init <project name>");
         return;
     }
-    // Join all arguments into a single string
     const argString = args.join('_');
-    // Check for existing .reqt.json files in the current directory
     const cwd = process.cwd();
-    const files = fs.readdirSync(cwd);
-    const reqtFiles = files.filter(f => f.endsWith('.reqt.json'));
-    let shouldContinue = true;
-    if (reqtFiles.length > 0) {
-        // Warn if any .reqt.json file exists, not just the target name
-        const message = reqtFiles.length === 1
-            ? `A ReqText project file ('${reqtFiles[0]}') already exists. Do you want to create and switch to '${argString}.reqt.json'?`
-            : `ReqText project files (${reqtFiles.join(', ')}) already exist. Do you want to create and switch to '${argString}.reqt.json'?`;
+    const reqtDir = path.join(cwd, '.reqt');
+    const configPath = path.join(reqtDir, 'config.reqt.json');
+    const templatePath = path.join(reqtDir, 'itemTemplate.reqt.json');
+    // Use all arguments joined as the project title (preserve spaces)
+    const projectTitle = args.join(' ');
+    const safeTitle = projectTitle.replace(/[^a-zA-Z0-9-_]/g, '_');
+    const sotFileName = `${safeTitle}.reqt.json`;
+    const sotPath = path.join(reqtDir, sotFileName);
+
+    // Check for existing .reqt directory and prompt before overwriting anything inside
+    if (fs.existsSync(reqtDir)) {
         const response = await promptFn({
             type: 'confirm',
-            name: 'switch',
-            message,
+            name: 'overwrite',
+            message: '⚠️ .reqt directory already exists. Overwrite all reqt project files in this folder?',
             initial: false
         });
-        shouldContinue = response.switch;
-        if (!shouldContinue) {
+        if (!response.overwrite) {
             console.log('Aborted. No changes made.');
             return;
+        } else {
+            // Remove the entire .reqt directory and its contents
+            fs.rmSync(reqtDir, { recursive: true, force: true });
+            fs.mkdirSync(reqtDir);
+            console.log('Overwrote .reqt directory and all contents.');
         }
+    } else {
+        fs.mkdirSync(reqtDir);
+        console.log(`Created .reqt directory in ${cwd}`);
     }
-    // use fhr.init with the argString
-    try {
-        await fhr.init(argString, '.reqt');
-        // 
 
-    }
-    catch (error) {
-        console.error('Initialization failed:', error);
-    }
+    // Write config.reqt.json
+    const config = {
+        projectTitle: projectTitle,
+        sotPath: `./.reqt/${sotFileName}`,
+        templatePath: './.reqt/itemTemplate.reqt.json'
+    };
+    fs.writeFileSync(configPath, JSON.stringify(config, null, 2));
+    console.log('Created config.reqt.json');
+
+    // Write itemTemplate.reqt.json (basic template)
+    const itemTemplate = {
+        reqt_ID: "TEMPLATE_ID",
+        title: "Template Title",
+        requirement: "",
+        acceptance: "",
+        details: "",
+        status: "",
+        test_exists: false,
+        test_passed: false
+    };
+    fs.writeFileSync(templatePath, JSON.stringify(itemTemplate, null, 2));
+    console.log('Created itemTemplate.reqt.json');
+
+    // Write ProjectSOT.reqt.json (empty array for new project)
+    fs.writeFileSync(sotPath, JSON.stringify([], null, 2));
+    console.log(`Created ${sotFileName}`);
+
+    console.log('ReqText project initialized successfully in .reqt');
 }
