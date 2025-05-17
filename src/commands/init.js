@@ -80,6 +80,8 @@ export default async function init(...args) {
     // Write itemTemplate.reqt.json (basic template)
     const itemTemplate = {
         reqt_ID: "reqt_ID",
+        hier: 0,
+        outline: "OUTLINE",
         title: "TITLE",
         requirement: "REQUIREMENT",
         acceptance: "ACCEPTANCE",
@@ -94,6 +96,8 @@ export default async function init(...args) {
     // Insert itemTemplate into the sot file for the project item
     const sotTemplate = {
         reqt_ID: await fhr.generateUniqueId(),
+        hier: 0,
+        outline: "0",
         title: safeTitle,
         requirement: "REQUIREMENT",
         acceptance: "ACCEPTANCE",
