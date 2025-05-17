@@ -10,12 +10,21 @@ const { Input, Confirm } = enquirerPkg;
 
 // Utility: Load data
 async function loadReqtData() {
-    const data = await getData();
-    if (!data) {
-        process.stdout.write('No reqt file found.\nRun npx reqt init <project name>.\n');
-        process.exit(1);
+    try {
+        const data = await getData();
+        if (!data) {
+            process.stdout.write('No reqt file found.\nRun npx reqt init <project name>.\n');
+            process.exit(1);
+        }
+        return data;
+    } catch (err) {
+        if (err.message === 'NO_CONFIG_REQT' || err.message === 'NO_SOT_FILE') {
+            process.stdout.write('⚠️  No ReqText project found.\nRun npx reqt init <project name> to initialize a project.\n');
+            process.exit(1);
+        } else {
+            throw err;
+        }
     }
-    return data;
 }
 
 // Utility: Get console size
