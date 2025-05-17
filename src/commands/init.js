@@ -53,17 +53,17 @@ export default async function init(...args) {
             initial: false
         });
         if (!response.overwrite) {
-            console.log('Aborted. No changes made.');
+            console.log('❌ Aborted. No changes made.');
             return;
         } else {
             // Remove the entire .reqt directory and its contents
             fs.rmSync(reqtDir, { recursive: true, force: true });
             fs.mkdirSync(reqtDir);
-            console.log('Overwrote .reqt directory and all contents.');
+            console.log('✅ Overwrote .reqt directory and all contents.');
         }
     } else {
         fs.mkdirSync(reqtDir);
-        console.log(`Created .reqt directory in ${cwd}`);
+        console.log(`✅ Created .reqt directory in ${cwd}`);
     }
 
     // Write config.reqt.json
@@ -73,7 +73,7 @@ export default async function init(...args) {
         templatePath: './.reqt/itemTemplate.reqt.json'
     };
     fs.writeFileSync(configPath, JSON.stringify(config, null, 2));
-    console.log('Created config.reqt.json');
+    console.log('✅ Created config.reqt.json');
 
     // Write itemTemplate.reqt.json (basic template)
     const itemTemplate = {
@@ -87,11 +87,11 @@ export default async function init(...args) {
         test_passed: false
     };
     fs.writeFileSync(templatePath, JSON.stringify(itemTemplate, null, 2));
-    console.log('Created itemTemplate.reqt.json');
+    console.log('✅ Created itemTemplate.reqt.json');
 
     // Write ProjectSOT.reqt.json (empty array for new project)
     fs.writeFileSync(sotPath, JSON.stringify([], null, 2));
-    console.log(`Created ${sotFileName}`);
+    console.log(`✅ Created ${sotFileName}`);
 
-    console.log('ReqText project initialized successfully in .reqt');
+    console.log('✅ ReqText project initialized successfully in .reqt');
 }

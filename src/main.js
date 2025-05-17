@@ -1,4 +1,3 @@
-import readline from 'node:readline';
 import help from './commands/help.js';
 import getVersion from './utils/getVersion.js';
 import addItemHandler from './commands/addItemHandler.js';
@@ -14,18 +13,6 @@ import cleanHandler from './commands/cleanHandler.js';
 
 let data = [];
 
-async function promptUser(question) {
-  return new Promise((resolve) => {
-    const rl = readline.createInterface({
-      input: process.stdin,
-      output: process.stdout
-    });
-    rl.question(question, (answer) => {
-      rl.close();
-      resolve(answer);
-    });
-  });
-}
 
 async function versionCommand() {
   // Get the version from package.json using es modules
@@ -40,26 +27,20 @@ async function versionCommand() {
 const commandMap = {
   // Version command
   version: versionCommand,
-  '--version': versionCommand,
-  '-v': versionCommand,
 
   // Help command
   help: help,
-  '--help': help,
-  '-h': help,
 
   init: async (...args) => {
-  await init(...args);
+    await init(...args);
   },
 
   editor: async (...args) => {
     await reqtEditor(...args);
   },
+  
   // Add item commands
   add_item: async (...args) => {
-    await addItemHandler(...args);
-  },
-  '-a': async (...args) => {
     await addItemHandler(...args);
   },
 
@@ -67,15 +48,9 @@ const commandMap = {
   add_after: async (...args) => {
     await addAfterHandler(...args);
   },
-  '-aa': async (...args) => {
-    await addAfterHandler(...args);
-  },
 
   // Delete commands
   delete: async (...args) => {
-    await deleteHandler(...args);
-  },
-  '-d': async (...args) => {
     await deleteHandler(...args);
   },
 
@@ -83,23 +58,14 @@ const commandMap = {
   make_children: async (...args) => {
     await makeChildrenHandler(...args);
   },
-  '-mc': async (...args) => {
-    await makeChildrenHandler(...args);
-  },
 
   // Make Sibling commands
   make_sibling: async (...args) => {
     await makeSiblingHandler(...args);
   },
-  '-ms': async (...args) => {
-    await makeSiblingHandler(...args);
-  },
 
   // Edit Title command
   edit_title: async (...args) => {
-    await editTitleHandler(...args);
-  },
-  '-et': async (...args) => {
     await editTitleHandler(...args);
   },
 
@@ -108,16 +74,26 @@ const commandMap = {
     await cleanHandler();
   },
 
-  // reqtmd command
-  reqtmd: async (reqtFilePath) => {
-    reqtToMD(reqtFilePath);
-  },
+};
 
+// Command aliases map
+const aliasMap = {
+  '-a': 'add_item',
+  '-aa': 'add_after',
+  '-d': 'delete',
+  '-mc': 'make_children',
+  '-ms': 'make_sibling',
+  '-et': 'edit_title',
+  '--version': 'version',
+  '-v': 'version',
+  '--help': 'help',
+  '-h': 'help',
 };
 
 export default async function mainLoop() {
   const [, , command, ...args] = process.argv;
-  const cmd = commandMap[command];
+  const canonicalCommand = aliasMap[command] || command;
+  const cmd = commandMap[canonicalCommand];
   if (cmd) {
     if (cmd.constructor.name === 'AsyncFunction') {
       await cmd(...args);
