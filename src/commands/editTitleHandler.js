@@ -1,5 +1,5 @@
 // Handler for the edit_title command in reqtext
-import fhr from '@terzitech/flathier';
+import { getData, setData } from '../services/dataHandler.js';
 
 export default async function editTitleHandler(outlineNumber, ...titleParts) {
   if (!outlineNumber || titleParts.length === 0) {
@@ -8,12 +8,18 @@ export default async function editTitleHandler(outlineNumber, ...titleParts) {
   }
   const newTitle = titleParts.join(' ');
   try {
-    // Load data using flathier API
-    const data = await fhr.loadData();
-    // Edit the title
-    fhr.editTitle(data, outlineNumber, newTitle);
-    // Save the updated data
-    await fhr.saveData(data);
+    // Load data using the new data handler
+    const data = await getData();
+    if (!Array.isArray(data)) {
+      throw new Error('Loaded data is not an array');
+    }
+    // Find the item by outline number
+    const idx = data.findIndex(item => item.outline === outlineNumber);
+    if (idx === -1) {
+      throw new Error(`No item found with outline number: ${outlineNumber}`);
+    }
+    data[idx].title = newTitle;
+    await setData(data);
     console.log(`Title for outline ${outlineNumber} updated to: ${newTitle}`);
   } catch (err) {
     console.error('Error editing title:', err.message);
