@@ -1,9 +1,11 @@
 import fhr from "@terzitech/flathier";
+import { getData, setData } from '../services/dataHandler.js';
+import { getItemTemplate } from '../services/itemTemplateService.js';
 
 export default async function addAfterHandler(...args) {
     try {
-        // Load the data
-        const data = await fhr.loadData();
+        // Load the data using the new dataHandler
+        const data = await getData();
         // Check if data is loaded
         if (!data || !Array.isArray(data) || data.length === 0) {
             console.error("❌ No project data loaded.\n Run 'npx reqt init <project name>'");
@@ -73,14 +75,22 @@ export default async function addAfterHandler(...args) {
         } else {
             itemName = stripAnsi(itemName);
         }
+        // Build the new item from the template
+        const template = await getItemTemplate();
+        const reqt_ID = await fhr.generateUniqueId();
+        const newItem = {
+            ...template,
+            reqt_ID,
+            title: itemName
+        };
         // Insert the new item after the specified outline number
-        const updatedData = await fhr.addObject(data, outlineNumber, itemName);
+        const updatedData = await fhr.addObject(data, outlineNumber, newItem);
         if (!updatedData) {
             // addObject prints its own warning if outline not found
             process.exit(1);
         }
-        // Save the updated data
-        await fhr.saveData(updatedData);
+        // Save the updated data using the new dataHandler
+        await setData(updatedData);
         console.log(`✅ Added item '${itemName}' after outline #${outlineNumber}`);
     } catch (err) {
         if (err.message && err.message.includes('Template file not found')) {
