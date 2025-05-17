@@ -1,8 +1,9 @@
 import fhr from "@terzitech/flathier";
+import { getData, setData } from '../services/dataHandler.js';
 
 export default async function makeSiblingHandler(...args) {
-    // Load the data
-    const data = await fhr.loadData();
+    // Load the data using the new data handler
+    const data = await getData();
 
     // Check if data is loaded
     if (!data || !Array.isArray(data) || data.length === 0) {
@@ -27,8 +28,7 @@ export default async function makeSiblingHandler(...args) {
         console.error(`⚠️  Could not promote item with outline #${outlineNumber}. It may already be at the root or not exist.`);
         process.exit(1);
     }
-    // Update in-memory cache before saving
-    fhr.setData(updatedData);
-    await fhr.saveData(updatedData);
+    // Save the updated data using the new data handler
+    await setData(updatedData);
     console.log(`✅ Made item (and its children) with outline #${outlineNumber} a sibling of the previous item.`);
 }
