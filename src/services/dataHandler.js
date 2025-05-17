@@ -1,6 +1,7 @@
 import fs from 'fs/promises';
 import path from 'path';
 
+
 // Helper to get the SoT file path from config
 async function getSoTPath() {
     const configPath = path.resolve(process.cwd(), '.reqt', 'config.reqt.json');

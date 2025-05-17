@@ -22,6 +22,8 @@
 import fs from 'fs';
 import enquirer from 'enquirer';
 import path from 'path';
+import fhr from "@terzitech/flathier";
+
 const { prompt } = enquirer;
 
 export default async function init(...args) {
@@ -77,20 +79,32 @@ export default async function init(...args) {
 
     // Write itemTemplate.reqt.json (basic template)
     const itemTemplate = {
-        reqt_ID: "TEMPLATE_ID",
-        title: "Template Title",
-        requirement: "",
-        acceptance: "",
-        details: "",
-        status: "",
+        reqt_ID: "reqt_ID",
+        title: "TITLE",
+        requirement: "REQUIREMENT",
+        acceptance: "ACCEPTANCE",
+        details: "DETAILS",
+        status: "NEW",
         test_exists: false,
         test_passed: false
     };
     fs.writeFileSync(templatePath, JSON.stringify(itemTemplate, null, 2));
     console.log('✅ Created itemTemplate.reqt.json');
 
-    // Write ProjectSOT.reqt.json (empty array for new project)
-    fs.writeFileSync(sotPath, JSON.stringify([], null, 2));
+    // Insert itemTemplate into the sot file for the project item
+    const sotTemplate = {
+        reqt_ID: await fhr.generateUniqueId(),
+        title: safeTitle,
+        requirement: "REQUIREMENT",
+        acceptance: "ACCEPTANCE",
+        details: "DETAILS",
+        status: "NEW",
+        test_exists: false,
+        test_passed: false
+    };
+
+    // Write ProjectSOT.reqt.json (array with project item)
+    fs.writeFileSync(sotPath, JSON.stringify([sotTemplate], null, 2));
     console.log(`✅ Created ${sotFileName}`);
 
     console.log('✅ ReqText project initialized successfully in .reqt');
