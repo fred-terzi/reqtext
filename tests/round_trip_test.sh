@@ -25,4 +25,7 @@ bash tests/makeChildrenHandler.integration.sh
 echo "[7] Running makeSiblingHandler.integration.sh (make sibling command)"
 bash tests/makeSiblingHandler.integration.sh
 
-echo "[8] Round trip test complete."
+echo "[8] Running deleteHandler.integration.sh (delete item command)"
+bash tests/deleteHandler.integration.sh
+
+echo "[9] Round trip test complete."

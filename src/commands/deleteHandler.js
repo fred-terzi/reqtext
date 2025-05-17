@@ -1,8 +1,9 @@
 import fhr from "@terzitech/flathier";
+import { getData, setData } from '../services/dataHandler.js';
 
 export default async function deleteHandler(...args) {
-    // Load the data
-    const data = await fhr.loadData();
+    // Load the data using the new data handler
+    const data = await getData();
     // Check if data is loaded
     if (!data || !Array.isArray(data) || data.length === 0) {
         console.error("❌ No project data loaded.\n Run 'npx reqt init <project name>'");
@@ -26,7 +27,7 @@ export default async function deleteHandler(...args) {
         // deleteObject should print its own warning if outline not found
         process.exit(1);
     }
-    // Save the updated data
-    await fhr.saveData(updatedData);
+    // Save the updated data using the new data handler
+    await setData(updatedData);
     console.log(`✅ Deleted item with outline #${outlineNumber}`);
 }

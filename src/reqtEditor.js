@@ -1,11 +1,16 @@
 import fhr from '@terzitech/flathier';
 import addAfterHandler from './commands/addAfterHandler.js';
 import enquirerPkg from 'enquirer';
+import { getData, setData } from './services/dataHandler.js';
+import editTitleHandler from './commands/editTitleHandler.js';
+import deleteHandler from './commands/deleteHandler.js';
+import makeChildrenHandler from './commands/makeChildrenHandler.js';
+import makeSiblingHandler from './commands/makeSiblingHandler.js';
 const { Input, Confirm } = enquirerPkg;
 
 // Utility: Load data
 async function loadReqtData() {
-    const data = await fhr.loadData();
+    const data = await getData();
     if (!data) {
         process.stdout.write('No reqt file found.\nRun npx reqt init <project name>.\n');
         process.exit(1);
@@ -136,40 +141,26 @@ const keyMap = {
         await renderTree(state.data, state.selectedIndex);
     },
     '\u001b[C': async (state) => { // Right arrow key
-        // Make the currently selected item a child of the one above it using flathier.demote
-        if (state.selectedIndex <= 0) return; // Can't demote the first item
-        const selectedItem = state.data[state.selectedIndex];
-        const aboveItem = state.data[state.selectedIndex - 1];
-        if (!selectedItem || !aboveItem) return;
-        // Use flathier.demote
-        const updatedData = await fhr.demote(state.data, selectedItem.outline);
-        if (updatedData) {
-            state.data = updatedData;
-            await fhr.setData(updatedData); // Save the updated data array
-            await fhr.saveData(updatedData); // Save the updated data array
-            await renderTree(state.data, state.selectedIndex, true);
-        }
-    },
-    '\u001b[D': async (state) => { // Left arrow key
-        // Make the currently selected item a sibling (promote) using flathier.promote
+        // Demote (make child)
+        if (state.selectedIndex <= 0) return;
         const selectedItem = state.data[state.selectedIndex];
         if (!selectedItem) return;
-        const promotedId = selectedItem.reqt_ID;
-        const updatedData = await fhr.promote(state.data, selectedItem.outline);
-        if (updatedData && updatedData !== state.data) {
-            state.data = updatedData;
-            await fhr.setData(updatedData);
-            await fhr.saveData(updatedData);
-            // After promotion, move selection to the promoted item by reqt_ID
-            const newIdx = state.data.findIndex(item => item.reqt_ID === promotedId);
-            if (newIdx !== -1) {
-                state.selectedIndex = newIdx;
-            }
-            await renderTree(state.data, state.selectedIndex, true);
-        } else {
-            process.stdout.write(`\n⚠️  Could not promote item with outline #${selectedItem.outline}. It may already be at the root or not exist.\n`);
-            await renderTree(state.data, state.selectedIndex, true);
+        await makeChildrenHandler(selectedItem.outline);
+        state.data = await loadReqtData();
+        await renderTree(state.data, state.selectedIndex, true);
+    },
+    '\u001b[D': async (state) => { // Left arrow key
+        // Promote (make sibling)
+        const selectedItem = state.data[state.selectedIndex];
+        if (!selectedItem) return;
+        await makeSiblingHandler(selectedItem.outline);
+        state.data = await loadReqtData();
+        // After promotion, move selection to the promoted item by reqt_ID
+        const newIdx = state.data.findIndex(item => item.reqt_ID === selectedItem.reqt_ID);
+        if (newIdx !== -1) {
+            state.selectedIndex = newIdx;
         }
+        await renderTree(state.data, state.selectedIndex, true);
     },
     'a': async (state) => {
         // Use the addAfterHandler to add after the currently selected outline
@@ -200,11 +191,9 @@ const keyMap = {
         // Delete the currently selected item
         const selectedItem = state.data[state.selectedIndex];
         if (!selectedItem) return;
-        // Move cursor to line above menu and clear it
         const { height } = getConsoleSize();
         process.stdout.write(`\x1b[${height - 1};1H`);
         process.stdout.write('\x1b[2K');
-        // Use enquirer for confirmation
         const prompt = new Confirm({
             message: `Delete item: '${selectedItem.title}'?`,
             initial: false
@@ -212,14 +201,10 @@ const keyMap = {
         try {
             const confirm = await prompt.run();
             if (confirm) {
-                // Use fhr.deleteObject to delete the item and recompute outlines
-                const updatedData = await fhr.deleteObject(state.data, selectedItem.outline);
-                if (updatedData) {
-                    state.data = updatedData;
-                    await fhr.saveData(state.data);
-                    if (state.selectedIndex >= state.data.length) {
-                        state.selectedIndex = Math.max(0, state.data.length - 1);
-                    }
+                await deleteHandler(selectedItem.outline);
+                state.data = await loadReqtData();
+                if (state.selectedIndex >= state.data.length) {
+                    state.selectedIndex = Math.max(0, state.data.length - 1);
                 }
             }
             await renderTree(state.data, state.selectedIndex, true);
@@ -229,15 +214,13 @@ const keyMap = {
         }
     },
     'k': async (state) => {
-        // Move the currently selected item up using flathier.moveUp
+        // Move up (demote sibling logic not implemented in CLI, fallback to flathier for now)
         const selectedItem = state.data[state.selectedIndex];
         if (!selectedItem) return;
         const updatedData = await fhr.moveUp(state.data, selectedItem.outline);
         if (updatedData && updatedData !== state.data) {
-            state.data = updatedData;
-            await fhr.setData(updatedData);
-            await fhr.saveData(updatedData);
-            // Move selection up if possible
+            await setData(updatedData);
+            state.data = await loadReqtData();
             state.selectedIndex = Math.max(0, state.selectedIndex - 1);
             await renderTree(state.data, state.selectedIndex, true);
         } else {
@@ -245,15 +228,13 @@ const keyMap = {
         }
     },
     'j': async (state) => {
-        // Move the currently selected item down using flathier.moveDown
+        // Move down (demote sibling logic not implemented in CLI, fallback to flathier for now)
         const selectedItem = state.data[state.selectedIndex];
         if (!selectedItem) return;
         const updatedData = await fhr.moveDown(state.data, selectedItem.outline);
         if (updatedData && updatedData !== state.data) {
-            state.data = updatedData;
-            await fhr.setData(updatedData);
-            await fhr.saveData(updatedData);
-            // Move selection down if possible
+            await setData(updatedData);
+            state.data = await loadReqtData();
             state.selectedIndex = Math.min(state.data.length - 1, state.selectedIndex + 1);
             await renderTree(state.data, state.selectedIndex, true);
         } else {
@@ -264,7 +245,6 @@ const keyMap = {
         // Edit the title of the currently selected item
         const selectedItem = state.data[state.selectedIndex];
         if (!selectedItem) return;
-        // Move cursor to line above menu and clear it
         const { height } = getConsoleSize();
         process.stdout.write(`\x1b[${height - 1};1H`);
         process.stdout.write('\x1b[2K');
@@ -275,8 +255,8 @@ const keyMap = {
         try {
             const newTitle = (await prompt.run()).trim();
             if (newTitle && newTitle !== selectedItem.title) {
-                selectedItem.title = newTitle; // Directly update the title
-                await fhr.saveData(state.data);
+                await editTitleHandler(selectedItem.outline, newTitle);
+                state.data = await loadReqtData();
             }
             await renderTree(state.data, state.selectedIndex, true);
         } catch (err) {

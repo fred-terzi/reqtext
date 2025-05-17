@@ -19,7 +19,7 @@ cat .reqt/deletehandlertest.reqt.json | jq '.[] | {title: .title, outline: .outl
 
 # 5. Delete the item
 echo "Deleting item..."
-npx reqt -d "2"
+npx reqt -d "1"
 
 # 6. Show items after delete
 echo "Items after delete:"
