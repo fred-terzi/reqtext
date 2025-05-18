@@ -118,8 +118,7 @@ const keyMap = {
         process.stdin.pause();
         process.stdout.write('\x1b[?1049l'); // Exit alternate screen buffer
         process.stdout.write('\x1b[?25h'); // Show cursor
-        process.stdout.write('\x1Bc'); // Clear console on exit
-        process.stdout.write('\nExiting ReqText Editor.\n');
+        console.log('Exiting ReqText Editor'); // Print message in main buffer with extra newlines
         process.exit(0);
     },
     '\u0003': async (state) => { // Ctrl+C
@@ -127,8 +126,7 @@ const keyMap = {
         process.stdin.pause();
         process.stdout.write('\x1b[?1049l'); // Exit alternate screen buffer
         process.stdout.write('\x1b[?25h'); // Show cursor
-        process.stdout.write('\x1Bc'); // Clear console on exit
-        process.stdout.write('\nExiting ReqText Editor.\n');
+        console.log('Exiting ReqText Editor'); // Print message in main buffer with extra newlines
         process.exit(0);
     },
     'r': async (state) => {
@@ -313,14 +311,13 @@ export default async function reqtEditor() {
     try {
         state = { data: await loadReqtData(), selectedIndex: 0 };
     } catch (err) {
-        cleanup();
-        process.stdout.write('\x1b[E'); // Move cursor to beginning of next line in the main buffer before printing error
-        if (err.friendly) {
-            process.stdout.write('⚠️  No ReqText project found.\nRun npx reqt init <project name> to initialize a project.\n');
-        } else {
-            process.stdout.write('Unexpected error: ' + (err && err.message ? err.message : String(err)) + '\n');
-        }
-        process.exit(1);
+        process.stdin.setRawMode(false);
+        process.stdin.pause();
+        process.stdout.write('\x1b[?1049l'); // Exit alternate screen buffer
+        process.stdout.write('\x1b[?25h'); // Show cursor
+        console.log('⚠️  No ReqText project found. Usage: npx reqt init <project name>'); // Print message in main buffer with extra newlines
+        process.exit(0);
+        
     }
     let firstRender = true;
     await renderTree(state.data, state.selectedIndex, firstRender);
