@@ -187,7 +187,7 @@
     "title": "Keypress: e = edit item",
     "requirement": "When the user is in the main tree editor and presses 'e', the item editor opens for the selected item, allowing the user to edit its fields one at a time. The item editor should present each field (title, status, test_exists, test_passed) for editing. After editing or skipping a field, the editor moves to the next field. Pressing 'q' at any time exits the item editor and returns to the main tree editor. Changes are saved immediately after editing a field. The bottom menu should show: [return: save] [esc: skip] [q: quit] while in the item editor.",
     "acceptance": "- Pressing 'e' in the main tree editor opens the item editor for the selected item.\n- The item editor displays each editable field (title, status, test_exists, test_passed) in sequence.\n- The user can edit a field and press return to save, press escape to skip to the next field, or press 'q' to quit the item editor and return to the main tree editor.\n- The main menu options at the bottom of the screen are replaced with the item editor's options while editing.\n- Changes are saved immediately after editing a field.\n- Pressing 'q' at any time exits the item editor and returns to the main tree editor.\n- The bottom menu should show: [return: save] [esc: skip] [q: quit] while in the item editor.",
-    "status": "PASS",
+    "status": "INFO",
     "test_type": "manual",
     "test_exists": true,
     "test_passed": true
