@@ -1,0 +1,12 @@
+{
+  "reqt_ID": "reqt_ID",
+  "hier": 0,
+  "outline": "OUTLINE",
+  "title": "TITLE",
+  "requirement": "REQUIREMENT",
+  "acceptance": "ACCEPTANCE",
+  "details": "DETAILS",
+  "status": "NEW",
+  "test_exists": false,
+  "test_passed": false
+}
