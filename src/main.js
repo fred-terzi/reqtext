@@ -11,6 +11,7 @@ import reqtEditor from './reqtEditor.js';
 import cleanHandler from './commands/cleanHandler.js';
 import setStatusHandler from './commands/setStatusHandler.js';
 import testExistsHandler from './commands/testExistsHandler.js';
+import reqtToMarkdown from './reqtParsers/reqtToMarkdown.mjs';
 
 
 let data = [];
@@ -86,6 +87,14 @@ const commandMap = {
     await testExistsHandler(...args);
   },
 
+  // Out MD command
+  out_md: async (...args) => {
+    await reqtToMarkdown(args[0]);
+  },
+
+  '-omd': async (...args) => {
+    await reqtToMarkdown(args[0]);
+  },
 };
 
 // Command aliases map
@@ -102,6 +111,8 @@ const aliasMap = {
   '-h': 'help',
   '-ss': 'set_status',
   '-te': 'test_exists',
+  'out-md': 'out_md',
+  '-omd': '-omd',
 };
 
 export default async function mainLoop() {

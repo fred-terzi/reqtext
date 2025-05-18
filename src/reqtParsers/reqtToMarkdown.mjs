@@ -21,7 +21,8 @@ function hierToMarkdownHeader(hier, outline) {
  * @param {object} reqt
  * @returns {string}
  */
-function reqtToMarkdown(reqt) {
+// Rename the inner function to avoid redeclaration
+function reqtToMarkdownBlock(reqt) {
   return `<!-- reqt_id: ${reqt.reqt_ID} --start-->
 
 ${hierToMarkdownHeader(reqt.hier, reqt.outline)} ${reqt.outline}: ${reqt.title}
@@ -55,22 +56,22 @@ ${hierToMarkdownHeader(reqt.hier, reqt.outline)} ${reqt.outline}: ${reqt.title}
 }
 
 /**
- * Main function: reads JSON file, outputs Markdown.
+ * Exported async function to convert reqt JSON to Markdown.
+ * @param {string} [inputFile] - Optional path to the input .reqt.json file
  */
-async function main() {
-  let jsonFile = process.argv[2];
+export default async function reqtToMarkdown(inputFile) {
+  let jsonFile = inputFile;
   if (!jsonFile) {
     try {
-      jsonFile = getCurrentReqtFilePath();
+      jsonFile = await getCurrentReqtFilePath();
     } catch (e) {
-      console.error('Usage: node reqtToMarkdown.mjs <input.json>');
-      process.exit(1);
+      throw new Error('Could not determine requirements file.');
     }
   }
   const jsonText = await fs.readFile(jsonFile, 'utf8');
   const reqts = JSON.parse(jsonText);
 
-  const markdownBlocks = reqts.map(reqtToMarkdown).join('\n\n');
+  const markdownBlocks = reqts.map(reqtToMarkdownBlock).join('\n\n');
 
   // Save to file named after the root item's title (first item's title), with .reqt.md extension
   const rootTitle = reqts[0]?.title || 'output';
@@ -81,4 +82,13 @@ async function main() {
   console.log(`Markdown saved to ${outPath}`);
 }
 
-main();
+// If this script is run directly as a CLI command, allow aliases for out-md and -omd
+if (import.meta.url === `file://${process.argv[1]}`) {
+  // Support: node src/reqtParsers/reqtToMarkdown.mjs <input.json>
+  // or: reqt out-md, reqt -omd (via bin/index.js or main.js command router)
+  const arg = process.argv[2];
+  reqtToMarkdown(arg).catch(e => {
+    console.error(e.message || e);
+    process.exit(1);
+  });
+}
