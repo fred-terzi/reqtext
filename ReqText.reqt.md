@@ -27,3 +27,6 @@ flowchart TD
     DataHandler --> mem
 ````
 
+- To edit the fields `requirement`, `acceptance`, or `details`, use the Markdown edit workflow in `ReqText.reqt.md`.
+- The terminal editor (keypress 'e') provides a quick edit menu for `title`, `status`, `test_exists`, and `test_passed` only.
+

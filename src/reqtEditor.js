@@ -74,7 +74,7 @@ async function renderTree(data, selectedIndex = 0, forceFullClear = false) {
         visibleLines.push('');
     }
     // Prepare menu line
-    let menu = "↑↓: nav | a: add | e: edit title | →: Demote | ←: Promote | k: item up | j: item down | d: delete | r: reload | q: quit";
+    let menu = "↑↓: nav | a: add | e: quick edit | →: Demote | ←: Promote | k: item up | j: item down | d: delete | r: reload | q: quit";
     if (menu.length > width) menu = menu.slice(0, width);
     // Diff and update only changed lines
     for (let i = 0; i < visibleLines.length; i++) {
@@ -246,27 +246,88 @@ const keyMap = {
         }
     },
     'e': async (state) => {
-        // Edit the title of the currently selected item
+        // Item Editor: edit only title, status, test_exists, test_passed for the selected item
         const selectedItem = state.data[state.selectedIndex];
         if (!selectedItem) return;
-        const { height } = getConsoleSize();
-        process.stdout.write(`\x1b[${height - 1};1H`);
-        process.stdout.write('\x1b[2K');
-        const prompt = new Input({
-            message: `Edit title for '${selectedItem.title}':`,
-            initial: selectedItem.title
-        });
-        try {
-            const newTitle = (await prompt.run()).trim();
-            if (newTitle && newTitle !== selectedItem.title) {
-                await editTitleHandler(selectedItem.outline, newTitle);
-                state.data = await loadReqtData();
-            }
-            await renderTree(state.data, state.selectedIndex, true);
-        } catch (err) {
-            // If prompt is cancelled, just re-render
-            await renderTree(state.data, state.selectedIndex, true);
+        const editableFields = [
+            { key: 'title', label: 'Title', type: 'input' },
+            { key: 'status', label: 'Status', type: 'input' },
+            { key: 'test_exists', label: 'Test Exists (true/false)', type: 'boolean' },
+            { key: 'test_passed', label: 'Test Passed (true/false)', type: 'boolean' }
+        ];
+        let quit = false;
+        let fieldIdx = 0;
+        const { height, width } = getConsoleSize();
+        // Helper to render the item editor menu
+        function renderItemEditorMenu() {
+            process.stdout.write(`\x1b[${height};1H`);
+            process.stdout.write('\x1b[2K');
+            let menu = '[return: save] [esc: skip] [q: quit]';
+            if (menu.length > width) menu = menu.slice(0, width);
+            process.stdout.write(`\x1b[7m${menu}\x1b[0m`);
+            process.stdout.write('\n'); // Newline after menu options
+            process.stdout.write('\n'); // Newline before the message
+            let msg = 'To edit requirement, acceptance, or details: use the markdown edit workflow.';
+            if (msg.length > width) msg = msg.slice(0, width);
+            process.stdout.write(msg);
+            process.stdout.write('\n');
         }
+        // Helper to prompt for a field
+        async function promptField(field) {
+            // Clear the screen before each prompt
+            process.stdout.write('\x1b[2J\x1b[H');
+            renderItemEditorMenu();
+            let value = selectedItem[field.key];
+            if (field.type === 'boolean') {
+                value = value === true ? 'true' : value === false ? 'false' : '';
+            }
+            const prompt = new Input({
+                message: `Edit ${field.label}:`,
+                initial: value !== undefined && value !== null ? String(value) : ''
+            });
+            // Patch key handling for esc/q
+            let skip = false;
+            let quitEditor = false;
+            prompt.on('keypress', (char, key) => {
+                if (key && key.name === 'escape') {
+                    skip = true;
+                    prompt.cancel();
+                } else if (key && key.name === 'q') {
+                    quitEditor = true;
+                    prompt.cancel();
+                }
+            });
+            try {
+                const result = await prompt.run();
+                if (quitEditor) {
+                    quit = true;
+                    return null;
+                }
+                if (skip) return null;
+                if (field.type === 'boolean') {
+                    if (result.trim().toLowerCase() === 'true') return true;
+                    if (result.trim().toLowerCase() === 'false') return false;
+                    return null;
+                }
+                return result;
+            } catch {
+                if (quitEditor) quit = true;
+                return null;
+            }
+        }
+        // Edit fields in sequence
+        while (fieldIdx < editableFields.length && !quit) {
+            const field = editableFields[fieldIdx];
+            const newValue = await promptField(field);
+            if (quit) break;
+            if (newValue !== null && newValue !== undefined && newValue !== selectedItem[field.key]) {
+                selectedItem[field.key] = newValue;
+                await setData(state.data);
+            }
+            fieldIdx++;
+        }
+        // Restore main menu and re-render tree
+        await renderTree(state.data, state.selectedIndex, true);
     }
 };
 

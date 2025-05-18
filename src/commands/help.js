@@ -19,8 +19,14 @@ Commands:
         Usage: reqtext make_children <outline_number>
     make_sibling, -ms        Promote an item (and its children)
         Usage: reqtext make_sibling <outline_number>
-    edit_title, -et          Edit the title of an item by outline number
+    edit_title, -et          Edit the title, status, test_exists, or test_passed of an item by outline number
         Usage: reqtext edit_title <outline_number> <new_title>
+    set_status               Edit the status of an item by outline number
+        Usage: reqtext set_status <outline_number> <new_status>
+    test_exists              Edit the test_exists field of an item by outline number
+        Usage: reqtext test_exists <outline_number> <true/false>
+    test_passed              Edit the test_passed field of an item by outline number
+        Usage: reqtext test_passed <outline_number> <true/false>
     clean                    Ensure all items have valid reqt_ID and proj_ID
         Usage: reqtext clean
 

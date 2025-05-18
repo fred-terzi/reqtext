@@ -8,12 +8,13 @@
     "reqt_ID": "2025-05-18T03:28:02.338Z-63d1e4f2-.reqt"
   },
   {
-    "title": "AI Instructions",
+    "title": "AI Instructs",
     "hier": 0,
     "outline": "1",
     "requirement": "Instructions Category",
     "status": "INSTRUCTs",
-    "reqt_ID": "2025-05-18T03:28:02.338Z-4d77e6ae-.reqt"
+    "reqt_ID": "2025-05-18T03:28:02.338Z-4d77e6ae-.reqt",
+    "test_exists": true
   },
   {
     "title": "ALWAYS follow reqtext instructions",
@@ -36,7 +37,7 @@
     "hier": 1,
     "outline": "1.3",
     "requirement": "In the reqt.md never delete a reqt_id comment mark. This is essential for the system to track changes and maintain the integrity of the project and to save the changes in the .reqt.md to the reqt.json",
-    "status": "NEW",
+    "status": "INSTRUCTs",
     "reqt_ID": "2025-05-18T03:28:02.338Z-64fc3a9b-.reqt"
   },
   {
@@ -63,7 +64,7 @@
     "requirement": "REQUIREMENT",
     "acceptance": "ACCEPTANCE",
     "details": "DETAILS",
-    "status": "NEW",
+    "status": "INSTRUCTs",
     "test_exists": false,
     "test_passed": false
   },
@@ -184,11 +185,11 @@
     "hier": 1,
     "outline": "3.1",
     "title": "Keypress: e = edit item",
-    "requirement": "When the user is in the main tree editor and presses 'e', the item editor opens for the selected item, allowing the user to edit its fields one at a time.",
-    "acceptance": "- Pressing 'e' in the main tree editor opens the item editor for the selected item.\n- The item editor displays each editable field in sequence.\n- The user can edit a field and press return to save, press escape to skip to the next field, or press 'q' to quit the item editor and return to the main tree editor.\n- The main menu options at the bottom of the screen are replaced with the item editor's options while editing.",
-    "details": "- The item editor should present each field (e.g., title, requirement, acceptance, details, status) for editing.\n- After editing or skipping a field, the editor moves to the next field.\n- Pressing 'q' at any time exits the item editor and returns to the main tree editor.\n- Changes are saved immediately after editing a field.\n- The bottom menu should show: [return: save] [esc: skip] [q: quit] while in the item editor.",
-    "status": "NEW",
-    "test_exists": false,
-    "test_passed": false
+    "requirement": "When the user is in the main tree editor and presses 'e', the item editor opens for the selected item, allowing the user to edit its fields one at a time. The item editor should present each field (title, status, test_exists, test_passed) for editing. After editing or skipping a field, the editor moves to the next field. Pressing 'q' at any time exits the item editor and returns to the main tree editor. Changes are saved immediately after editing a field. The bottom menu should show: [return: save] [esc: skip] [q: quit] while in the item editor.",
+    "acceptance": "- Pressing 'e' in the main tree editor opens the item editor for the selected item.\n- The item editor displays each editable field (title, status, test_exists, test_passed) in sequence.\n- The user can edit a field and press return to save, press escape to skip to the next field, or press 'q' to quit the item editor and return to the main tree editor.\n- The main menu options at the bottom of the screen are replaced with the item editor's options while editing.\n- Changes are saved immediately after editing a field.\n- Pressing 'q' at any time exits the item editor and returns to the main tree editor.\n- The bottom menu should show: [return: save] [esc: skip] [q: quit] while in the item editor.",
+    "status": "PASS",
+    "test_type": "manual",
+    "test_exists": true,
+    "test_passed": true
   }
 ]
