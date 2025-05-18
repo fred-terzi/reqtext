@@ -10,6 +10,7 @@ import editTitleHandler from './commands/editTitleHandler.js';
 import reqtEditor from './reqtEditor.js';
 import cleanHandler from './commands/cleanHandler.js';
 import setStatusHandler from './commands/setStatusHandler.js';
+import testExistsHandler from './commands/testExistsHandler.js';
 
 
 let data = [];
@@ -80,6 +81,11 @@ const commandMap = {
     await setStatusHandler(...args);
   },
 
+  // Test Exists command
+  test_exists: async (...args) => {
+    await testExistsHandler(...args);
+  },
+
 };
 
 // Command aliases map
@@ -95,6 +101,7 @@ const aliasMap = {
   '--help': 'help',
   '-h': 'help',
   '-ss': 'set_status',
+  '-te': 'test_exists',
 };
 
 export default async function mainLoop() {
