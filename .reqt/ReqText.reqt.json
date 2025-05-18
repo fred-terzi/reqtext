@@ -160,9 +160,21 @@
     "test_passed": false
   },
   {
-    "title": "npx reqt clean",
+    "reqt_ID": "2025-05-18T03:40:14.632Z-34e02797-.reqt",
     "hier": 1,
     "outline": "2.10",
+    "title": "reqt test-exists <outline number> true/false",
+    "requirement": "The command 'reqt test-exists <outline number> true/false' must set the test_exists field of the requirement with the given outline number to the boolean value provided by the user.",
+    "acceptance": "When the command is run with a valid outline number and boolean, the corresponding item's test_exists field is updated in the .reqt.json file. If the outline number does not exist, an error is shown.",
+    "details": "- The command takes two arguments: the outline number and a boolean (true/false).\n- The command locates the item in the .reqt.json file with the matching outline number.\n- The item's test_exists field is updated to the new value.\n- The file is saved with the updated test_exists value.\n- If the outline number is not found, the command returns an error message.",
+    "status": "In Dev",
+    "test_exists": false,
+    "test_passed": false
+  },
+  {
+    "title": "npx reqt clean",
+    "hier": 1,
+    "outline": "2.11",
     "requirement": "Use the clean command after AI or the user creates an item manually.",
     "status": "INFO",
     "reqt_ID": "2025-05-18T03:28:02.339Z-db67977f-.reqt"
