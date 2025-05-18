@@ -27,34 +27,3 @@ flowchart TD
     DataHandler --> mem
 ````
 
-# ReqText Init Design
-
-Change from using flathier init to reqtext's own init for creating the templates and sot. 
-
-- User calls `init` from the project root.
-- Create the `.reqt` folder in the root directory (wherever `init` is called).
-    - This ensures all reqtext files are organized and project-local.
-- Create `config.reqt.json` in `.reqt`.
-    - Stores configuration, including the path to the project SoT file (which must be in `.reqt`).
-- Create `itemTemplate.reqt.json` in `.reqt`.
-    - Used as a template for creating new items in the project.
-- Create `[ProjectTitle].reqt.json` in `.reqt`.
-    - This is the Source of Truth (SoT) for the project and must always reside in `.reqt`.
-
-```mermaid
-flowchart LR
-    init([User runs reqtext init])
-    dotreq([.reqt folder created in root])
-    config([config.reqt.json created in .reqt])
-    template([itemTemplate.reqt.json created in .reqt])
-    sot([[ProjectTitle].reqt.json (SoT) created in .reqt])
-
-    init --> dotreq
-    dotreq --> config
-    dotreq --> template
-    dotreq --> sot
-```
-
-
-
-
