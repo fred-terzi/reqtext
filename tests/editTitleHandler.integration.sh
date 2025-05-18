@@ -1,9 +1,6 @@
 #!/bin/bash
 set -e
 
-# Clean up
-rm -rf .reqt/
-
 # 1. Init project
 echo "Initializing project..."
 npx reqt init edittitletest

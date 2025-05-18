@@ -1,5 +1,3 @@
-
-
 # ReqText by Terzi Tech
 
 **ReqText** is a Git-native, CLI-first requirements and documentation framework that brings requirement management directly into your development workflow. Requirements are edited as hierarchical trees but stored in a flat, ordered structure—making them easy to version, diff, and understand by both humans and AI.
@@ -98,6 +96,8 @@ npx reqt -a "New Item"            # Add a new item to the end
 | `make_children`, `-mc`        | Demote an item (and its children)         | `reqt make_children 1.2` |
 | `make_sibling`, `-ms`         | Promote an item (and its children)        | `reqt make_sibling 1.2` |
 | `edit_title`, `-et`           | Edit the title of an item by outline ID   | `reqt edit_title 1.2 "Updated Title"` |
+| `in-md`, `-imd`               | Import changes from a markdown file back into the .reqt.json source of truth, updating only the long-form fields (requirement, acceptance, details) for each item. Use --keep or -k to keep the markdown file after import. | `reqt in-md --keep` |
+| `out-md`, `-omd`             | Export all requirements to a markdown file, including the long-form fields (requirement, acceptance, details) for each item. | `reqt out-md` `|
 
 ---
 
@@ -170,3 +170,22 @@ I’m actively working on new features and refinements. Your feedback is invalua
 Thank you for checking out ReqText. Happy Docucoding!
 
 — *Joseph Terzi*
+
+---
+
+## Markdown Workflow
+
+ReqText supports a markdown-based workflow for editing long-form requirement fields (requirement, acceptance, details) outside the terminal editor.
+
+### Export to Markdown
+- Run `reqt out-md` or `reqt -omd` to export requirements to a markdown file.
+- The markdown file contains all long-form fields for each item, with `reqt_ID` as a comment for tracking.
+- The file is suitable for editing in any markdown editor.
+
+### Import from Markdown
+- Run `reqt in-md` or `reqt -imd` to import changes from the markdown file back into the `.reqt.json` file.
+- Only the long-form fields (requirement, acceptance, details) are updated; other fields are not affected.
+- The markdown file is deleted by default after import, unless you specify `--keep` or `-k`.
+
+
+See `README_AI.reqt` and `ReqText.reqt.md` for more details on the workflow and best practices.

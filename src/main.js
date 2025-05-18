@@ -12,6 +12,7 @@ import cleanHandler from './commands/cleanHandler.js';
 import setStatusHandler from './commands/setStatusHandler.js';
 import testExistsHandler from './commands/testExistsHandler.js';
 import reqtToMarkdown from './reqtParsers/reqtToMarkdown.mjs';
+import { inMdHandler } from './commands/inMdHandler.js';
 
 
 let data = [];
@@ -92,8 +93,24 @@ const commandMap = {
     await reqtToMarkdown(args[0]);
   },
 
-  '-omd': async (...args) => {
-    await reqtToMarkdown(args[0]);
+  // In MD command
+  in_md: async (...args) => {
+    // Support: reqt in-md [--keep|-k] [mdFile]
+    const options = {};
+    for (const arg of args) {
+      if (arg === '--keep' || arg === '-k') options.keep = true;
+      else if (arg.endsWith('.md')) options.mdFile = arg;
+    }
+    await inMdHandler(options);
+  },
+
+  '-imd': async (...args) => {
+    const options = {};
+    for (const arg of args) {
+      if (arg === '--keep' || arg === '-k') options.keep = true;
+      else if (arg.endsWith('.md')) options.mdFile = arg;
+    }
+    await inMdHandler(options);
   },
 };
 
@@ -112,7 +129,8 @@ const aliasMap = {
   '-ss': 'set_status',
   '-te': 'test_exists',
   'out-md': 'out_md',
-  '-omd': '-omd',
+  'in-md': 'in_md',
+  '-imd': '-imd',
 };
 
 export default async function mainLoop() {

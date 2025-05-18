@@ -57,15 +57,18 @@ async function updateReqtFromMarkdown(jsonPath, mdPath) {
 }
 
 // CLI entry point for direct execution
-if (import.meta && import.meta.url && process.argv[1] === path.resolve(process.argv[1])) {
-  (async () => {
-    const jsonPath = getCurrentReqtFilePath();
-    const mdPath = path.resolve(
-      process.cwd(),
-      path.basename(jsonPath, path.extname(jsonPath)) + '.md'
-    );
-    await updateReqtFromMarkdown(jsonPath, mdPath);
-  })();
+// Only run this block if this file is run directly, not when imported
+if (import.meta.url === `file://${process.argv[1]}`) {
+  if (process.argv.length > 2 && process.argv[2].endsWith('.md')) {
+    (async () => {
+      const jsonPath = await getCurrentReqtFilePath();
+      const mdPath = process.argv[2];
+      await updateReqtFromMarkdown(jsonPath, mdPath);
+    })();
+  } else {
+    console.error('No markdown file provided. Usage: node markdownUpdateReqt.js <file.md>');
+    process.exit(1);
+  }
 }
 
 export default updateReqtFromMarkdown;
