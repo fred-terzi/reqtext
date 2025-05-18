@@ -9,6 +9,7 @@ import makeSiblingHandler from './commands/makeSiblingHandler.js';
 import editTitleHandler from './commands/editTitleHandler.js';
 import reqtEditor from './reqtEditor.js';
 import cleanHandler from './commands/cleanHandler.js';
+import setStatusHandler from './commands/setStatusHandler.js';
 
 
 let data = [];
@@ -74,6 +75,11 @@ const commandMap = {
     await cleanHandler();
   },
 
+  // Set Status command
+  set_status: async (...args) => {
+    await setStatusHandler(...args);
+  },
+
 };
 
 // Command aliases map
@@ -88,6 +94,7 @@ const aliasMap = {
   '-v': 'version',
   '--help': 'help',
   '-h': 'help',
+  '-ss': 'set_status',
 };
 
 export default async function mainLoop() {

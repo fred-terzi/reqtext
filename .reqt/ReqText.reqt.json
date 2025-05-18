@@ -56,9 +56,21 @@
     "reqt_ID": "2025-05-18T03:28:02.338Z-e90ee161-.reqt"
   },
   {
-    "title": "ALWAYS consider security",
+    "reqt_ID": "2025-05-18T03:32:27.295Z-2d1c8eec-.reqt",
     "hier": 1,
     "outline": "1.6",
+    "title": "DRY - Don't Repeat Yourself",
+    "requirement": "REQUIREMENT",
+    "acceptance": "ACCEPTANCE",
+    "details": "DETAILS",
+    "status": "NEW",
+    "test_exists": false,
+    "test_passed": false
+  },
+  {
+    "title": "ALWAYS consider security",
+    "hier": 1,
+    "outline": "1.7",
     "requirement": "When designing and creating code, always consider security.",
     "status": "INSTRUCTs",
     "reqt_ID": "2025-05-18T03:28:02.339Z-d3adbfbf-.reqt"
@@ -143,7 +155,7 @@
     "requirement": "The command 'reqt set-status <outline number> \"New Status\"' must set the status field of the requirement with the given outline number to the value provided by the user.",
     "acceptance": "When the command is run with a valid outline number and status, the corresponding item's status field is updated in the .reqt.json file. If the outline number does not exist, an error is shown.",
     "details": "- The command takes two arguments: the outline number and the new status string.\n- The command locates the item in the .reqt.json file with the matching outline number.\n- The item's status field is updated to the new value.\n- The file is saved with the updated status.\n- If the outline number is not found, the command returns an error message.",
-    "status": "NEW",
+    "status": "PASS",
     "test_exists": false,
     "test_passed": false
   },
