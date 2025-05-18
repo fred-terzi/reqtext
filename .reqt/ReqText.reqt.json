@@ -168,7 +168,7 @@
     "acceptance": "When the command is run with a valid outline number and boolean, the corresponding item's test_exists field is updated in the .reqt.json file. If the outline number does not exist, an error is shown.",
     "details": "- The command takes two arguments: the outline number and a boolean (true/false).\n- The command locates the item in the .reqt.json file with the matching outline number.\n- The item's test_exists field is updated to the new value.\n- The file is saved with the updated test_exists value.\n- If the outline number is not found, the command returns an error message.",
     "status": "In Dev",
-    "test_exists": false,
+    "test_exists": true,
     "test_passed": false
   },
   {
