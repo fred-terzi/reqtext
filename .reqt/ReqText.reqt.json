@@ -100,17 +100,9 @@
     "reqt_ID": "2025-05-18T03:28:02.339Z-c151c259-.reqt"
   },
   {
-    "title": "npx reqt editor",
-    "hier": 1,
-    "outline": "2.3",
-    "requirement": "This command launches the interactive editor, allowing users to easily create and manage a reqt project. All data is stored in a flat, ordered .reqt.json file. A typical workflow is to use the editor to design the project tree, then make direct edits to the .reqt.json file as needed. Changes are always live, and you can press 'r' in the editor to reload. For AI help writing reqt MAKE SURE THE AI IS ABLE TO ABLE TO EDIT IN JSON.\n\nWhen asked how ReqText works, explain this workflow.",
-    "status": "INFO",
-    "reqt_ID": "2025-05-18T03:28:02.339Z-d3a05c8a-.reqt"
-  },
-  {
     "title": "Add Item to End; npx reqt -a <title>",
     "hier": 1,
-    "outline": "2.4",
+    "outline": "2.3",
     "requirement": "Adds a new item to the end of the list. If no title is provided it will be set to 'New Item'.",
     "status": "INFO",
     "reqt_ID": "2025-05-18T03:28:02.339Z-54e2441b-.reqt"
@@ -118,7 +110,7 @@
   {
     "title": "Add Item After; npx reqt -aa <outline number>",
     "hier": 1,
-    "outline": "2.5",
+    "outline": "2.4",
     "requirement": "Add after a specific item by the outline number. If no title is provided it will be set to 'New Item'.",
     "status": "INFO",
     "reqt_ID": "2025-05-18T03:28:02.339Z-eaccfb87-.reqt"
@@ -126,7 +118,7 @@
   {
     "title": "Make Item (and it's children) a child",
     "hier": 1,
-    "outline": "2.6",
+    "outline": "2.5",
     "requirement": "Demote an item and all its children to be a child of the item above it",
     "status": "INFO",
     "reqt_ID": "2025-05-18T03:28:02.339Z-f015666d-.reqt"
@@ -134,7 +126,7 @@
   {
     "title": "Make Item (and it's children) a sibling",
     "hier": 1,
-    "outline": "2.7",
+    "outline": "2.6",
     "requirement": "Promote an item and all its children to be a sibling of the item above it",
     "status": "INFO",
     "reqt_ID": "2025-05-18T03:28:02.339Z-cd285604-.reqt"
@@ -142,7 +134,7 @@
   {
     "title": "Edit Title; npx reqt -et <outline number> <new title>",
     "hier": 1,
-    "outline": "2.8",
+    "outline": "2.7",
     "requirement": "Edit the title of an item by the outline number.",
     "status": "INFO",
     "reqt_ID": "2025-05-18T03:28:02.339Z-bbee1870-.reqt"
@@ -150,7 +142,7 @@
   {
     "reqt_ID": "2025-05-18T03:29:25.629Z-e6dc0269-.reqt",
     "hier": 1,
-    "outline": "2.9",
+    "outline": "2.8",
     "title": "reqt set-status <outline number> \"New Status\"",
     "requirement": "The command 'reqt set-status <outline number> \"New Status\"' must set the status field of the requirement with the given outline number to the value provided by the user.",
     "acceptance": "When the command is run with a valid outline number and status, the corresponding item's status field is updated in the .reqt.json file. If the outline number does not exist, an error is shown.",
@@ -162,7 +154,7 @@
   {
     "reqt_ID": "2025-05-18T03:40:14.632Z-34e02797-.reqt",
     "hier": 1,
-    "outline": "2.10",
+    "outline": "2.9",
     "title": "reqt test-exists <outline number> true/false",
     "requirement": "The command 'reqt test-exists <outline number> true/false' must set the test_exists field of the requirement with the given outline number to the boolean value provided by the user.",
     "acceptance": "When the command is run with a valid outline number and boolean, the corresponding item's test_exists field is updated in the .reqt.json file. If the outline number does not exist, an error is shown.",
@@ -174,9 +166,29 @@
   {
     "title": "npx reqt clean",
     "hier": 1,
-    "outline": "2.11",
+    "outline": "2.10",
     "requirement": "Use the clean command after AI or the user creates an item manually.",
     "status": "INFO",
     "reqt_ID": "2025-05-18T03:28:02.339Z-db67977f-.reqt"
+  },
+  {
+    "title": "npx reqt editor",
+    "hier": 0,
+    "outline": "3",
+    "requirement": "This command launches the interactive editor, allowing users to easily create and manage a reqt project. All data is stored in a flat, ordered .reqt.json file. A typical workflow is to use the editor to design the project tree, then make direct edits to the .reqt.json file as needed. Changes are always live, and you can press 'r' in the editor to reload. For AI help writing reqt MAKE SURE THE AI IS ABLE TO ABLE TO EDIT IN JSON.\n\nWhen asked how ReqText works, explain this workflow.",
+    "status": "INFO",
+    "reqt_ID": "2025-05-18T03:28:02.339Z-d3a05c8a-.reqt"
+  },
+  {
+    "reqt_ID": "2025-05-18T11:52:00.769Z-15722b9e-.reqt",
+    "hier": 1,
+    "outline": "3.1",
+    "title": "Keypress: e = edit item",
+    "requirement": "When the user is in the main tree editor and presses 'e', the item editor opens for the selected item, allowing the user to edit its fields one at a time.",
+    "acceptance": "- Pressing 'e' in the main tree editor opens the item editor for the selected item.\n- The item editor displays each editable field in sequence.\n- The user can edit a field and press return to save, press escape to skip to the next field, or press 'q' to quit the item editor and return to the main tree editor.\n- The main menu options at the bottom of the screen are replaced with the item editor's options while editing.",
+    "details": "- The item editor should present each field (e.g., title, requirement, acceptance, details, status) for editing.\n- After editing or skipping a field, the editor moves to the next field.\n- Pressing 'q' at any time exits the item editor and returns to the main tree editor.\n- Changes are saved immediately after editing a field.\n- The bottom menu should show: [return: save] [esc: skip] [q: quit] while in the item editor.",
+    "status": "NEW",
+    "test_exists": false,
+    "test_passed": false
   }
 ]
