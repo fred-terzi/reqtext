@@ -12,8 +12,7 @@ import cleanHandler from './commands/cleanHandler.js';
 import setStatusHandler from './commands/setStatusHandler.js';
 import testExistsHandler from './commands/testExistsHandler.js';
 import reqtToMarkdown from './reqtParsers/reqtToMarkdown.mjs';
-import { inMdHandler } from './commands/inMdHandler.js';
-
+import markdownToReqt from './reqtParsers/markdownUpdateReqt.js';
 
 let data = [];
 
@@ -101,7 +100,7 @@ const commandMap = {
       if (arg === '--keep' || arg === '-k') options.keep = true;
       else if (arg.endsWith('.md')) options.mdFile = arg;
     }
-    await inMdHandler(options);
+    await markdownToReqt();
   },
 
   '-imd': async (...args) => {
@@ -110,7 +109,7 @@ const commandMap = {
       if (arg === '--keep' || arg === '-k') options.keep = true;
       else if (arg.endsWith('.md')) options.mdFile = arg;
     }
-    await inMdHandler(options);
+    await markdownToReqt();
   },
 };
 

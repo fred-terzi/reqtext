@@ -1,6 +1,6 @@
+import { getCurrentReqtFilePath } from '../utils/getCurrentReqtFilePath.js';
 import fs from 'fs/promises';
 import path from 'path';
-import { getCurrentReqtFilePath } from '../utils/getCurrentReqtFilePath.js';
 
 /**
  * Parse a Markdown file for reqt blocks and extract fields.
@@ -24,55 +24,52 @@ export function parseReqtBlocks(md) {
       const m = block.match(regex);
       return m ? m[1].trim() : undefined;
     };
+    let details = getField('Det', 'Details');
+    if (details) {
+      details = details.replace(/<table[\s\S]*?<\/table>/gi, '').trim();
+    }
     updates[reqt_id] = {
       requirement: getField('Req', 'Requirement'),
       acceptance: getField('Accept', 'Acceptance'),
-      details: getField('Det', 'Details'),
-      // Make extracted table values uneditable from markdown
-    //   status,
-    //   test_exists,
-    //   test_passed,
+      details,
+      status,
+      test_exists,
+      test_passed,
     };
   }
   return updates;
 }
 
-/**
- * Update a reqt JSON array with data parsed from a Markdown file.
- * @param {string} jsonPath Path to the reqt JSON file
- * @param {string} mdPath Path to the Markdown file
- * @returns {Promise<Array>} The updated JSON array
- */
-async function updateReqtFromMarkdown(jsonPath, mdPath) {
-  const md = await fs.readFile(mdPath, 'utf8');
-  const json = JSON.parse(await fs.readFile(jsonPath, 'utf8'));
+export default async function markdownToReqt() {
+  const mdFilePath = await getCurrentReqtFilePath();
+  console.log('mdFilePath', mdFilePath);
+  // 1. Read the Markdown file
+  const md = await fs.readFile(mdFilePath, 'utf-8');
+  // 2. Parse the Markdown
   const updates = parseReqtBlocks(md);
-  for (const item of json) {
-    const update = updates[item.reqt_ID];
-    if (update) {
-      Object.assign(item, update);
-    }
+
+  // 3. Determine the JSON file path (same basename, .json extension, in reqtStore)
+  const jsonFileName = path.basename(mdFilePath).replace(/\.md$/, '.json');
+  const jsonFilePath = path.join(path.dirname(path.dirname(mdFilePath)), 'reqtStore', jsonFileName);
+
+  // 4. Read the existing JSON file
+  let jsonData = {};
+  try {
+    const jsonRaw = await fs.readFile(jsonFilePath, 'utf-8');
+    jsonData = JSON.parse(jsonRaw);
+  } catch (err) {
+    if (err.code !== 'ENOENT') throw err; // Only ignore file-not-found
   }
-  return json;
-}
 
-// CLI entry point for direct execution
-if (import.meta.url === `file://${process.argv[1]}`) {
-  (async () => {
-    try {
-      const jsonPath = await getCurrentReqtFilePath();
-      // Determine markdown file name from root title in JSON (like out-md)
-      const jsonText = await fs.readFile(jsonPath, 'utf8');
-      const reqts = JSON.parse(jsonText);
-      const rootTitle = reqts[0]?.title || 'output';
-      const safeTitle = rootTitle.replace(/[^a-zA-Z0-9-_]/g, '_');
-      const mdPath = `${safeTitle}.reqt.md`;
-      await updateReqtFromMarkdown(jsonPath, mdPath);
-    } catch (e) {
-      console.error(`Failed to update .reqt.json from markdown: ${e.message}`);
-      process.exit(1);
-    }
-  })();
-}
+  // 5. Update the JSON data with the parsed updates
+  for (const [reqt_id, fields] of Object.entries(updates)) {
+    jsonData[reqt_id] = {
+      ...jsonData[reqt_id],
+      ...fields,
+    };
+  }
 
-export default updateReqtFromMarkdown;
+  // 6. Write the updated JSON back to disk
+  await fs.writeFile(jsonFilePath, JSON.stringify(jsonData, null, 2), 'utf-8');
+  console.log('Updated JSON written to', jsonFilePath);
+}
