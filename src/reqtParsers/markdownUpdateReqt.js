@@ -15,22 +15,22 @@ export function parseReqtBlocks(md) {
   while ((match = blockRegex.exec(md)) !== null) {
     const reqt_id = match[1];
     const block = match[2];
-    // Extract table values (Status, Test Exists, Test Passed) from HTML table
-    const tableMatch = block.match(/<td>(.*?)<\/td><td>(.*?)<\/td><td>(.*?)<\/td>/);
-    const [status, test_exists, test_passed] = tableMatch ? tableMatch.slice(1) : [undefined, undefined, undefined];
-    // Extract fields by comment marker
+    // Extract table values (Status, Test Exists, Test Passed) from the markdown table (skip header and separator)
+    const tableRowMatch = block.match(/\| Status \| Test Exists \| Test Passed \|[\r\n]+\|[-| ]+\|[\r\n]+\| ([^|]+) \| ([^|]+) \| ([^|]+) \|/);
+    const [status, test_exists, test_passed] = tableRowMatch ? tableRowMatch.slice(1).map(s => s.trim()) : [undefined, undefined, undefined];
+    // Extract fields by comment marker and label
     const getField = (field, label) => {
-      const regex = new RegExp(`<!-- reqt_${field}_field-->\\s*\\*\\*${label}:\\*\\*\\s*([\\s\\S]*?)(?=<!--|$)`, 'i');
+      // Match the field marker, the label, and capture everything until the next field marker or end of block
+      const regex = new RegExp(`<!-- reqt_${field}_field-->\\s*\\*\\*${label}:\\*\\*\\s*([\\s\\S]*?)(?=<!-- reqt_|<!-- reqt_id:|$)`, 'i');
       const m = block.match(regex);
       return m ? m[1].trim() : undefined;
     };
-    let details = getField('Det', 'Details');
-    if (details) {
-      details = details.replace(/<table[\s\S]*?<\/table>/gi, '').trim();
-    }
+    const requirement = getField('Req', 'Requirement');
+    const acceptance = getField('Accept', 'Acceptance');
+    const details = getField('Det', 'Details');
     updates[reqt_id] = {
-      requirement: getField('Req', 'Requirement'),
-      acceptance: getField('Accept', 'Acceptance'),
+      requirement,
+      acceptance,
       details,
       status,
       test_exists,
@@ -41,22 +41,36 @@ export function parseReqtBlocks(md) {
 }
 
 export default async function markdownToReqt() {
-  const mdFilePath = await getCurrentReqtFilePath();
+  // Get the .json file path from getCurrentReqtFilePath
+  const reqtJsonPath = await getCurrentReqtFilePath();
+  // Convert to .md file path in the project root
+  const mdFileName = path.basename(reqtJsonPath).replace(/\.json$/, '.md');
+  const mdFilePath = path.join(process.cwd(), mdFileName);
   console.log('mdFilePath', mdFilePath);
   // 1. Read the Markdown file
   const md = await fs.readFile(mdFilePath, 'utf-8');
   // 2. Parse the Markdown
   const updates = parseReqtBlocks(md);
 
-  // 3. Determine the JSON file path (same basename, .json extension, in reqtStore)
-  const jsonFileName = path.basename(mdFilePath).replace(/\.md$/, '.json');
-  const jsonFilePath = path.join(path.dirname(path.dirname(mdFilePath)), 'reqtStore', jsonFileName);
+  // 3. Determine the JSON file path (same as reqtJsonPath)
+  const jsonFilePath = reqtJsonPath;
 
   // 4. Read the existing JSON file
   let jsonData = {};
+  let originalWasArray = false;
   try {
     const jsonRaw = await fs.readFile(jsonFilePath, 'utf-8');
-    jsonData = JSON.parse(jsonRaw);
+    const parsed = JSON.parse(jsonRaw);
+    if (Array.isArray(parsed)) {
+      // Convert array to object keyed by reqt_ID
+      jsonData = {};
+      for (const item of parsed) {
+        if (item.reqt_ID) jsonData[item.reqt_ID] = item;
+      }
+      originalWasArray = true;
+    } else {
+      jsonData = parsed;
+    }
   } catch (err) {
     if (err.code !== 'ENOENT') throw err; // Only ignore file-not-found
   }
@@ -70,6 +84,13 @@ export default async function markdownToReqt() {
   }
 
   // 6. Write the updated JSON back to disk
-  await fs.writeFile(jsonFilePath, JSON.stringify(jsonData, null, 2), 'utf-8');
+  let outputJson;
+  if (originalWasArray) {
+    // Convert back to array
+    outputJson = Object.values(jsonData);
+  } else {
+    outputJson = jsonData;
+  }
+  await fs.writeFile(jsonFilePath, JSON.stringify(outputJson, null, 2), 'utf-8');
   console.log('Updated JSON written to', jsonFilePath);
 }
