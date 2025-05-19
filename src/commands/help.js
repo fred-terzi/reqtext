@@ -27,7 +27,7 @@ Commands:
         Usage: reqtext test_exists <outline_number> <true/false>
     test_passed              Edit the test_passed field of an item by outline number
         Usage: reqtext test_passed <outline_number> <true/false>
-    clean                    Ensure all items have valid reqt_ID and proj_ID
+    clean                    Ensure all items have valid reqt_ID
         Usage: reqtext clean
 
 Terminal Editor Keybindings:
