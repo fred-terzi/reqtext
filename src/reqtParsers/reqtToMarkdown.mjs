@@ -62,11 +62,7 @@ ${hierToMarkdownHeader(reqt.hier, reqt.outline)} ${reqt.outline}: ${reqt.title}
 export default async function reqtToMarkdown(inputFile) {
   let jsonFile = inputFile;
   if (!jsonFile) {
-    try {
-      jsonFile = await getCurrentReqtFilePath();
-    } catch (e) {
-      throw new Error('Could not determine requirements file.');
-    }
+    jsonFile = await getCurrentReqtFilePath(); // Let errors propagate for user-friendly output
   }
   const jsonText = await fs.readFile(jsonFile, 'utf8');
   const reqts = JSON.parse(jsonText);
@@ -84,11 +80,18 @@ export default async function reqtToMarkdown(inputFile) {
 
 // If this script is run directly as a CLI command, allow aliases for out-md and -omd
 if (import.meta.url === `file://${process.argv[1]}`) {
-  // Support: node src/reqtParsers/reqtToMarkdown.mjs <input.json>
-  // or: reqt out-md, reqt -omd (via bin/index.js or main.js command router)
   const arg = process.argv[2];
   reqtToMarkdown(arg).catch(e => {
-    console.error(e.message || e);
-    process.exit(1);
+    // Robustly detect missing project config (ENOENT or message)
+    if ((e.code && e.code === 'ENOENT') ||
+        (typeof e.message === 'string' && /no \.reqt project/i.test(e.message))) {
+      // Print only the error message, no stack trace
+      console.error(`\x1b[31mError:\x1b[0m ${e.message}`);
+      process.exit(2);
+    } else {
+      // Unexpected error: print full error (with stack)
+      console.error(e);
+      process.exit(1);
+    }
   });
 }

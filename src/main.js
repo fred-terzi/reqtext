@@ -137,13 +137,24 @@ export default async function mainLoop() {
   const [, , command, ...args] = process.argv;
   const canonicalCommand = aliasMap[command] || command;
   const cmd = commandMap[canonicalCommand];
-  if (cmd) {
-    if (cmd.constructor.name === 'AsyncFunction') {
-      await cmd(...args);
+  try {
+    if (cmd) {
+      if (cmd.constructor.name === 'AsyncFunction') {
+        await cmd(...args);
+      } else {
+        cmd(...args);
+      }
     } else {
-      cmd(...args);
+      help();
     }
-  } else {
-    help();
+  } catch (e) {
+    if ((e.code && e.code === 'ENOENT') ||
+        (typeof e.message === 'string' && /no \.reqt project/i.test(e.message))) {
+      console.error('❌ No .reqt project found. Run `reqt init <project name>` to create one.');
+      process.exit(2);
+    } else {
+      console.error('💥 Unexpected error:', e);
+      process.exit(1);
+    }
   }
 }
