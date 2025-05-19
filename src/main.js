@@ -14,8 +14,7 @@ import testExistsHandler from './commands/testExistsHandler.js';
 import reqtToMarkdown from './reqtParsers/reqtToMarkdown.mjs';
 import markdownToReqt from './reqtParsers/markdownUpdateReqt.js';
 
-let data = [];
-
+import Enquirer from 'enquirer';
 
 async function versionCommand() {
   // Get the version from package.json using es modules
@@ -92,29 +91,30 @@ const commandMap = {
     await reqtToMarkdown(args[0]);
   },
 
-  '-omd': async (...args) => {
-    await reqtToMarkdown(args[0]);
-  },
 
   // In MD command
   in_md: async (...args) => {
     // Support: reqt in-md [--keep|-k] [mdFile]
-    const options = {};
+    let keep = false;
+    let mdFile = undefined;
     for (const arg of args) {
-      if (arg === '--keep' || arg === '-k') options.keep = true;
-      else if (arg.endsWith('.md')) options.mdFile = arg;
+      if (arg === '--keep' || arg === '-k') keep = true;
+      else if (arg.endsWith('.md')) mdFile = arg;
     }
-    await markdownToReqt();
+    const { Confirm } = Enquirer;
+    const prompt = new Confirm({
+      name: 'overwrite',
+      message: 'Overwrite the source of truth reqt.json with the current changes in the markdown?',
+      initial: false
+    });
+    const overwrite = await prompt.run();
+    if (overwrite) {
+      await markdownToReqt(mdFile, keep);
+    } else {
+      console.log('Aborted: reqt.json was not updated.');
+    }
   },
 
-  '-imd': async (...args) => {
-    const options = {};
-    for (const arg of args) {
-      if (arg === '--keep' || arg === '-k') options.keep = true;
-      else if (arg.endsWith('.md')) options.mdFile = arg;
-    }
-    await markdownToReqt();
-  },
 };
 
 // Command aliases map
@@ -133,7 +133,8 @@ const aliasMap = {
   '-te': 'test_exists',
   'out-md': 'out_md',
   'in-md': 'in_md',
-  '-imd': '-imd',
+  '-omd': 'out_md',
+  '-imd': 'in_md',
 };
 
 export default async function mainLoop() {

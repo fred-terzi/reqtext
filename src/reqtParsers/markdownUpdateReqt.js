@@ -40,12 +40,12 @@ export function parseReqtBlocks(md) {
   return updates;
 }
 
-export default async function markdownToReqt() {
+export default async function markdownToReqt(mdFilePathArg, keep = false) {
   // Get the .json file path from getCurrentReqtFilePath
   const reqtJsonPath = await getCurrentReqtFilePath();
   // Convert to .md file path in the project root
   const mdFileName = path.basename(reqtJsonPath).replace(/\.json$/, '.md');
-  const mdFilePath = path.join(process.cwd(), mdFileName);
+  const mdFilePath = mdFilePathArg || path.join(process.cwd(), mdFileName);
   console.log('mdFilePath', mdFilePath);
   // 1. Read the Markdown file
   const md = await fs.readFile(mdFilePath, 'utf-8');
@@ -93,4 +93,14 @@ export default async function markdownToReqt() {
   }
   await fs.writeFile(jsonFilePath, JSON.stringify(outputJson, null, 2), 'utf-8');
   console.log('Updated JSON written to', jsonFilePath);
+
+  // 7. Delete the markdown file by default (unless keep is true)
+  if (!keep) {
+    try {
+      await fs.unlink(mdFilePath);
+      console.log('Deleted markdown file:', mdFilePath);
+    } catch (err) {
+      if (err.code !== 'ENOENT') throw err;
+    }
+  }
 }
