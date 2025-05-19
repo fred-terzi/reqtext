@@ -28,14 +28,9 @@ function reqtToMarkdownBlock(reqt) {
 ${hierToMarkdownHeader(reqt.hier, reqt.outline)} ${reqt.outline}: ${reqt.title}
 
 <!-- reqt Table Non-Editable-->
-<table border="1" cellspacing="0" cellpadding="4">
-  <tr>
-    <th>Status</th><th>Test Exists</th><th>Test Passed</th>
-  </tr>
-  <tr>
-    <td>${reqt.status}</td><td>${reqt.test_exists}</td><td>${reqt.test_passed}</td>
-  </tr>
-</table>
+| Status | Test Exists | Test Passed |
+|--------|-------------|-------------|
+| ${reqt.status} | ${reqt.test_exists} | ${reqt.test_passed} |
 <!-- reqt Table Non-Editable-->
 
 <!-- reqt_Req_field-->
