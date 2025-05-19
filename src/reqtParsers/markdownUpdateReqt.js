@@ -57,18 +57,22 @@ async function updateReqtFromMarkdown(jsonPath, mdPath) {
 }
 
 // CLI entry point for direct execution
-// Only run this block if this file is run directly, not when imported
 if (import.meta.url === `file://${process.argv[1]}`) {
-  if (process.argv.length > 2 && process.argv[2].endsWith('.md')) {
-    (async () => {
+  (async () => {
+    try {
       const jsonPath = await getCurrentReqtFilePath();
-      const mdPath = process.argv[2];
+      // Determine markdown file name from root title in JSON (like out-md)
+      const jsonText = await fs.readFile(jsonPath, 'utf8');
+      const reqts = JSON.parse(jsonText);
+      const rootTitle = reqts[0]?.title || 'output';
+      const safeTitle = rootTitle.replace(/[^a-zA-Z0-9-_]/g, '_');
+      const mdPath = `${safeTitle}.reqt.md`;
       await updateReqtFromMarkdown(jsonPath, mdPath);
-    })();
-  } else {
-    console.error('No markdown file provided. Usage: node markdownUpdateReqt.js <file.md>');
-    process.exit(1);
-  }
+    } catch (e) {
+      console.error(`Failed to update .reqt.json from markdown: ${e.message}`);
+      process.exit(1);
+    }
+  })();
 }
 
 export default updateReqtFromMarkdown;
