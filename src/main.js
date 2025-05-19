@@ -92,6 +92,10 @@ const commandMap = {
     await reqtToMarkdown(args[0]);
   },
 
+  '-omd': async (...args) => {
+    await reqtToMarkdown(args[0]);
+  },
+
   // In MD command
   in_md: async (...args) => {
     // Support: reqt in-md [--keep|-k] [mdFile]
