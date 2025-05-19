@@ -136,14 +136,8 @@ The terminal editor provides an interactive tree view to create, navigate, and s
 ---
 
 
-## 🔥New Command: reqtmd and mdreqt
 
-You can now convert a .reqt.json and .reqt.md file over to your .reqt.json! The CLI will prompt if you have want to overwrite the file or not but you have the freedom to edit from the CLI, from the markdown or have your AI agent edit the json. Future features for diffs and merging are on the way!
 
-```
-npx reqt reqtmd 
-```
-This command will create a Markdown file with the same name as the .reqt file, but with a .md extension. The Markdown file will be created in the same directory as the .reqt file.
 
 **Stored Data** vs **Markdown Generated**
 
@@ -159,19 +153,8 @@ Demo the stored data vs the markdown generated.
 
 ## Learn More
 
-Visit [terzitech.dev](https://terzitech.dev) for documentation, updates, and blog posts.
+Visit [terzitech.dev](https://www.terzitech.dev/) for documentation, updates, and blog posts.
 
-## 👋 A Note from the Developer
-
-This project is in early demo release because I believe the core functionality and methodology are ready for real-world feedback.
-
-I’m actively working on new features and refinements. Your feedback is invaluable—please [open an issue](https://github.com/terzitech/reqtext/issues) with any bugs, requests, or ideas. Issues always take top priority.
-
-Thank you for checking out ReqText. Happy Docucoding!
-
-— *Joseph Terzi*
-
----
 
 ## Markdown Workflow
 
