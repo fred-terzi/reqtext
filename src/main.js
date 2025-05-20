@@ -13,6 +13,7 @@ import setStatusHandler from './commands/setStatusHandler.js';
 import testExistsHandler from './commands/testExistsHandler.js';
 import reqtToMarkdown from './reqtParsers/reqtToMarkdown.mjs';
 import markdownToReqt from './reqtParsers/markdownUpdateReqt.js';
+import getExistingMarkdownFile from './utils/getExistingMarkdownFile.js';
 
 import Enquirer from 'enquirer';
 
@@ -87,36 +88,14 @@ const commandMap = {
   },
 
   // Helper to check if a markdown file exists, given a file name or project context
-  getExistingMarkdownFile: async (mdFileArg) => {
-    const fs = await import('fs/promises');
-    let fileToCheck = mdFileArg;
-    if (!fileToCheck) {
-      try {
-        const reqtJsonPath = await import('./utils/getCurrentReqtFilePath.js').then(m => m.getCurrentReqtFilePath());
-        const jsonText = await fs.readFile(reqtJsonPath, 'utf8');
-        const reqts = JSON.parse(jsonText);
-        const rootTitle = reqts[0]?.title || 'output';
-        const safeTitle = rootTitle.replace(/[^a-zA-Z0-9-_]/g, '_');
-        fileToCheck = `./${safeTitle}.reqt.md`;
-      } catch (e) {
-        // fallback: let reqtToMarkdown handle it
-        return undefined;
-      }
-    }
-    try {
-      await fs.access(fileToCheck);
-      return fileToCheck;
-    } catch (e) {
-      return undefined;
-    }
-  },
+  getExistingMarkdownFile: getExistingMarkdownFile,
 
   // Out MD command
   // If a <project name>.reqt.md exists, prompt to overwrite
   // If not, create a new one
   out_md: async (...args) => {
     let outFile = args[0];
-    const fileToCheck = await commandMap.getExistingMarkdownFile(outFile);
+    const fileToCheck = await getExistingMarkdownFile(outFile);
     let shouldWrite = true;
     if (fileToCheck) {
       const { Confirm } = Enquirer;
@@ -144,7 +123,7 @@ const commandMap = {
       if (arg === '--keep' || arg === '-k') keep = true;
       else if (arg.endsWith('.md')) mdFile = arg;
     }
-    const fileToCheck = await commandMap.getExistingMarkdownFile(mdFile);
+    const fileToCheck = await getExistingMarkdownFile(mdFile);
     if (!fileToCheck) {
       console.log('No reqt.md file was found to import.');
       return;
@@ -170,22 +149,22 @@ const commandMap = {
 
 // Command aliases map
 const aliasMap = {
-  '-a': 'add_item',
-  '-aa': 'add_after',
+  '-a': 'add-item',
+  '-aa': 'add-after',
   '-d': 'delete',
-  '-mc': 'make_children',
-  '-ms': 'make_sibling',
-  '-et': 'edit_title',
+  '-mc': 'make-children',
+  '-ms': 'make-sibling',
+  '-et': 'edit-title',
   '--version': 'version',
   '-v': 'version',
   '--help': 'help',
   '-h': 'help',
-  '-ss': 'set_status',
-  '-te': 'test_exists',
-  'out-md': 'out_md',
-  'in-md': 'in_md',
-  '-omd': 'out_md',
-  '-imd': 'in_md',
+  '-ss': 'set-status',
+  '-te': 'test-exists',
+  'out-md': 'out-md',
+  'in-md': 'in-md',
+  '-omd': 'out-md',
+  '-imd': 'in-md',
 };
 
 export default async function mainLoop() {

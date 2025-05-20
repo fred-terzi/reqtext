@@ -29,6 +29,7 @@ Commands:
         Usage: reqtext test_passed <outline_number> <true/false>
     clean                    Ensure all items have valid reqt_ID
         Usage: reqtext clean
+    
 
 Terminal Editor Keybindings:
     ↑/↓        Navigate requirements

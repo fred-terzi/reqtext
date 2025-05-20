@@ -47,6 +47,7 @@ ${hierToMarkdownHeader(reqt.hier, reqt.outline)} ${reqt.outline}: ${reqt.title}
 **Details:**
 
  ${reqt.details}
+
 <!-- reqt_id: ${reqt.reqt_ID} --end-->`;
 }
 
