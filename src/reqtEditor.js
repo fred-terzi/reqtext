@@ -2,7 +2,6 @@ import fhr from '@terzitech/flathier';
 import addAfterHandler from './commands/addAfterHandler.js';
 import enquirerPkg from 'enquirer';
 import { getData, setData } from './services/dataHandler.js';
-import editTitleHandler from './commands/editTitleHandler.js';
 import deleteHandler from './commands/deleteHandler.js';
 import makeChildrenHandler from './commands/makeChildrenHandler.js';
 import makeSiblingHandler from './commands/makeSiblingHandler.js';
@@ -348,8 +347,11 @@ export default async function reqtEditor() {
     // Define cleanup BEFORE any try/catch that might use it
     let resizeTimeout = null;
     const resizeHandler = () => {
+        console.log('[DEBUG] resize event detected');
         if (resizeTimeout) clearTimeout(resizeTimeout);
         resizeTimeout = setTimeout(() => {
+            // Clear scrollback and visible area in the alternate screen buffer
+            process.stdout.write('\x1b[3J\x1b[2J\x1b[H');
             renderTree(state?.data, state?.selectedIndex, true);
         }, 50);
     };
@@ -420,4 +422,6 @@ export default async function reqtEditor() {
     keyMap['q'] = async (state) => { cleanup(); await originalQ(state); };
     const originalCtrlC = keyMap['\u0003'];
     keyMap['\u0003'] = async (state) => { cleanup(); await originalCtrlC(state); };
+
+    process.stdout.on('resize', resizeHandler);
 }
