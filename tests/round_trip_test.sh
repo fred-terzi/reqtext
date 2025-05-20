@@ -29,3 +29,7 @@ echo "[8] Running deleteHandler.integration.sh (delete item command)"
 bash tests/deleteHandler.integration.sh
 
 echo "[9] Round trip test complete."
+
+# Cleanup
+echo "[10] Cleaning up .reqt data..."
+bash tests/clean_reqt.sh
