@@ -1,19 +1,23 @@
 import fs from 'fs/promises';
 import path from 'path';
-import { parseReqtBlocks } from './markdownUpdateReqt.js';
+import { parseReqtBlocks } from '../reqtParsers/markdownUpdateReqt.js';
+import { getData } from './dataHandler.js';
 
 /**
  * Checks for diffs between the three main editable fields in a data array (in-memory) and the Markdown file.
- * @param {Object[]} data - The in-memory data array of reqt objects.
+ * @param {Object[]} [data] - The in-memory data array of reqt objects. If not provided, loads from SoT using getData().
  * @param {string} [mdPath] - Optional path to the Markdown file. If not provided, uses the default for the current project.
  * @returns {Promise<boolean>} - Returns true if diffs are found, false otherwise.
  */
 export async function checkReqtMdDiff({ data, mdPath } = {}) {
-  if (!data || !Array.isArray(data)) throw new Error('Must provide in-memory data array as `data`');
+  if (!data) {
+    data = await getData();
+  }
+  if (!Array.isArray(data)) throw new Error('Must provide in-memory data array as `data`');
   // If no mdPath provided, try to infer from current config
   if (!mdPath) {
     const { getCurrentReqtFilePath } = await import('../utils/getCurrentReqtFilePath.js');
-    let jsonPath = getCurrentReqtFilePath();
+    let jsonPath = await getCurrentReqtFilePath();
     let base = path.basename(jsonPath);
     base = base.replace(/(\.reqt)?\.json$/, '');
     mdPath = path.resolve(process.cwd(), base + '.reqt.md');
@@ -24,7 +28,7 @@ export async function checkReqtMdDiff({ data, mdPath } = {}) {
   for (const item of data) {
     const mdItem = mdFields[item.reqt_ID];
     if (!mdItem) continue;
-    for (const field of ['requirement', 'acceptance', 'details']) {
+    for (const field of ['requirement', 'acceptance', 'details', 'readme']) {
       const dataVal = (item[field] || '').trim();
       const mdVal = (mdItem[field] || '').trim();
       if (dataVal !== mdVal) {
@@ -50,9 +54,7 @@ export async function checkReqtMdDiff({ data, mdPath } = {}) {
 // If run directly, fallback to old behavior (load data from disk)
 if (import.meta.url === `file://${process.argv[1]}`) {
   (async () => {
-    const { getCurrentReqtFilePath } = await import('../utils/getCurrentReqtFilePath.js');
-    let jsonPath = getCurrentReqtFilePath();
-    const data = JSON.parse(await fs.readFile(jsonPath, 'utf8'));
+    const data = await getData();
     await checkReqtMdDiff({ data });
   })();
 }

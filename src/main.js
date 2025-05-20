@@ -143,6 +143,18 @@ const commandMap = {
     await markdownToReqt(mdFile, keep);
   },
 
+  // diff command
+  'diff': async (...args) => {
+    // Import the diff checker
+    const { checkReqtMdDiff } = await import('./services/reqtmdDiff.js');
+    // Use getData from dataHandler.js for SoT
+    const { getData } = await import('./services/dataHandler.js');
+    let data = await getData();
+    // Optionally accept a markdown file path as an argument
+    let mdPath = args.find(arg => arg.endsWith('.md'));
+    await checkReqtMdDiff({ data, mdPath });
+  },
+
 };
 
 // Command aliases map
