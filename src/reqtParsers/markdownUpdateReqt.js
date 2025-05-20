@@ -20,14 +20,24 @@ export function parseReqtBlocks(md) {
     const [status, test_exists, test_passed] = tableRowMatch ? tableRowMatch.slice(1).map(s => s.trim()) : [undefined, undefined, undefined];
     // Extract fields by comment marker and label
     const getField = (field, label) => {
-      // Match the field marker, the label, and capture everything until the next field marker or end of block
-      const regex = new RegExp(`<!-- reqt_${field}_field-->\\s*\\*\\*${label}:\\*\\*\\s*([\\s\\S]*?)(?=<!-- reqt_|<!-- reqt_id:|$)`, 'i');
-      const m = block.match(regex);
-      return m ? m[1].trim() : undefined;
+      // For README, allow extraction without requiring the label line
+      if (field === 'README') {
+        // Match the field marker and capture everything until the next field marker or end of block
+        const regex = new RegExp(`<!-- reqt_${field}_field-->\\s*([\\s\\S]*?)(?=<!-- reqt_|<!-- reqt_id:|$)`, 'i');
+        const m = block.match(regex);
+        return m ? m[1].trim() : undefined;
+      } else {
+        // For all other fields, require the label line
+        const regex = new RegExp(`<!-- reqt_${field}_field-->\\s*\\*\\*${label}:\\*\\*\\s*([\\s\\S]*?)(?=<!-- reqt_|<!-- reqt_id:|$)`, 'i');
+        const m = block.match(regex);
+        return m ? m[1].trim() : undefined;
+      }
     };
     const requirement = getField('Req', 'Requirement');
     const acceptance = getField('Accept', 'Acceptance');
     const details = getField('Det', 'Details');
+    // Add extraction for the new 'readme' field
+    const readme = getField('README', 'README');
     updates[reqt_id] = {
       requirement,
       acceptance,
@@ -35,6 +45,7 @@ export function parseReqtBlocks(md) {
       status,
       test_exists,
       test_passed,
+      readme,
     };
   }
   return updates;
@@ -76,9 +87,13 @@ export default async function markdownToReqt(mdFilePathArg, keep = false) {
 
   // 5. Update the JSON data with the parsed updates
   for (const [reqt_id, fields] of Object.entries(updates)) {
+    // Only overwrite fields that are defined in the Markdown
+    const filteredFields = Object.fromEntries(
+      Object.entries(fields).filter(([_, v]) => v !== undefined)
+    );
     jsonData[reqt_id] = {
       ...jsonData[reqt_id],
-      ...fields,
+      ...filteredFields,
     };
   }
 

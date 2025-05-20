@@ -23,6 +23,7 @@ import fs from 'fs/promises';
 import enquirer from 'enquirer';
 import path from 'path';
 import fhr from "@terzitech/flathier";
+import { read } from 'fs';
 
 const { prompt } = enquirer;
 
@@ -91,6 +92,7 @@ export default async function init(...args) {
         requirement: "REQUIREMENT",
         acceptance: "ACCEPTANCE",
         details: "DETAILS",
+        readme: "README",
         status: "NEW",
         test_exists: false,
         test_passed: false
@@ -107,6 +109,7 @@ export default async function init(...args) {
         requirement: "REQUIREMENT",
         acceptance: "ACCEPTANCE",
         details: "DETAILS",
+        readme: "README",
         status: "NEW",
         test_exists: false,
         test_passed: false

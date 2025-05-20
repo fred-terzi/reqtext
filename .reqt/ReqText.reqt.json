@@ -6,10 +6,11 @@
     "title": "ReqText",
     "requirement": "The ReqText project must meet all the requirements outlined in this reqt project file.",
     "acceptance": "A test suite must be created to validate the requirements outlined in this reqt project file.",
-    "details": "**ReqText** is a CLI & TUI requirements management tool designed to help you easily create, manage and visualize your requirements from the command line. The tool is built on my FlatHier (Short for Flat Hierarchy) library, which creates a manipulates hierarchical data structure in a flat, ordered json. Making it human readable and git ready.",
+    "details": "DETAILS",
     "status": "NEW",
     "test_exists": "false",
-    "test_passed": "false"
+    "test_passed": "false",
+    "readme": "undefined"
   },
   {
     "reqt_ID": "2025-05-20T00:24:38.690Z-89ddbdb7",
@@ -21,7 +22,8 @@
     "details": "DETAILS",
     "status": "INSTRUCs",
     "test_exists": "false",
-    "test_passed": "false"
+    "test_passed": "false",
+    "readme": "undefined"
   },
   {
     "reqt_ID": "2025-05-20T02:05:38.677Z-b0309245",
@@ -32,32 +34,35 @@
     "acceptance": "ACCEPTANCE",
     "details": "DETAILS",
     "status": "NEW",
-    "test_exists": false,
-    "test_passed": false
+    "test_exists": "false",
+    "test_passed": "false",
+    "readme": "undefined"
   },
   {
     "reqt_ID": "2025-05-20T00:24:52.186Z-7ce6967d",
     "hier": 0,
     "outline": "2",
     "title": "ReqText Commands",
-    "requirement": "REQUIREMENT",
-    "acceptance": "ACCEPTANCE",
-    "details": "DETAILS",
+    "requirement": "ReqText must provide a comprehensive set of CLI commands for managing requirements, including project initialization, item management (add, delete, edit, promote/demote), status updates, markdown import/export, and cleaning. Each command must be accessible via both long and short flags, and must function as described in the documentation.",
+    "acceptance": "All documented commands are implemented and accessible from the CLI. Each command produces the expected output, handles errors gracefully, and provides usage instructions when invoked incorrectly. Automated and/or manual tests exist for each command, verifying correct behavior and error handling.",
+    "details": "The CLI commands cover all major user workflows: initializing a project, adding/editing/deleting items, promoting/demoting items in the hierarchy, updating item status, exporting/importing requirements to/from markdown, and cleaning up project files. Commands should be discoverable via `--help` and should provide clear feedback to the user. Each command should be testable via scripts in the `tests/` directory. Reference the README for command usage examples and expected behaviors.",
     "status": "INFO",
     "test_exists": "false",
-    "test_passed": "false"
+    "test_passed": "false",
+    "readme": "undefined"
   },
   {
     "reqt_ID": "2025-05-20T00:25:13.130Z-9ba8c130",
     "hier": 1,
     "outline": "2.1",
     "title": "--version, -v",
-    "requirement": "REQUIREMENT",
-    "acceptance": "ACCEPTANCE",
-    "details": "DETAILS",
+    "requirement": "The CLI must display the current version of ReqText when invoked with `--version` or `-v` and then exit.",
+    "acceptance": "Running `reqt --version` or `reqt -v` outputs the version number (matching `package.json`) to stdout and exits with code 0. If an error occurs, a helpful message is shown and a non-zero exit code is returned. A test exists to verify this behavior.",
+    "details": "The version should be sourced from `package.json` to ensure consistency. No other output should be produced. This command is typically used in CI, scripting, and user troubleshooting. See `src/utils/getVersion.js` for implementation and `tests/` for test coverage.",
     "status": "NEW",
     "test_exists": "false",
-    "test_passed": "false"
+    "test_passed": "false",
+    "readme": "undefined"
   },
   {
     "reqt_ID": "2025-05-20T00:27:35.249Z-cc998ee6",
@@ -69,7 +74,8 @@
     "details": "DETAILS",
     "status": "NEW",
     "test_exists": "false",
-    "test_passed": "false"
+    "test_passed": "false",
+    "readme": "undefined"
   },
   {
     "reqt_ID": "2025-05-20T00:27:57.660Z-7d19b5ff",
@@ -81,7 +87,8 @@
     "details": "DETAILS",
     "status": "NEW",
     "test_exists": "false",
-    "test_passed": "false"
+    "test_passed": "false",
+    "readme": "undefined"
   },
   {
     "reqt_ID": "2025-05-20T00:28:20.116Z-92a81e13",
@@ -93,7 +100,8 @@
     "details": "DETAILS",
     "status": "NEW",
     "test_exists": "false",
-    "test_passed": "false"
+    "test_passed": "false",
+    "readme": "undefined"
   },
   {
     "reqt_ID": "2025-05-20T00:28:26.979Z-c596438c",
@@ -105,7 +113,8 @@
     "details": "DETAILS",
     "status": "NEW",
     "test_exists": "false",
-    "test_passed": "false"
+    "test_passed": "false",
+    "readme": "undefined"
   },
   {
     "reqt_ID": "2025-05-20T00:29:36.696Z-72699288",
@@ -117,7 +126,8 @@
     "details": "DETAILS",
     "status": "NEW",
     "test_exists": "false",
-    "test_passed": "false"
+    "test_passed": "false",
+    "readme": "undefined"
   },
   {
     "reqt_ID": "2025-05-20T01:26:58.829Z-8481b746",
@@ -129,7 +139,8 @@
     "details": "DETAILS",
     "status": "NEW",
     "test_exists": "false",
-    "test_passed": "false"
+    "test_passed": "false",
+    "readme": "undefined"
   },
   {
     "reqt_ID": "2025-05-20T01:27:52.950Z-47ebf7b2",
@@ -141,7 +152,8 @@
     "details": "DETAILS",
     "status": "NEW",
     "test_exists": "false",
-    "test_passed": "false"
+    "test_passed": "false",
+    "readme": "undefined"
   },
   {
     "reqt_ID": "2025-05-20T01:28:12.893Z-bef84ff2",
@@ -153,7 +165,8 @@
     "details": "DETAILS",
     "status": "NEW",
     "test_exists": "false",
-    "test_passed": "false"
+    "test_passed": "false",
+    "readme": "undefined"
   },
   {
     "reqt_ID": "2025-05-20T01:29:56.349Z-5bca48cb",
@@ -165,7 +178,8 @@
     "details": "DETAILS",
     "status": "NEW",
     "test_exists": "false",
-    "test_passed": "false"
+    "test_passed": "false",
+    "readme": "undefined"
   },
   {
     "reqt_ID": "2025-05-20T01:30:09.693Z-73e490bb",
@@ -177,7 +191,8 @@
     "details": "DETAILS",
     "status": "NEW",
     "test_exists": "false",
-    "test_passed": "false"
+    "test_passed": "false",
+    "readme": "undefined"
   },
   {
     "reqt_ID": "2025-05-20T01:30:28.413Z-10c1f70d",
@@ -189,7 +204,8 @@
     "details": "DETAILS",
     "status": "NEW",
     "test_exists": "false",
-    "test_passed": "false"
+    "test_passed": "false",
+    "readme": "undefined"
   },
   {
     "reqt_ID": "2025-05-20T01:30:37.305Z-fc8adb5d",
@@ -201,7 +217,8 @@
     "details": "DETAILS",
     "status": "NEW",
     "test_exists": "false",
-    "test_passed": "false"
+    "test_passed": "false",
+    "readme": "undefined"
   },
   {
     "reqt_ID": "2025-05-20T01:31:14.743Z-9b80dca9",
@@ -213,7 +230,8 @@
     "details": "DETAILS",
     "status": "NEW",
     "test_exists": "false",
-    "test_passed": "false"
+    "test_passed": "false",
+    "readme": "undefined"
   },
   {
     "reqt_ID": "2025-05-20T00:28:48.594Z-b59141b8",
@@ -225,6 +243,20 @@
     "details": "DETAILS",
     "status": "NEW",
     "test_exists": "false",
-    "test_passed": "false"
+    "test_passed": "false",
+    "readme": "undefined"
+  },
+  {
+    "reqt_ID": "2025-05-20T02:26:37.787Z-dfbd435b",
+    "hier": 0,
+    "outline": "4",
+    "title": "README Generation",
+    "requirement": "REQUIREMENT",
+    "acceptance": "ACCEPTANCE",
+    "details": "DETAILS",
+    "status": "NEW",
+    "test_exists": "false",
+    "test_passed": "false",
+    "readme": "undefined"
   }
 ]

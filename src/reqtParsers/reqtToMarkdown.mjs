@@ -48,6 +48,10 @@ ${hierToMarkdownHeader(reqt.hier, reqt.outline)} ${reqt.outline}: ${reqt.title}
 
  ${reqt.details}
 
+<!-- reqt_README_field-->
+
+ ${reqt.readme}
+
 <!-- reqt_id: ${reqt.reqt_ID} --end-->`;
 }
 

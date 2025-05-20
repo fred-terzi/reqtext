@@ -6,6 +6,7 @@
   "requirement": "REQUIREMENT",
   "acceptance": "ACCEPTANCE",
   "details": "DETAILS",
+  "readme": "README",
   "status": "NEW",
   "test_exists": false,
   "test_passed": false
