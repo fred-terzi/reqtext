@@ -94,6 +94,7 @@ export default async function init(...args) {
         details: "DETAILS",
         readme: "README",
         status: "NEW",
+        readme_ai_include: false,
         test_exists: false,
         test_passed: false
     };
@@ -111,6 +112,7 @@ export default async function init(...args) {
         details: "DETAILS",
         readme: "README",
         status: "NEW",
+        readme_ai_include: false,
         test_exists: false,
         test_passed: false
     };
