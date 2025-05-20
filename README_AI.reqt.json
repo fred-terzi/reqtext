@@ -1,0 +1,114 @@
+[
+  {
+    "generated_on": "2025-05-20T18:37:12.796Z",
+    "generated_by": "ReqText v0.1.0-demo.18 (https://github.com/joseph-terzi/reqtext)"
+  },
+  {
+    "title": "ReqText",
+    "readme": "**ReqText** is a CLI & TUI requirements management tool designed to help you easily create, manage and visualize your requirements from the command line. The tool is built on my FlatHier (Short for Flat Hierarchy) library, which creates a manipulates hierarchical data structure in a flat, ordered json. Making it human readable and git ready."
+  },
+  {
+    "title": "AI INSTRUCTs",
+    "readme": "exclude"
+  },
+  {
+    "title": "ReqText Installation",
+    "readme": "Available over npm:\n\n```bash\nnpm install reqtext\n```"
+  },
+  {
+    "title": "ReqText Commands",
+    "readme": "README"
+  },
+  {
+    "title": "--version, -v",
+    "readme": "README"
+  },
+  {
+    "title": "--help, -h",
+    "readme": "README"
+  },
+  {
+    "title": "init <project name>",
+    "readme": "Use `reqt init <project name>` to quickly start a new ReqText project. This command creates the necessary files and structure for managing your requirements. See the README for more details and examples."
+  },
+  {
+    "title": "add-item, -a",
+    "readme": "README"
+  },
+  {
+    "title": "add-after, -aa <outline number>",
+    "readme": "README"
+  },
+  {
+    "title": "delete, -d <outline number>",
+    "readme": "README"
+  },
+  {
+    "title": "make-children, -mc <outline number>",
+    "readme": "README"
+  },
+  {
+    "title": "make-sibling, -ms <outline number>",
+    "readme": "README"
+  },
+  {
+    "title": "set-status, -ss <outline number>",
+    "readme": "README"
+  },
+  {
+    "title": "test-exists, -te <outline number>",
+    "readme": "README"
+  },
+  {
+    "title": "test-passed -tp <outline number>",
+    "readme": "README"
+  },
+  {
+    "title": "out-md, -omd",
+    "readme": "README"
+  },
+  {
+    "title": "in-md, -imd",
+    "readme": "README"
+  },
+  {
+    "title": "clean, -c",
+    "readme": "README"
+  },
+  {
+    "title": "ReqText Tree Editor",
+    "readme": "README"
+  },
+  {
+    "title": "README Generation",
+    "readme": "README"
+  },
+  {
+    "title": "Meta Data",
+    "readme": "undefined"
+  },
+  {
+    "title": "Title",
+    "readme": "README"
+  },
+  {
+    "title": "README Section",
+    "readme": "README"
+  },
+  {
+    "title": "README Exclude",
+    "readme": "README"
+  },
+  {
+    "title": "README_AI Generation",
+    "readme": ""
+  },
+  {
+    "title": "README_AI Meta Data",
+    "readme": "README"
+  },
+  {
+    "title": "README_AI Include/Exclude",
+    "readme": "README"
+  }
+]

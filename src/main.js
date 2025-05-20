@@ -16,6 +16,8 @@ import markdownToReqt from './reqtParsers/markdownUpdateReqt.js';
 import { getExistingMarkdownFile } from './utils/getExistingMarkdownFile.js';
 
 import Enquirer from 'enquirer';
+import fs from 'fs/promises';
+import path from 'path';
 
 async function versionCommand() {
   // Get the version from package.json using es modules
@@ -191,6 +193,35 @@ const commandMap = {
     }
   },
 
+  // Add to CLI: generate-readme_ai and -grmai
+  'generate-readme_ai': async () => {
+    const { getCurrentReqtFilePath } = await import('./utils/getCurrentReqtFilePath.js');
+    const fs = (await import('fs/promises')).default;
+    const path = (await import('path')).default;
+
+    // Allow override via REQT_SOT_PATH env var for testing/flexibility
+    let reqtFilePath = process.env.REQT_SOT_PATH;
+    if (!reqtFilePath) {
+      reqtFilePath = await getCurrentReqtFilePath();
+    }
+    if (!reqtFilePath) {
+      console.error('Could not find a .reqt.json file in this project.');
+      process.exit(1);
+    }
+    let reqtArray;
+    try {
+      reqtArray = JSON.parse(await fs.readFile(reqtFilePath, 'utf8'));
+    } catch (e) {
+      console.error('Error reading or parsing .reqt.json:', e.message);
+      process.exit(1);
+    }
+    const generateReadmeAIJson = (await import('./services/generateReadmeAIJson.js')).default;
+    const aiJson = await generateReadmeAIJson(reqtArray);
+    const outPath = path.resolve(process.cwd(), 'README_AI.reqt.json');
+    await fs.writeFile(outPath, JSON.stringify(aiJson, null, 2), 'utf8');
+    console.log(`README_AI.reqt.json generated at ${outPath}`);
+    process.exit(0);
+  },
 };
 
 // Command aliases map
@@ -214,6 +245,7 @@ const aliasMap = {
   '-imd': 'in-md',
   '-c': 'clean',
   '-grm': 'generate-readme',
+  '-grmai': 'generate-readme_ai',
 };
 
 export default async function mainLoop() {
