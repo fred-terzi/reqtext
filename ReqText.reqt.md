@@ -160,14 +160,74 @@ SEE README.
 <!-- reqt_README_field-->
 **README:**
 
- README
+ ## CLI Reference
+
+### General Commands
+
+| Command                | Description                          |
+|------------------------|--------------------------------------|
+| `version`, `--version`, `-v` | Show version number                |
+| `help`, `--help`, `-h`       | Show help text                     |
+| `init <project name>`        | Initialize a new ReqText project   |
+| `editor`                     | Launch the interactive terminal editor |
+| `clean`, `-c`                | Ensure all items have a valid reqt_id. |
+
+> Note: The main purpose of `clean` is if an AI coding tool adds an item directly in the .reqt.json, or .reqt.md. Use the README_AI.reqt.json for the AI tool to learn how to properly use the CLI inputs for it to add or modify items.
+
+### Item Management Commands
+
+| Command                        | Description                               | Usage Example |
+|--------------------------------|-------------------------------------------|----------------|
+| `add-item`, `-a`              | Add an item to the end of the project     | `reqt add-item "New Item"` |
+| `add-after`, `-aa`            | Add an item after a specific outline ID   | `reqt add-after 1.2 "New Subitem"` |
+| `delete`, `-d`                | Delete an item by outline number          | `reqt delete 1.3` |
+| `make-children`, `-mc`        | Demote an item (and its children)         | `reqt make-children 1.2` |
+| `make-sibling`, `-ms`         | Promote an item (and its children)        | `reqt make-sibling 1.2` |
+| `edit-title`, `-et`           | Edit the title of an item by outline ID   | `reqt edit-title 1.2 "Updated Title"` |
+| `set-status`, `-ss`           | Set the status of an item                 | `reqt set-status 1.2 NEW` |
+| `test-exists`, `-te`          | Mark test as existing for an item         | `reqt test-exists 1.2 true` |
+| `test-passed`, `-tp`          | Mark test as passed for an item           | `reqt test-passed 1.2 true` |
+
+### Markdown Editing Commands
+| Command | Description |
+| `in-md`, `-imd`               | Import changes from a markdown file back into the .reqt.json source of truth, updating only the long-form fields (requirement, acceptance, details) for each item. Use --keep or -k to keep the markdown file after import. |
+| `out-md`, `-omd`              | Export all requirements to a markdown file, including the long-form fields (requirement, acceptance, details) for each item. |
+| `diff`                        | Show differences between .reqt.json and markdown |
+
+### README and README_AI Generation
+| `generate-readme`, `-grm`     | Generate README.md from the .reqt.json source of truth |
+| `generate-readme_ai`, `-grmai`| Generate README_AI.reqt.json for AI from the .reqt.json source of truth | `reqt generate-readme_ai` |
+| `init`                        | Initialize a new ReqText project          |
+| `editor`                      | Launch the interactive terminal editor    |
+
+**Example:**
+
+```json  
+{
+    "reqt_ID": "2025-05-20T19:14:37.669Z-12b36284",
+    "hier": 1,
+    "outline": "5.3",
+    "title": "Example Reqt",
+    "requirement": "REQUIREMENT",
+    "acceptance": "ACCEPTANCE",
+    "details": "DETAILS",
+    "readme": "README",
+    "readme_ai": "exclude",
+    "test_exists": "false",
+    "test_passed": "false",
+    "status": "undefined"
+  }
+
+````
+
+**Logic:** If 
 
 <!-- Make Content "exclude" to exclude from README generation -->
 
 <!-- reqt_README_AI_field--> 
 **README AI:**
 
-undefined
+SEE README.
 
 <!-- Make Content "exclude" to exclude from README AI generation -->
 
@@ -201,14 +261,14 @@ undefined
 <!-- reqt_README_field-->
 **README:**
 
- README
+ exclude
 
 <!-- Make Content "exclude" to exclude from README generation -->
 
 <!-- reqt_README_AI_field--> 
 **README AI:**
 
-undefined
+reqt --version or reqt -v to get the current version of reqtext.
 
 <!-- Make Content "exclude" to exclude from README AI generation -->
 
@@ -227,29 +287,29 @@ undefined
 <!-- reqt_Req_field-->
 **Requirement:**
 
- REQUIREMENT
+ The CLI must provide a `--help` or `-h` command that displays usage instructions and a summary of all available commands, including their flags and descriptions. The help output must be clear, concise, and up to date with all implemented features. The command should exit after displaying help.
 
 <!-- reqt_Accept_field-->
 **Acceptance:**
 
- ACCEPTANCE
+ Running `reqt --help` or `reqt -h` displays a help message listing all available commands, their flags, and a brief description of each. The output is readable and matches the current CLI implementation. The command exits with code 0. If an unknown command is entered, the help message is also shown. Manual or automated tests verify the output and behavior.
 
 <!-- reqt_Det_field-->
 **Details:**
 
- DETAILS
+ The help command is essential for user onboarding and troubleshooting. It should be updated whenever new commands or flags are added. The help output should include both long and short flags, usage examples, and a brief description of each command. The implementation should ensure that the help message is shown for both explicit (`--help`, `-h`) and fallback (unknown command) invocations. See `src/commands/help.js` for implementation and `tests/` for test coverage.
 
 <!-- reqt_README_field-->
 **README:**
 
- README
+ exclude
 
 <!-- Make Content "exclude" to exclude from README generation -->
 
 <!-- reqt_README_AI_field--> 
 **README AI:**
 
-undefined
+Recommend reqt -h to new users.
 
 <!-- Make Content "exclude" to exclude from README AI generation -->
 
@@ -262,7 +322,7 @@ undefined
 <!-- reqt Table Non-Editable-->
 | Status | Test Exists | Test Passed |
 |--------|-------------|-------------|
-| NEW | false | false |
+| DONE | true | true |
 <!-- reqt Table Non-Editable-->
 
 <!-- reqt_Req_field-->
@@ -283,14 +343,21 @@ undefined
 <!-- reqt_README_field-->
 **README:**
 
- Use `reqt init <project name>` to quickly start a new ReqText project. This command creates the necessary files and structure for managing your requirements. See the README for more details and examples.
+`reqt init <project name>`
+
+Project name can be entered in "" or with spaces, the init command will replace spaces with underscores.
+
+The init command will create a `.reqt` directory in your root that will hold the following files:
+    - `config.reqt.json` - The config file for the project
+    - `itemTemplate.reqt.json` - The template for new items. This can be edited at any time, but will not back populate existing items.
+    - <project name>.reqt.json - The source of truth for the project. This is where all the requirements, acceptance, details, and status are stored.
 
 <!-- Make Content "exclude" to exclude from README generation -->
 
 <!-- reqt_README_AI_field--> 
 **README AI:**
 
-undefined
+SEE README.
 
 <!-- Make Content "exclude" to exclude from README AI generation -->
 

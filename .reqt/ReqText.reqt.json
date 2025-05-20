@@ -36,7 +36,7 @@
     "status": "NEW",
     "test_exists": "false",
     "test_passed": "false",
-    "readme": "Available over npm:\n\n```bash\nnpm install reqtext\n```"
+    "readme": "Available over npm:\n\n```bash\nnpm install reqtext\n```\n\nor for global installation:\n```bash\nnpm install -g reqtext\n```\n\n> ✅ Both `reqtext` and `reqt` are valid commands. For convenience, `reqt` is the preferred shorthand throughout this guide."
   },
   {
     "reqt_ID": "2025-05-20T00:24:52.186Z-7ce6967d",
@@ -49,7 +49,7 @@
     "status": "INFO",
     "test_exists": "false",
     "test_passed": "false",
-    "readme": "README"
+    "readme": "## CLI Reference\n\n### General Commands\n\n| Command                | Description                          |\n|------------------------|--------------------------------------|\n| `version`, `--version`, `-v` | Show version number                |\n| `help`, `--help`, `-h`       | Show help text                     |\n| `init <project name>`        | Initialize a new ReqText project   |\n| `editor`                     | Launch the interactive terminal editor |\n\n### Item Management Commands\n\n| Command                        | Description                               | Usage Example |\n|--------------------------------|-------------------------------------------|----------------|\n| `add_item`, `-a`              | Add an item to the end of the project     | `reqt add_item \"New Item\"` |\n| `add_after`, `-aa`            | Add an item after a specific outline ID   | `reqt add_after 1.2 \"New Subitem\"` |\n| `delete`, `-d`                | Delete an item by outline number          | `reqt delete 1.3` |\n| `make_children`, `-mc`        | Demote an item (and its children)         | `reqt make_children 1.2` |\n| `make_sibling`, `-ms`         | Promote an item (and its children)        | `reqt make_sibling 1.2` |\n| `edit_title`, `-et`           | Edit the title of an item by outline ID   | `reqt edit_title 1.2 \"Updated Title\"` |\n| `in-md`, `-imd`               | Import changes from a markdown file back into the .reqt.json source of truth, updating only the long-form fields (requirement, acceptance, details) for each item. Use --keep or -k to keep the markdown file after import. | `reqt in-md --keep` |\n| `out-md`, `-omd`             | Export all requirements to a markdown file, including the long-form fields (requirement, acceptance, details) for each item. | `reqt out-md` `|"
   },
   {
     "reqt_ID": "2025-05-20T00:25:13.130Z-9ba8c130",
@@ -62,20 +62,20 @@
     "status": "NEW",
     "test_exists": "false",
     "test_passed": "false",
-    "readme": "README"
+    "readme": "exclude"
   },
   {
     "reqt_ID": "2025-05-20T00:27:35.249Z-cc998ee6",
     "hier": 1,
     "outline": "2.2",
     "title": "--help, -h",
-    "requirement": "REQUIREMENT",
-    "acceptance": "ACCEPTANCE",
-    "details": "DETAILS",
+    "requirement": "The CLI must provide a `--help` or `-h` command that displays usage instructions and a summary of all available commands, including their flags and descriptions. The help output must be clear, concise, and up to date with all implemented features. The command should exit after displaying help.",
+    "acceptance": "Running `reqt --help` or `reqt -h` displays a help message listing all available commands, their flags, and a brief description of each. The output is readable and matches the current CLI implementation. The command exits with code 0. If an unknown command is entered, the help message is also shown. Manual or automated tests verify the output and behavior.",
+    "details": "The help command is essential for user onboarding and troubleshooting. It should be updated whenever new commands or flags are added. The help output should include both long and short flags, usage examples, and a brief description of each command. The implementation should ensure that the help message is shown for both explicit (`--help`, `-h`) and fallback (unknown command) invocations. See `src/commands/help.js` for implementation and `tests/` for test coverage.",
     "status": "NEW",
     "test_exists": "false",
     "test_passed": "false",
-    "readme": "README"
+    "readme": "exclude"
   },
   {
     "reqt_ID": "2025-05-20T00:27:57.660Z-7d19b5ff",
@@ -85,10 +85,10 @@
     "requirement": "The CLI must provide an `init <project name>` command that initializes a new ReqText project in the specified directory. This command must create the necessary project structure, including a `.reqt.json` or `.reqt.md` file, and populate it with a minimal valid template. The command should prevent overwriting existing projects unless explicitly confirmed by the user.",
     "acceptance": "Running `reqt init <project name>` creates a new directory (if it does not exist), initializes a `.reqt.json` or `.reqt.md` file with a valid template, and provides a success message. If the target directory or file already exists, the user is prompted before overwriting. The command exits with code 0 on success and a non-zero code on error. Tests exist to verify correct initialization, error handling, and user prompts.",
     "details": "The `init` command is the entry point for new ReqText projects. It sets up the required files and structure for requirements management. The template includes a root requirement and example items to guide users. The implementation should handle edge cases such as invalid project names, permission errors, and existing files. See `src/commands/init.js` for implementation and `init.unit.test.js` for test coverage. Reference the README for usage examples and expected behaviors.",
-    "status": "NEW",
-    "test_exists": "false",
-    "test_passed": "false",
-    "readme": "Use `reqt init <project name>` to quickly start a new ReqText project. This command creates the necessary files and structure for managing your requirements. See the README for more details and examples."
+    "status": "DONE",
+    "test_exists": "true",
+    "test_passed": "true",
+    "readme": "`reqt init <project name>`\n\nProject name can be entered in \"\" or with spaces, the init command will replace spaces with underscores.\n\nThe init command will create a `.reqt` directory in your root that will hold the following files:\n    - `config.reqt.json` - The config file for the project\n    - `itemTemplate.reqt.json` - The template for new items. This can be edited at any time, but will not back populate existing items.\n    - <project name>.reqt.json - The source of truth for the project. This is where all the requirements, acceptance, details, and status are stored."
   },
   {
     "reqt_ID": "2025-05-20T00:28:20.116Z-92a81e13",
@@ -320,8 +320,9 @@
     "acceptance": "A user can run `reqt generate-readme_ai` or `reqt -grmai` and a `README_AI.reqt.json` file is created or updated in the project root. The file contains an array of objects, each with `title` and `readme` fields, filtered according to the `readme_ai` field. The process completes without errors, and the output matches the source content. Automated or manual tests verify that changes in the source are reflected in the generated file, and that exclusion/inclusion logic works as specified. If required fields are missing, the tool provides a clear warning or error message.",
     "details": "The README_AI will be a README_AI.reqt.json. It will include the title and readme sections of the .reqt.json file. It will be generated from the .reqt.json file and will be used for AI understanding of the project.\n\n Command: reqt generate-readme_ai, or reqt -grmai.",
     "status": "NEW",
-    "test_exists": false,
-    "test_passed": false
+    "test_exists": "false",
+    "test_passed": "false",
+    "readme": "undefined"
   },
   {
     "reqt_ID": "2025-05-20T18:24:20.031Z-7ba8b28d",
@@ -333,8 +334,8 @@
     "details": "A new object in the json will be added at the start of the README_AI.reqt.json file that will include the 'generated_on' and a 'generated_by' with the link to the reqtext repo.",
     "readme": "README",
     "status": "NEW",
-    "test_exists": false,
-    "test_passed": false
+    "test_exists": "false",
+    "test_passed": "false"
   },
   {
     "reqt_ID": "2025-05-20T13:31:50.019Z-38ce0010",
@@ -353,13 +354,14 @@
     "reqt_ID": "2025-05-20T19:14:37.669Z-12b36284",
     "hier": 1,
     "outline": "5.3",
-    "title": "test grmai",
+    "title": "Example Reqt",
     "requirement": "REQUIREMENT",
     "acceptance": "ACCEPTANCE",
     "details": "DETAILS",
     "readme": "README",
     "readme_ai": "exclude",
-    "test_exists": false,
-    "test_passed": false
+    "test_exists": "false",
+    "test_passed": "false",
+    "status": "NEW"
   }
 ]
