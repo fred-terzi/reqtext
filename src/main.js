@@ -131,7 +131,7 @@ const commandMap = {
       const { Confirm } = Enquirer;
       const prompt = new Confirm({
         name: 'overwrite',
-        message: `Overwrite the source of truth reqt.json with the current changes in the markdown from '${fileToCheck}'?`,
+        message: `Check in changes to the SoT? Any conflicts will be overwritten. \n Use 'reqt diff' to check for diffs.`,
         initial: false
       });
       shouldWrite = await prompt.run();

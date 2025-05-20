@@ -36,7 +36,7 @@
     "status": "NEW",
     "test_exists": "false",
     "test_passed": "false",
-    "readme": "undefined"
+    "readme": "Available over npm:\n\n```bash\nnpm install reqtext\n```"
   },
   {
     "reqt_ID": "2025-05-20T00:24:52.186Z-7ce6967d",
@@ -75,7 +75,7 @@
     "status": "NEW",
     "test_exists": "false",
     "test_passed": "false",
-    "readme": "**README:**\n\n README"
+    "readme": "README"
   },
   {
     "reqt_ID": "2025-05-20T00:27:57.660Z-7d19b5ff",
@@ -88,7 +88,7 @@
     "status": "NEW",
     "test_exists": "false",
     "test_passed": "false",
-    "readme": "**README:**\n\n Use `reqt init <project name>` to quickly start a new ReqText project. This command creates the necessary files and structure for managing your requirements. See the README for more details and examples."
+    "readme": "Use `reqt init <project name>` to quickly start a new ReqText project. This command creates the necessary files and structure for managing your requirements. See the README for more details and examples."
   },
   {
     "reqt_ID": "2025-05-20T00:28:20.116Z-92a81e13",
@@ -251,8 +251,8 @@
     "hier": 0,
     "outline": "4",
     "title": "README Generation",
-    "requirement": "ReqText must provide a feature to generate a `README.md` file directly from the `.reqt.json` (or `.reqt.md`) source of truth. The generated README must include the main header and the content of the README field, supporting markdown, HTML, and other markup formats as stored in the source file. This ensures that documentation, requirements, and test states are always synchronized and up to date.",
-    "acceptance": "A user can run the appropriate CLI command (e.g., `reqt out-md` or a dedicated README generation command) and a `README.md` file is created or updated in the project root. The file contains the main header and the content from the README field in the `.reqt.json`/`.reqt.md`. The process completes without errors, and the output matches the source content. Automated or manual tests verify that changes in the README field are reflected in the generated README.md. If the README field is missing or empty, the tool provides a clear warning or error message.",
+    "requirement": "ReqText must provide a feature to generate a `README.md` file directly from the `.reqt.json` source of truth. The generated README must include the main header and the content of the README field, supporting markdown, HTML, and other markup formats as stored in the source file. This ensures that documentation, requirements, and test states are always synchronized and up to date.",
+    "acceptance": "A user can run the appropriate CLI command (e.g., `reqt out-md` or a dedicated README generation command) and a `README.md` file is created or updated in the project root. The file contains the main header and the content from the README field in the `.reqt.json`. The process completes without errors, and the output matches the source content. Automated or manual tests verify that changes in the README field are reflected in the generated README.md. If the README field is missing or empty, the tool provides a clear warning or error message.",
     "details": "The ReqText README generation feature is designed to take the README field, and main header from the .reqt.json file and generate a markdown file. The README field is a string and can be any text so any markdown, html, mermaid etc can be stored into the .reqt.json SoT. \n\n The main purpose of this feature is to have the README directly with the design, requirements, and test states for the project. The goal being that the requirements, design and README all come from the same source of truth and kept visible and up to date togther.",
     "status": "NEW",
     "test_exists": "false",
@@ -260,39 +260,13 @@
     "readme": "undefined"
   },
   {
-    "reqt_ID": "2025-05-20T03:32:14.825Z-037563f0",
-    "hier": 1,
-    "outline": "4.1",
-    "title": "Lower Level",
+    "reqt_ID": "2025-05-20T12:50:41.265Z-da00905f",
+    "hier": 0,
+    "outline": "5",
+    "title": "Meta Data",
     "requirement": "REQUIREMENT",
     "acceptance": "ACCEPTANCE",
     "details": "DETAILS",
-    "readme": "README",
-    "status": "NEW",
-    "test_exists": false,
-    "test_passed": false
-  },
-  {
-    "reqt_ID": "2025-05-20T03:12:19.165Z-8fc59845",
-    "hier": 1,
-    "outline": "4.2",
-    "title": "reqt --gen-readme",
-    "requirement": "REQUIREMENT",
-    "acceptance": "ACCEPTANCE",
-    "details": "The ReqText README generation feature is designed to take the README field, and main header from the .reqt.json file and generate a markdown file. The README field is a string and can be any text so any markdown, html, mermaid etc can be stored into the .reqt.json SoT.",
-    "readme": "README",
-    "status": "NEW",
-    "test_exists": "false",
-    "test_passed": "false"
-  },
-  {
-    "reqt_ID": "2025-05-20T02:53:01.966Z-205bdb70",
-    "hier": 1,
-    "outline": "4.3",
-    "title": "reqt_README",
-    "requirement": "The `.reqt` format must include a `README` field that holds the content to be generated into the project's `README.md`. This field must accept any string, including markdown, HTML, or mermaid diagrams, and serve as the canonical source for the README content.",
-    "acceptance": "The `README` field is present in the `.reqt.json`/`.reqt.md` file and contains valid text. When the README generation feature is invoked, the content of this field is included in the generated `README.md` file. If the field is missing or empty, the tool provides a clear warning or error. Tests or manual checks confirm that the README field content is faithfully rendered in the output file.",
-    "details": "In the .reqt format there is a field called README. The purpose of this field is to hold the text for the section going to be generated into the README.md. It is a string and can be any text so any markdown, html, mermaid etc can be stored into the .reqt.json SoT.",
     "readme": "README",
     "status": "NEW",
     "test_exists": "false",
