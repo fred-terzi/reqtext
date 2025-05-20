@@ -87,6 +87,11 @@ const commandMap = {
     await testExistsHandler(...args);
   },
 
+  // Test Passed command
+  'test-passed': async (...args) => {
+    await testExistsHandler(...args);
+  },
+
   // Out MD command
   'out-md': async (...args) => {
     const fileToCheck = await getExistingMarkdownFile();
@@ -154,10 +159,12 @@ const aliasMap = {
   '-h': 'help',
   '-ss': 'set-status',
   '-te': 'test-exists',
+  '-tp': 'test-passed',
   'out-md': 'out-md',
   'in-md': 'in-md',
   '-omd': 'out-md',
   '-imd': 'in-md',
+  '-c': 'clean',
 };
 
 export default async function mainLoop() {
