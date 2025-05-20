@@ -1,24 +1,30 @@
-// Utility to check if a markdown file exists, given a file name or project context
-export default async function getExistingMarkdownFile(mdFileArg) {
-  const fs = await import('fs/promises');
-  let fileToCheck = mdFileArg;
-  if (!fileToCheck) {
-    try {
-      const reqtJsonPath = await import('../utils/getCurrentReqtFilePath.js').then(m => m.getCurrentReqtFilePath());
-      const jsonText = await fs.readFile(reqtJsonPath, 'utf8');
-      const reqts = JSON.parse(jsonText);
-      const rootTitle = reqts[0]?.title || 'output';
-      const safeTitle = rootTitle.replace(/[^a-zA-Z0-9-_]/g, '_');
-      fileToCheck = `./${safeTitle}.reqt.md`;
-    } catch (e) {
-      // fallback: let reqtToMarkdown handle it
-      return undefined;
-    }
-  }
+/**
+ * Utility to check if a <project name>.reqt.md file exists in the root directory.
+ *
+ * Uses the getCurrentReqtFilePath function to determine the project name,
+ * then checks for the existence of a file with the .reqt.md extension
+ * (instead of .reqt.json) in the root.
+ */
+
+import fs from "fs";
+import path from "path";
+
+/**
+ * Checks if a <project name>.reqt.md file exists in the root directory.
+ * @returns {string|null} The path to the Markdown file if it exists, otherwise null.
+ */
+export function getExistingMarkdownFile() {
+  // Read config.reqt.json without import assertion
+  const configPath = path.join(process.cwd(), ".reqt", "config.reqt.json");
+  let projectName = "";
   try {
-    await fs.access(fileToCheck);
-    return fileToCheck;
+    const configRaw = fs.readFileSync(configPath, "utf-8");
+    const config = JSON.parse(configRaw);
+    projectName = config.projectTitle;
   } catch (e) {
-    return undefined;
+    return null;
   }
+  const mdFilePath = path.join(process.cwd(), `${projectName}.reqt.md`);
+  return fs.existsSync(mdFilePath) ? mdFilePath : null;
 }
+

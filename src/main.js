@@ -13,7 +13,7 @@ import setStatusHandler from './commands/setStatusHandler.js';
 import testExistsHandler from './commands/testExistsHandler.js';
 import reqtToMarkdown from './reqtParsers/reqtToMarkdown.mjs';
 import markdownToReqt from './reqtParsers/markdownUpdateReqt.js';
-import getExistingMarkdownFile from './utils/getExistingMarkdownFile.js';
+import { getExistingMarkdownFile } from './utils/getExistingMarkdownFile.js';
 
 import Enquirer from 'enquirer';
 
@@ -29,73 +29,67 @@ async function versionCommand() {
 
 const commandMap = {
   // Version command
-  version: versionCommand,
+  'version': versionCommand,
 
   // Help command
-  help: help,
+  'help': help,
 
-  init: async (...args) => {
+  'init': async (...args) => {
     await init(...args);
   },
 
-  editor: async (...args) => {
+  'editor': async (...args) => {
     await reqtEditor(...args);
   },
-  
+
   // Add item commands
-  add_item: async (...args) => {
+  'add-item': async (...args) => {
     await addItemHandler(...args);
   },
 
   // Add After commands
-  add_after: async (...args) => {
+  'add-after': async (...args) => {
     await addAfterHandler(...args);
   },
 
   // Delete commands
-  delete: async (...args) => {
+  'delete': async (...args) => {
     await deleteHandler(...args);
   },
 
   // Make Children commands
-  make_children: async (...args) => {
+  'make-children': async (...args) => {
     await makeChildrenHandler(...args);
   },
 
   // Make Sibling commands
-  make_sibling: async (...args) => {
+  'make-sibling': async (...args) => {
     await makeSiblingHandler(...args);
   },
 
   // Edit Title command
-  edit_title: async (...args) => {
+  'edit-title': async (...args) => {
     await editTitleHandler(...args);
   },
 
   // Clean command
-  clean: async () => {
+  'clean': async () => {
     await cleanHandler();
   },
 
   // Set Status command
-  set_status: async (...args) => {
+  'set-status': async (...args) => {
     await setStatusHandler(...args);
   },
 
   // Test Exists command
-  test_exists: async (...args) => {
+  'test-exists': async (...args) => {
     await testExistsHandler(...args);
   },
 
-  // Helper to check if a markdown file exists, given a file name or project context
-  getExistingMarkdownFile: getExistingMarkdownFile,
-
   // Out MD command
-  // If a <project name>.reqt.md exists, prompt to overwrite
-  // If not, create a new one
-  out_md: async (...args) => {
-    let outFile = args[0];
-    const fileToCheck = await getExistingMarkdownFile(outFile);
+  'out-md': async (...args) => {
+    const fileToCheck = await getExistingMarkdownFile();
     let shouldWrite = true;
     if (fileToCheck) {
       const { Confirm } = Enquirer;
@@ -113,9 +107,8 @@ const commandMap = {
     await reqtToMarkdown(args[0]);
   },
 
-
   // In MD command
-  in_md: async (...args) => {
+  'in-md': async (...args) => {
     // Support: reqt in-md [--keep|-k] [mdFile]
     let keep = false;
     let mdFile = undefined;
@@ -123,7 +116,7 @@ const commandMap = {
       if (arg === '--keep' || arg === '-k') keep = true;
       else if (arg.endsWith('.md')) mdFile = arg;
     }
-    const fileToCheck = await getExistingMarkdownFile(mdFile);
+    const fileToCheck = await getExistingMarkdownFile();
     if (!fileToCheck) {
       console.log('No reqt.md file was found to import.');
       return;
