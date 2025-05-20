@@ -94,7 +94,7 @@ export default async function init(...args) {
         acceptance: "ACCEPTANCE",
         readme: "README",
         status: "NEW",
-        readme_ai_include: "exclude",
+        readme_ai: "exclude",
         test_exists: false,
         test_passed: false
     };
@@ -112,7 +112,7 @@ export default async function init(...args) {
         acceptance: "ACCEPTANCE",
         readme: "README",
         status: "NEW",
-        readme_ai_include: "exclude",
+        readme_ai: "exclude",
         test_exists: false,
         test_passed: false
     };

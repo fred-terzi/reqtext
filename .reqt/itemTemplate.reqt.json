@@ -7,7 +7,7 @@
   "acceptance": "ACCEPTANCE",
   "details": "DETAILS",
   "readme": "README",
-  "status": "NEW",
+  "readme_ai": "exclude",
   "test_exists": false,
   "test_passed": false
 }

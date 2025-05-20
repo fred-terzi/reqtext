@@ -1,114 +1,141 @@
 [
   {
-    "generated_on": "2025-05-20T18:37:12.796Z",
+    "generated_on": "2025-05-20T19:14:45.509Z",
     "generated_by": "ReqText v0.1.0-demo.18 (https://github.com/joseph-terzi/reqtext)"
   },
   {
     "title": "ReqText",
-    "readme": "**ReqText** is a CLI & TUI requirements management tool designed to help you easily create, manage and visualize your requirements from the command line. The tool is built on my FlatHier (Short for Flat Hierarchy) library, which creates a manipulates hierarchical data structure in a flat, ordered json. Making it human readable and git ready."
+    "readme": "**ReqText** is a CLI & TUI requirements management tool designed to help you easily create, manage and visualize your requirements from the command line. The tool is built on my FlatHier (Short for Flat Hierarchy) library, which creates a manipulates hierarchical data structure in a flat, ordered json. Making it human readable and git ready.",
+    "readme_ai": ""
   },
   {
     "title": "AI INSTRUCTs",
-    "readme": "exclude"
+    "readme": "exclude",
+    "readme_ai": ""
   },
   {
     "title": "ReqText Installation",
-    "readme": "Available over npm:\n\n```bash\nnpm install reqtext\n```"
+    "readme": "Available over npm:\n\n```bash\nnpm install reqtext\n```",
+    "readme_ai": ""
   },
   {
     "title": "ReqText Commands",
-    "readme": "README"
+    "readme": "README",
+    "readme_ai": ""
   },
   {
     "title": "--version, -v",
-    "readme": "README"
+    "readme": "README",
+    "readme_ai": ""
   },
   {
     "title": "--help, -h",
-    "readme": "README"
+    "readme": "README",
+    "readme_ai": ""
   },
   {
     "title": "init <project name>",
-    "readme": "Use `reqt init <project name>` to quickly start a new ReqText project. This command creates the necessary files and structure for managing your requirements. See the README for more details and examples."
+    "readme": "Use `reqt init <project name>` to quickly start a new ReqText project. This command creates the necessary files and structure for managing your requirements. See the README for more details and examples.",
+    "readme_ai": ""
   },
   {
     "title": "add-item, -a",
-    "readme": "README"
+    "readme": "README",
+    "readme_ai": ""
   },
   {
     "title": "add-after, -aa <outline number>",
-    "readme": "README"
+    "readme": "README",
+    "readme_ai": ""
   },
   {
     "title": "delete, -d <outline number>",
-    "readme": "README"
+    "readme": "README",
+    "readme_ai": ""
   },
   {
     "title": "make-children, -mc <outline number>",
-    "readme": "README"
+    "readme": "README",
+    "readme_ai": ""
   },
   {
     "title": "make-sibling, -ms <outline number>",
-    "readme": "README"
+    "readme": "README",
+    "readme_ai": ""
   },
   {
     "title": "set-status, -ss <outline number>",
-    "readme": "README"
+    "readme": "README",
+    "readme_ai": ""
   },
   {
     "title": "test-exists, -te <outline number>",
-    "readme": "README"
+    "readme": "README",
+    "readme_ai": ""
   },
   {
     "title": "test-passed -tp <outline number>",
-    "readme": "README"
+    "readme": "README",
+    "readme_ai": ""
   },
   {
     "title": "out-md, -omd",
-    "readme": "README"
+    "readme": "README",
+    "readme_ai": ""
   },
   {
     "title": "in-md, -imd",
-    "readme": "README"
+    "readme": "README",
+    "readme_ai": ""
   },
   {
     "title": "clean, -c",
-    "readme": "README"
+    "readme": "README",
+    "readme_ai": ""
   },
   {
     "title": "ReqText Tree Editor",
-    "readme": "README"
+    "readme": "README",
+    "readme_ai": ""
   },
   {
     "title": "README Generation",
-    "readme": "README"
+    "readme": "README",
+    "readme_ai": ""
   },
   {
     "title": "Meta Data",
-    "readme": "undefined"
+    "readme": "undefined",
+    "readme_ai": ""
   },
   {
     "title": "Title",
-    "readme": "README"
+    "readme": "README",
+    "readme_ai": ""
   },
   {
     "title": "README Section",
-    "readme": "README"
+    "readme": "README",
+    "readme_ai": ""
   },
   {
     "title": "README Exclude",
-    "readme": "README"
+    "readme": "README",
+    "readme_ai": ""
   },
   {
     "title": "README_AI Generation",
-    "readme": ""
+    "readme": "",
+    "readme_ai": ""
   },
   {
     "title": "README_AI Meta Data",
-    "readme": "README"
+    "readme": "README",
+    "readme_ai": ""
   },
   {
     "title": "README_AI Include/Exclude",
-    "readme": "README"
+    "readme": "README",
+    "readme_ai": ""
   }
 ]
