@@ -25,10 +25,16 @@ export function parseReqtBlocks(md) {
       const m = block.match(regex);
       return m ? m[1].trim() : undefined;
     };
-    const requirement = getField('Req', 'Requirement');
-    const acceptance = getField('Accept', 'Acceptance');
-    const details = getField('Det', 'Details');
-    const readme = getField('README', 'README');
+    const stripTrailingComment = val => {
+      if (!val) return val;
+      // Remove trailing HTML comments (and any whitespace before/after)
+      return val.replace(/\n?<!--.*?-->/gs, '').trim();
+    };
+    const requirement = stripTrailingComment(getField('Req', 'Requirement'));
+    const acceptance = stripTrailingComment(getField('Accept', 'Acceptance'));
+    const details = stripTrailingComment(getField('Det', 'Details'));
+    const readme = stripTrailingComment(getField('README', 'README'));
+    const readme_ai = stripTrailingComment(getField('README_AI', 'README_AI'));
     updates[reqt_id] = {
       requirement,
       acceptance,
@@ -37,6 +43,7 @@ export function parseReqtBlocks(md) {
       test_exists,
       test_passed,
       readme,
+      readme_ai,
     };
   }
   return updates;

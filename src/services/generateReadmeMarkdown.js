@@ -31,7 +31,9 @@ export function generateReadmeMarkdown(items, options = {}) {
     }
   });
   if (meta) {
-    md += `---\n${meta}\n`;
+    // Make ReqText and version number bold in the meta string
+    const metaBold = meta.replace(/(ReqText v)([\w\.-]+)/, (_, a, b) => `**${a}${b}**`);
+    md += `---\n${metaBold}\n`;
   }
   return md.trim() + '\n';
 }
