@@ -262,7 +262,7 @@ const keyMap = {
         function renderItemEditorMenu() {
             process.stdout.write(`\x1b[${height};1H`);
             process.stdout.write('\x1b[2K');
-            let menu = '[return: save] [esc: skip] [q: quit]';
+            let menu = '[return: save] [esc: skip]';
             if (menu.length > width) menu = menu.slice(0, width);
             process.stdout.write(`\x1b[7m${menu}\x1b[0m`);
             process.stdout.write('\n'); // Newline after menu options
@@ -291,9 +291,6 @@ const keyMap = {
             prompt.on('keypress', (char, key) => {
                 if (key && key.name === 'escape') {
                     skip = true;
-                    prompt.cancel();
-                } else if (key && key.name === 'q') {
-                    quitEditor = true;
                     prompt.cancel();
                 }
             });
@@ -370,7 +367,7 @@ export default async function reqtEditor() {
 
     let state;
     try {
-        state = { data: await loadReqtData(), selectedIndex: 0 };
+        state = { data: await loadReqtData(), selectedIndex: 0, inPrompt: false };
     } catch (err) {
         process.stdin.setRawMode(false);
         process.stdin.pause();
@@ -388,36 +385,17 @@ export default async function reqtEditor() {
     process.stdin.resume();
     process.stdin.setEncoding('utf8');
 
-    // --- Clean up resize handler and restore terminal on exit ---
-    // (Moved cleanup definition above for use in error path)
-    // const cleanup = () => {
-    //     process.stdout.write('\x1b[?1049l'); // Exit alternate screen buffer
-    //     process.stdout.write('\x1b[?25h');   // Show cursor
-    //     process.stdout.off('resize', resizeHandler);
-    //     process.stdin.setRawMode(false);
-    //     process.stdin.pause();
-    // };
-
     // Handler function reference for removal/restoration
     let keyHandler = async (key) => {
+        if (state.inPrompt) return; // Ignore keypresses during prompt
         await handleKeypress(key, state);
     };
 
     process.stdin.on('data', keyHandler);
 
-    // --- Add resize handler ---
-    // Debounce to avoid excessive rerenders
-    // let resizeTimeout = null;
-    // const resizeHandler = () => {
-    //     if (resizeTimeout) clearTimeout(resizeTimeout);
-    //     resizeTimeout = setTimeout(() => {
-    //         renderTree(state.data, state.selectedIndex, true);
-    //     }, 50);
-    // };
-    // process.stdout.on('resize', resizeHandler);
-
-    // Patch enquirer prompts to temporarily remove the key handler
+    // Patch enquirer prompts to temporarily set inPrompt flag
     const patchPrompt = (fn) => async (...args) => {
+        state.inPrompt = true;
         process.stdin.removeListener('data', keyHandler);
         process.stdout.write('\x1b[?25h'); // Show cursor for prompt
         try {
@@ -427,10 +405,11 @@ export default async function reqtEditor() {
             process.stdin.setRawMode(true);
             process.stdin.resume();
             process.stdin.on('data', keyHandler);
+            state.inPrompt = false;
         }
     };
 
-    // Patch the 'a' and 'd' handlers to use the patchPrompt wrapper
+    // Patch the 'a', 'd', and 'e' handlers to use the patchPrompt wrapper
     keyMap['a'] = patchPrompt(keyMap['a']);
     keyMap['d'] = patchPrompt(keyMap['d']);
     keyMap['e'] = patchPrompt(keyMap['e']);
