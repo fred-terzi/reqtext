@@ -6,7 +6,7 @@
     "title": "ReqText",
     "requirement": "The ReqText project must meet all the requirements outlined in this reqt project file.",
     "acceptance": "A test suite must be created to validate the requirements outlined in this reqt project file.",
-    "details": "DETAILS",
+    "details": "**ReqText** is a CLI & TUI requirements management tool designed to help you easily create, manage and visualize your requirements from the command line. The tool is built on my FlatHier (Short for Flat Hierarchy) library, which creates a manipulates hierarchical data structure in a flat, ordered json. Making it human readable and git ready.",
     "status": "NEW",
     "test_exists": "false",
     "test_passed": "false"
@@ -19,26 +19,38 @@
     "requirement": "REQUIREMENT",
     "acceptance": "ACCEPTANCE",
     "details": "DETAILS",
-    "status": "NEW",
+    "status": "INSTRUCs",
     "test_exists": "false",
     "test_passed": "false"
   },
   {
-    "reqt_ID": "2025-05-20T00:24:52.186Z-7ce6967d",
+    "reqt_ID": "2025-05-20T02:05:38.677Z-b0309245",
     "hier": 0,
     "outline": "1",
-    "title": "ReqText Commands",
+    "title": "ReqText Installation",
     "requirement": "REQUIREMENT",
     "acceptance": "ACCEPTANCE",
     "details": "DETAILS",
     "status": "NEW",
+    "test_exists": false,
+    "test_passed": false
+  },
+  {
+    "reqt_ID": "2025-05-20T00:24:52.186Z-7ce6967d",
+    "hier": 0,
+    "outline": "2",
+    "title": "ReqText Commands",
+    "requirement": "REQUIREMENT",
+    "acceptance": "ACCEPTANCE",
+    "details": "DETAILS",
+    "status": "INFO",
     "test_exists": "false",
     "test_passed": "false"
   },
   {
     "reqt_ID": "2025-05-20T00:25:13.130Z-9ba8c130",
     "hier": 1,
-    "outline": "1.1",
+    "outline": "2.1",
     "title": "--version, -v",
     "requirement": "REQUIREMENT",
     "acceptance": "ACCEPTANCE",
@@ -50,7 +62,7 @@
   {
     "reqt_ID": "2025-05-20T00:27:35.249Z-cc998ee6",
     "hier": 1,
-    "outline": "1.2",
+    "outline": "2.2",
     "title": "--help, -h",
     "requirement": "REQUIREMENT",
     "acceptance": "ACCEPTANCE",
@@ -62,7 +74,7 @@
   {
     "reqt_ID": "2025-05-20T00:27:57.660Z-7d19b5ff",
     "hier": 1,
-    "outline": "1.3",
+    "outline": "2.3",
     "title": "init <project name>",
     "requirement": "REQUIREMENT",
     "acceptance": "ACCEPTANCE",
@@ -74,7 +86,7 @@
   {
     "reqt_ID": "2025-05-20T00:28:20.116Z-92a81e13",
     "hier": 1,
-    "outline": "1.4",
+    "outline": "2.4",
     "title": "add-item, -a",
     "requirement": "REQUIREMENT",
     "acceptance": "ACCEPTANCE",
@@ -86,7 +98,7 @@
   {
     "reqt_ID": "2025-05-20T00:28:26.979Z-c596438c",
     "hier": 1,
-    "outline": "1.5",
+    "outline": "2.5",
     "title": "add-after, -aa <outline number>",
     "requirement": "REQUIREMENT",
     "acceptance": "ACCEPTANCE",
@@ -98,7 +110,7 @@
   {
     "reqt_ID": "2025-05-20T00:29:36.696Z-72699288",
     "hier": 1,
-    "outline": "1.6",
+    "outline": "2.6",
     "title": "delete, -d <outline number>",
     "requirement": "REQUIREMENT",
     "acceptance": "ACCEPTANCE",
@@ -110,103 +122,103 @@
   {
     "reqt_ID": "2025-05-20T01:26:58.829Z-8481b746",
     "hier": 1,
-    "outline": "1.7",
+    "outline": "2.7",
     "title": "make-children, -mc <outline number>",
     "requirement": "REQUIREMENT",
     "acceptance": "ACCEPTANCE",
     "details": "DETAILS",
     "status": "NEW",
-    "test_exists": false,
-    "test_passed": false
+    "test_exists": "false",
+    "test_passed": "false"
   },
   {
     "reqt_ID": "2025-05-20T01:27:52.950Z-47ebf7b2",
     "hier": 1,
-    "outline": "1.8",
+    "outline": "2.8",
     "title": "make-sibling, -ms <outline number>",
     "requirement": "REQUIREMENT",
     "acceptance": "ACCEPTANCE",
     "details": "DETAILS",
     "status": "NEW",
-    "test_exists": false,
-    "test_passed": false
+    "test_exists": "false",
+    "test_passed": "false"
   },
   {
     "reqt_ID": "2025-05-20T01:28:12.893Z-bef84ff2",
     "hier": 1,
-    "outline": "1.9",
+    "outline": "2.9",
     "title": "set-status, -ss <outline number>",
     "requirement": "REQUIREMENT",
     "acceptance": "ACCEPTANCE",
     "details": "DETAILS",
     "status": "NEW",
-    "test_exists": false,
-    "test_passed": false
+    "test_exists": "false",
+    "test_passed": "false"
   },
   {
     "reqt_ID": "2025-05-20T01:29:56.349Z-5bca48cb",
     "hier": 1,
-    "outline": "1.10",
+    "outline": "2.10",
     "title": "test-exists, -te <outline number>",
     "requirement": "REQUIREMENT",
     "acceptance": "ACCEPTANCE",
     "details": "DETAILS",
     "status": "NEW",
-    "test_exists": false,
-    "test_passed": false
+    "test_exists": "false",
+    "test_passed": "false"
   },
   {
     "reqt_ID": "2025-05-20T01:30:09.693Z-73e490bb",
     "hier": 1,
-    "outline": "1.11",
+    "outline": "2.11",
     "title": "test-passed -tp <outline number>",
     "requirement": "REQUIREMENT",
     "acceptance": "ACCEPTANCE",
     "details": "DETAILS",
     "status": "NEW",
-    "test_exists": false,
-    "test_passed": false
+    "test_exists": "false",
+    "test_passed": "false"
   },
   {
     "reqt_ID": "2025-05-20T01:30:28.413Z-10c1f70d",
     "hier": 1,
-    "outline": "1.12",
+    "outline": "2.12",
     "title": "out-md, -omd",
     "requirement": "REQUIREMENT",
     "acceptance": "ACCEPTANCE",
     "details": "DETAILS",
     "status": "NEW",
-    "test_exists": false,
-    "test_passed": false
+    "test_exists": "false",
+    "test_passed": "false"
   },
   {
     "reqt_ID": "2025-05-20T01:30:37.305Z-fc8adb5d",
     "hier": 1,
-    "outline": "1.13",
+    "outline": "2.13",
     "title": "in-md, -imd",
     "requirement": "REQUIREMENT",
     "acceptance": "ACCEPTANCE",
     "details": "DETAILS",
     "status": "NEW",
-    "test_exists": false,
-    "test_passed": false
+    "test_exists": "false",
+    "test_passed": "false"
   },
   {
     "reqt_ID": "2025-05-20T01:31:14.743Z-9b80dca9",
     "hier": 1,
-    "outline": "1.14",
+    "outline": "2.14",
     "title": "clean, -c",
     "requirement": "REQUIREMENT",
     "acceptance": "ACCEPTANCE",
     "details": "DETAILS",
     "status": "NEW",
-    "test_exists": false,
-    "test_passed": false
+    "test_exists": "false",
+    "test_passed": "false"
   },
   {
     "reqt_ID": "2025-05-20T00:28:48.594Z-b59141b8",
     "hier": 0,
-    "outline": "2",
+    "outline": "3",
     "title": "ReqText Tree Editor",
     "requirement": "REQUIREMENT",
     "acceptance": "ACCEPTANCE",
