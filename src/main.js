@@ -86,8 +86,51 @@ const commandMap = {
     await testExistsHandler(...args);
   },
 
+  // Helper to check if a markdown file exists, given a file name or project context
+  getExistingMarkdownFile: async (mdFileArg) => {
+    const fs = await import('fs/promises');
+    let fileToCheck = mdFileArg;
+    if (!fileToCheck) {
+      try {
+        const reqtJsonPath = await import('./utils/getCurrentReqtFilePath.js').then(m => m.getCurrentReqtFilePath());
+        const jsonText = await fs.readFile(reqtJsonPath, 'utf8');
+        const reqts = JSON.parse(jsonText);
+        const rootTitle = reqts[0]?.title || 'output';
+        const safeTitle = rootTitle.replace(/[^a-zA-Z0-9-_]/g, '_');
+        fileToCheck = `./${safeTitle}.reqt.md`;
+      } catch (e) {
+        // fallback: let reqtToMarkdown handle it
+        return undefined;
+      }
+    }
+    try {
+      await fs.access(fileToCheck);
+      return fileToCheck;
+    } catch (e) {
+      return undefined;
+    }
+  },
+
   // Out MD command
+  // If a <project name>.reqt.md exists, prompt to overwrite
+  // If not, create a new one
   out_md: async (...args) => {
+    let outFile = args[0];
+    const fileToCheck = await commandMap.getExistingMarkdownFile(outFile);
+    let shouldWrite = true;
+    if (fileToCheck) {
+      const { Confirm } = Enquirer;
+      const prompt = new Confirm({
+        name: 'overwrite',
+        message: `The markdown file '${fileToCheck}' already exists. Overwrite?`,
+        initial: false
+      });
+      shouldWrite = await prompt.run();
+      if (!shouldWrite) {
+        console.log('Aborted: Markdown file was not overwritten.');
+        return;
+      }
+    }
     await reqtToMarkdown(args[0]);
   },
 
@@ -101,18 +144,26 @@ const commandMap = {
       if (arg === '--keep' || arg === '-k') keep = true;
       else if (arg.endsWith('.md')) mdFile = arg;
     }
-    const { Confirm } = Enquirer;
-    const prompt = new Confirm({
-      name: 'overwrite',
-      message: 'Overwrite the source of truth reqt.json with the current changes in the markdown?',
-      initial: false
-    });
-    const overwrite = await prompt.run();
-    if (overwrite) {
-      await markdownToReqt(mdFile, keep);
-    } else {
-      console.log('Aborted: reqt.json was not updated.');
+    const fileToCheck = await commandMap.getExistingMarkdownFile(mdFile);
+    if (!fileToCheck) {
+      console.log('No reqt.md file was found to import.');
+      return;
     }
+    let shouldWrite = true;
+    if (fileToCheck) {
+      const { Confirm } = Enquirer;
+      const prompt = new Confirm({
+        name: 'overwrite',
+        message: `Overwrite the source of truth reqt.json with the current changes in the markdown from '${fileToCheck}'?`,
+        initial: false
+      });
+      shouldWrite = await prompt.run();
+      if (!shouldWrite) {
+        console.log('Aborted: reqt.json was not updated.');
+        return;
+      }
+    }
+    await markdownToReqt(mdFile, keep);
   },
 
 };

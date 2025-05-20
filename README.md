@@ -24,7 +24,7 @@ npx reqt [command] [options]
 ```bash
 npx reqt init <project name>     # Initialize a new reqt project
 npx reqt editor                  # Launch the interactive tree editor
-npx reqt -a "New Item"            # Add a new item to the end
+npx reqt -a "New Item"           # Add a new item to the end
 ```
 
 > ✅ Both `reqtext` and `reqt` are valid commands. For convenience, `reqt` is the preferred shorthand throughout this guide.

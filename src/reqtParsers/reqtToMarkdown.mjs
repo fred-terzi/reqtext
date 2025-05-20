@@ -68,7 +68,7 @@ export default async function reqtToMarkdown(inputFile) {
   const rootTitle = reqts[0]?.title || 'output';
   // Sanitize filename: remove/replace problematic characters
   const safeTitle = rootTitle.replace(/[^a-zA-Z0-9-_]/g, '_');
-  const outPath = `${safeTitle}.reqt.md`;
+  const outPath = `./${safeTitle}.reqt.md`;
   await fs.writeFile(outPath, markdownBlocks, 'utf8');
   console.log(`Markdown saved to ${outPath}`);
 }

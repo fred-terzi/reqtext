@@ -46,7 +46,6 @@ export default async function markdownToReqt(mdFilePathArg, keep = false) {
   // Convert to .md file path in the project root
   const mdFileName = path.basename(reqtJsonPath).replace(/\.json$/, '.md');
   const mdFilePath = mdFilePathArg || path.join(process.cwd(), mdFileName);
-  console.log('mdFilePath', mdFilePath);
   // 1. Read the Markdown file
   const md = await fs.readFile(mdFilePath, 'utf-8');
   // 2. Parse the Markdown
