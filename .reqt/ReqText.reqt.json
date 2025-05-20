@@ -279,11 +279,11 @@
     "title": "reqt --gen-readme",
     "requirement": "REQUIREMENT",
     "acceptance": "ACCEPTANCE",
-    "details": "DETAILS",
+    "details": "The ReqText README generation feature is designed to take the README field, and main header from the .reqt.json file and generate a markdown file. The README field is a string and can be any text so any markdown, html, mermaid etc can be stored into the .reqt.json SoT.",
     "readme": "README",
     "status": "NEW",
-    "test_exists": false,
-    "test_passed": false
+    "test_exists": "false",
+    "test_passed": "false"
   },
   {
     "reqt_ID": "2025-05-20T02:53:01.966Z-205bdb70",

@@ -2,6 +2,7 @@ import fs from 'fs/promises';
 import path from 'path';
 import { parseReqtBlocks } from '../reqtParsers/markdownUpdateReqt.js';
 import { getData } from './dataHandler.js';
+import { getExistingMarkdownFile } from '../utils/getExistingMarkdownFile.js';
 
 /**
  * Checks for diffs between the three main editable fields in a data array (in-memory) and the Markdown file.
@@ -16,11 +17,11 @@ export async function checkReqtMdDiff({ data, mdPath } = {}) {
   if (!Array.isArray(data)) throw new Error('Must provide in-memory data array as `data`');
   // If no mdPath provided, try to infer from current config
   if (!mdPath) {
-    const { getCurrentReqtFilePath } = await import('../utils/getCurrentReqtFilePath.js');
-    let jsonPath = await getCurrentReqtFilePath();
-    let base = path.basename(jsonPath);
-    base = base.replace(/(\.reqt)?\.json$/, '');
-    mdPath = path.resolve(process.cwd(), base + '.reqt.md');
+    mdPath = getExistingMarkdownFile();
+    if (!mdPath) {
+      console.log('No reqt.md currently checked out.');
+      return false;
+    }
   }
   const md = await fs.readFile(mdPath, 'utf8');
   const mdFields = parseReqtBlocks(md);
