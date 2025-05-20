@@ -21,11 +21,12 @@
 <!-- reqt_Det_field-->
 **Details:**
 
- DETAILS
+ This root-level requirement establishes that ReqText, as a project, is governed by the requirements defined in this file. It acts as a meta-requirement, ensuring traceability and completeness for all features, commands, and workflows. The intent is to guarantee that every aspect of the tool (CLI, TUI, markdown workflow, data model, and documentation) is covered by explicit, testable requirements. This requirement is validated by the presence of a comprehensive test suite that exercises all documented requirements, and by regular review to ensure new features or changes are reflected in this file. The root requirement also serves as a contract for contributors and maintainers, ensuring ongoing alignment between implementation, documentation, and user needs.
 
 <!-- reqt_README_field-->
+**README:**
 
- undefined
+ **ReqText** is a CLI & TUI requirements management tool designed to help you easily create, manage and visualize your requirements from the command line. The tool is built on my FlatHier (Short for Flat Hierarchy) library, which creates a manipulates hierarchical data structure in a flat, ordered json. Making it human readable and git ready.
 
 <!-- reqt_id: 2025-05-20T00:21:07.991Z-d123f61d --end-->
 
@@ -55,6 +56,7 @@
  DETAILS
 
 <!-- reqt_README_field-->
+**README:**
 
  undefined
 
@@ -86,6 +88,7 @@
  DETAILS
 
 <!-- reqt_README_field-->
+**README:**
 
  undefined
 
@@ -117,6 +120,7 @@
  The CLI commands cover all major user workflows: initializing a project, adding/editing/deleting items, promoting/demoting items in the hierarchy, updating item status, exporting/importing requirements to/from markdown, and cleaning up project files. Commands should be discoverable via `--help` and should provide clear feedback to the user. Each command should be testable via scripts in the `tests/` directory. Reference the README for command usage examples and expected behaviors.
 
 <!-- reqt_README_field-->
+**README:**
 
  undefined
 
@@ -148,6 +152,7 @@
  The version should be sourced from `package.json` to ensure consistency. No other output should be produced. This command is typically used in CI, scripting, and user troubleshooting. See `src/utils/getVersion.js` for implementation and `tests/` for test coverage.
 
 <!-- reqt_README_field-->
+**README:**
 
  undefined
 
@@ -179,8 +184,11 @@
  DETAILS
 
 <!-- reqt_README_field-->
+**README:**
 
- undefined
+ **README:**
+
+ README
 
 <!-- reqt_id: 2025-05-20T00:27:35.249Z-cc998ee6 --end-->
 
@@ -197,21 +205,24 @@
 <!-- reqt_Req_field-->
 **Requirement:**
 
- REQUIREMENT
+ The CLI must provide an `init <project name>` command that initializes a new ReqText project in the specified directory. This command must create the necessary project structure, including a `.reqt.json` or `.reqt.md` file, and populate it with a minimal valid template. The command should prevent overwriting existing projects unless explicitly confirmed by the user.
 
 <!-- reqt_Accept_field-->
 **Acceptance:**
 
- ACCEPTANCE
+ Running `reqt init <project name>` creates a new directory (if it does not exist), initializes a `.reqt.json` or `.reqt.md` file with a valid template, and provides a success message. If the target directory or file already exists, the user is prompted before overwriting. The command exits with code 0 on success and a non-zero code on error. Tests exist to verify correct initialization, error handling, and user prompts.
 
 <!-- reqt_Det_field-->
 **Details:**
 
- DETAILS
+ The `init` command is the entry point for new ReqText projects. It sets up the required files and structure for requirements management. The template includes a root requirement and example items to guide users. The implementation should handle edge cases such as invalid project names, permission errors, and existing files. See `src/commands/init.js` for implementation and `init.unit.test.js` for test coverage. Reference the README for usage examples and expected behaviors.
 
 <!-- reqt_README_field-->
+**README:**
 
- undefined
+ **README:**
+
+ Use `reqt init <project name>` to quickly start a new ReqText project. This command creates the necessary files and structure for managing your requirements. See the README for more details and examples.
 
 <!-- reqt_id: 2025-05-20T00:27:57.660Z-7d19b5ff --end-->
 
@@ -241,6 +252,7 @@
  DETAILS
 
 <!-- reqt_README_field-->
+**README:**
 
  undefined
 
@@ -272,6 +284,7 @@
  DETAILS
 
 <!-- reqt_README_field-->
+**README:**
 
  undefined
 
@@ -303,6 +316,7 @@
  DETAILS
 
 <!-- reqt_README_field-->
+**README:**
 
  undefined
 
@@ -334,6 +348,7 @@
  DETAILS
 
 <!-- reqt_README_field-->
+**README:**
 
  undefined
 
@@ -365,6 +380,7 @@
  DETAILS
 
 <!-- reqt_README_field-->
+**README:**
 
  undefined
 
@@ -396,6 +412,7 @@
  DETAILS
 
 <!-- reqt_README_field-->
+**README:**
 
  undefined
 
@@ -427,6 +444,7 @@
  DETAILS
 
 <!-- reqt_README_field-->
+**README:**
 
  undefined
 
@@ -458,6 +476,7 @@
  DETAILS
 
 <!-- reqt_README_field-->
+**README:**
 
  undefined
 
@@ -489,6 +508,7 @@
  DETAILS
 
 <!-- reqt_README_field-->
+**README:**
 
  undefined
 
@@ -520,6 +540,7 @@
  DETAILS
 
 <!-- reqt_README_field-->
+**README:**
 
  undefined
 
@@ -551,6 +572,7 @@
  DETAILS
 
 <!-- reqt_README_field-->
+**README:**
 
  undefined
 
@@ -582,6 +604,7 @@
  DETAILS
 
 <!-- reqt_README_field-->
+**README:**
 
  undefined
 
@@ -590,6 +613,72 @@
 <!-- reqt_id: 2025-05-20T02:26:37.787Z-dfbd435b --start-->
 
 ## 4: README Generation
+
+<!-- reqt Table Non-Editable-->
+| Status | Test Exists | Test Passed |
+|--------|-------------|-------------|
+| NEW | false | false |
+<!-- reqt Table Non-Editable-->
+
+<!-- reqt_Req_field-->
+**Requirement:**
+
+ ReqText must provide a feature to generate a `README.md` file directly from the `.reqt.json` (or `.reqt.md`) source of truth. The generated README must include the main header and the content of the README field, supporting markdown, HTML, and other markup formats as stored in the source file. This ensures that documentation, requirements, and test states are always synchronized and up to date.
+
+<!-- reqt_Accept_field-->
+**Acceptance:**
+
+ A user can run the appropriate CLI command (e.g., `reqt out-md` or a dedicated README generation command) and a `README.md` file is created or updated in the project root. The file contains the main header and the content from the README field in the `.reqt.json`/`.reqt.md`. The process completes without errors, and the output matches the source content. Automated or manual tests verify that changes in the README field are reflected in the generated README.md. If the README field is missing or empty, the tool provides a clear warning or error message.
+
+<!-- reqt_Det_field-->
+**Details:**
+
+ The ReqText README generation feature is designed to take the README field, and main header from the .reqt.json file and generate a markdown file. The README field is a string and can be any text so any markdown, html, mermaid etc can be stored into the .reqt.json SoT. 
+
+ The main purpose of this feature is to have the README directly with the design, requirements, and test states for the project. The goal being that the requirements, design and README all come from the same source of truth and kept visible and up to date togther.
+
+<!-- reqt_README_field-->
+**README:**
+
+ undefined
+
+<!-- reqt_id: 2025-05-20T02:26:37.787Z-dfbd435b --end-->
+
+<!-- reqt_id: 2025-05-20T02:53:01.966Z-205bdb70 --start-->
+
+### 4.1: reqt_README
+
+<!-- reqt Table Non-Editable-->
+| Status | Test Exists | Test Passed |
+|--------|-------------|-------------|
+| NEW | false | false |
+<!-- reqt Table Non-Editable-->
+
+<!-- reqt_Req_field-->
+**Requirement:**
+
+ The `.reqt` format must include a `README` field that holds the content to be generated into the project's `README.md`. This field must accept any string, including markdown, HTML, or mermaid diagrams, and serve as the canonical source for the README content.
+
+<!-- reqt_Accept_field-->
+**Acceptance:**
+
+ The `README` field is present in the `.reqt.json`/`.reqt.md` file and contains valid text. When the README generation feature is invoked, the content of this field is included in the generated `README.md` file. If the field is missing or empty, the tool provides a clear warning or error. Tests or manual checks confirm that the README field content is faithfully rendered in the output file.
+
+<!-- reqt_Det_field-->
+**Details:**
+
+ In the .reqt format there is a field called README. The purpose of this field is to hold the text for the section going to be generated into the README.md. It is a string and can be any text so any markdown, html, mermaid etc can be stored into the .reqt.json SoT.
+
+<!-- reqt_README_field-->
+**README:**
+
+ README
+
+<!-- reqt_id: 2025-05-20T02:53:01.966Z-205bdb70 --end-->
+
+<!-- reqt_id: 2025-05-20T03:12:19.165Z-8fc59845 --start-->
+
+### 4.2: reqt --gen-readme, -grm
 
 <!-- reqt Table Non-Editable-->
 | Status | Test Exists | Test Passed |
@@ -610,10 +699,11 @@
 <!-- reqt_Det_field-->
 **Details:**
 
- DETAILS
+ The ReqText README generation feature is designed to take the README field, and main header from the .reqt.json file and generate a markdown file. The README field is a string and can be any text so any markdown, html, mermaid etc can be stored into the .reqt.json SoT.
 
 <!-- reqt_README_field-->
+**README:**
 
- undefined
+ README
 
-<!-- reqt_id: 2025-05-20T02:26:37.787Z-dfbd435b --end-->
+<!-- reqt_id: 2025-05-20T03:12:19.165Z-8fc59845 --end-->

@@ -8,26 +8,25 @@ export default async function makeChildrenHandler(...args) {
 
     // Check if data is loaded
     if (!data || !Array.isArray(data) || data.length === 0) {
-        console.error("❌ No project data loaded.\n Run 'npx reqt init <project name>'");
-        process.exit(1);
+        // In TUI/editor context, do nothing if no data
+        return;
     }
     // Require at least one argument: outline_number
     if (args.length < 1) {
-        console.error("Usage: reqtext make_children <outline_number>");
-        process.exit(1);
+        // Do nothing if no argument
+        return;
     }
     const outlineNumber = args[0];
     if (!outlineNumber || typeof outlineNumber !== 'string') {
-        console.error("❌ Invalid outline number. Must be a non-empty string.");
-        process.exit(1);
+        // Do nothing if invalid outline number
+        return;
     }
 
     // Demote the item with the specified outline number
     const updatedData = fhr.demote(data, outlineNumber);
     if (!updatedData || updatedData === data) {
-        // demote returns unchanged data if demotion is not possible
-        console.error(`⚠️  Could not demote item with outline #${outlineNumber}. It may already be the first item or not exist.`);
-        process.exit(1);
+        // Do nothing if demotion is not possible
+        return;
     }
     // Save the updated data using the new data handler
     await setData(updatedData);
