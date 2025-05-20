@@ -1,4 +1,4 @@
-# ReqText by Terzi Tech
+# ReqText
 
 **ReqText** is a CLI & TUI requirements management tool designed to help you easily create, manage and visualize your requirements from the command line. The tool is built on my FlatHier (Short for Flat Hierarchy) library, which creates a manipulates hierarchical data structure in a flat, ordered json. Making it human readable and git ready. 
 
