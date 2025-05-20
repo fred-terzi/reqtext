@@ -19,7 +19,7 @@
  * @param {...string} args - The project name and any additional arguments.
  * @returns {Promise<void>} Resolves when initialization is complete or aborted.
  */
-import fs from 'fs';
+import fs from 'fs/promises';
 import enquirer from 'enquirer';
 import path from 'path';
 import fhr from "@terzitech/flathier";
@@ -47,7 +47,12 @@ export default async function init(...args) {
     const sotPath = path.join(reqtDir, sotFileName);
 
     // Check for existing .reqt directory and prompt before overwriting anything inside
-    if (fs.existsSync(reqtDir)) {
+    let dirExists = false;
+    try {
+        await fs.access(reqtDir);
+        dirExists = true;
+    } catch {}
+    if (dirExists) {
         const response = await promptFn({
             type: 'confirm',
             name: 'overwrite',
@@ -59,12 +64,12 @@ export default async function init(...args) {
             return;
         } else {
             // Remove the entire .reqt directory and its contents
-            fs.rmSync(reqtDir, { recursive: true, force: true });
-            fs.mkdirSync(reqtDir);
+            await fs.rm(reqtDir, { recursive: true, force: true });
+            await fs.mkdir(reqtDir);
             console.log('✅ Overwrote .reqt directory and all contents.');
         }
     } else {
-        fs.mkdirSync(reqtDir);
+        await fs.mkdir(reqtDir);
         console.log(`✅ Created .reqt directory in ${cwd}`);
     }
 
@@ -74,7 +79,7 @@ export default async function init(...args) {
         sotPath: `./.reqt/${sotFileName}`,
         templatePath: './.reqt/itemTemplate.reqt.json'
     };
-    fs.writeFileSync(configPath, JSON.stringify(config, null, 2));
+    await fs.writeFile(configPath, JSON.stringify(config, null, 2));
     console.log('✅ Created config.reqt.json');
 
     // Write itemTemplate.reqt.json (basic template)
@@ -90,7 +95,7 @@ export default async function init(...args) {
         test_exists: false,
         test_passed: false
     };
-    fs.writeFileSync(templatePath, JSON.stringify(itemTemplate, null, 2));
+    await fs.writeFile(templatePath, JSON.stringify(itemTemplate, null, 2));
     console.log('✅ Created itemTemplate.reqt.json');
 
     // Insert itemTemplate into the sot file for the project item
@@ -108,7 +113,7 @@ export default async function init(...args) {
     };
 
     // Write ProjectSOT.reqt.json (array with project item)
-    fs.writeFileSync(sotPath, JSON.stringify([sotTemplate], null, 2));
+    await fs.writeFile(sotPath, JSON.stringify([sotTemplate], null, 2));
     console.log(`✅ Created ${sotFileName}`);
 
     console.log('✅ ReqText project initialized successfully in .reqt');

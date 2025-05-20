@@ -1,30 +1,32 @@
-import fs from 'fs';
+import fs from 'fs/promises';
 import path from 'path';
 import init from '../src/commands/init.js';
 
 // Helper to clean up test files
-function cleanFiles(baseName) {
+async function cleanFiles(baseName) {
     const files = [
         `${baseName}.reqt.json`,
         `${baseName}.template.json`
     ];
     for (const file of files) {
-        if (fs.existsSync(file)) fs.unlinkSync(file);
+        try { await fs.unlink(file); } catch {}
     }
 }
 
 async function testInitCreatesFields() {
     const testName = 'testproject';
-    cleanFiles(testName);
+    await cleanFiles(testName);
     // Mock promptFn to always confirm
     const promptFn = async () => ({ switch: true });
     await init(testName, promptFn);
     const reqtFile = path.join('.reqt', `${testName}.reqt.json`);
-    if (!fs.existsSync(reqtFile)) {
+    let exists = false;
+    try { await fs.access(reqtFile); exists = true; } catch {}
+    if (!exists) {
         console.error('FAIL: .reqt.json file not created');
         return;
     }
-    const data = JSON.parse(fs.readFileSync(reqtFile, 'utf-8'));
+    const data = JSON.parse(await fs.readFile(reqtFile, 'utf-8'));
     // Accept both camelCase and snake_case for test fields
     let allFields = data.every(item =>
         ('Test Exists' in item || 'test_exists' in item) &&
@@ -36,7 +38,7 @@ async function testInitCreatesFields() {
         console.error('FAIL: Not all items have required fields');
         console.error('Actual item fields:', data.map(i => Object.keys(i)));
     }
-    cleanFiles(testName);
+    await cleanFiles(testName);
 }
 
 // Additional test for new init logic (projectTitle as SoT file, config, template)
@@ -48,27 +50,28 @@ async function testInitCreatesAllFiles() {
     const templatePath = path.join(reqtDir, 'itemTemplate.reqt.json');
     const sotFileName = `${testName}.reqt.json`;
     const sotPath = path.join(reqtDir, sotFileName);
-
     // Clean up before test
-    if (fs.existsSync(configPath)) fs.unlinkSync(configPath);
-    if (fs.existsSync(templatePath)) fs.unlinkSync(templatePath);
-    if (fs.existsSync(sotPath)) fs.unlinkSync(sotPath);
-    if (fs.existsSync(reqtDir)) fs.rmdirSync(reqtDir, { recursive: true });
-
+    try { await fs.unlink(configPath); } catch {}
+    try { await fs.unlink(templatePath); } catch {}
+    try { await fs.unlink(sotPath); } catch {}
+    try { await fs.rmdir(reqtDir, { recursive: true }); } catch {}
     // Mock prompt to always confirm overwrite
     const mockPrompt = async () => ({ overwrite: true });
     await init(testName, mockPrompt);
-
     let passed = true;
-    if (!fs.existsSync(reqtDir)) {
+    let exists = false;
+    try { await fs.access(reqtDir); exists = true; } catch {}
+    if (!exists) {
         console.error('.reqt directory not created');
         passed = false;
     }
-    if (!fs.existsSync(configPath)) {
+    exists = false;
+    try { await fs.access(configPath); exists = true; } catch {}
+    if (!exists) {
         console.error('config.reqt.json not created');
         passed = false;
     } else {
-        const config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+        const config = JSON.parse(await fs.readFile(configPath, 'utf8'));
         if (config.projectTitle !== testName) {
             console.error('projectTitle not set correctly in config');
             passed = false;
@@ -78,15 +81,19 @@ async function testInitCreatesAllFiles() {
             passed = false;
         }
     }
-    if (!fs.existsSync(templatePath)) {
+    exists = false;
+    try { await fs.access(templatePath); exists = true; } catch {}
+    if (!exists) {
         console.error('itemTemplate.reqt.json not created');
         passed = false;
     }
-    if (!fs.existsSync(sotPath)) {
+    exists = false;
+    try { await fs.access(sotPath); exists = true; } catch {}
+    if (!exists) {
         console.error('SoT file not created');
         passed = false;
     } else {
-        const sot = JSON.parse(fs.readFileSync(sotPath, 'utf8'));
+        const sot = JSON.parse(await fs.readFile(sotPath, 'utf8'));
         // Expect the SoT file to contain a single project item with correct fields
         if (!Array.isArray(sot) || sot.length !== 1) {
             console.error('SoT file does not contain a single project item');

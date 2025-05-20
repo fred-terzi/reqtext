@@ -1,12 +1,12 @@
-import fs from 'fs';
+import fs from 'fs/promises';
 import path from 'path';
 import addItemHandler from '../src/commands/addItemHandler.js';
 import init from '../src/commands/init.js';
 import { execSync } from 'child_process';
 
-function cleanFiles(baseName) {
+async function cleanFiles(baseName) {
     const reqtFile = path.join('.reqt', `${baseName}.reqt.json`);
-    if (fs.existsSync(reqtFile)) fs.unlinkSync(reqtFile);
+    try { await fs.unlink(reqtFile); } catch {}
 }
 
 async function testAddItemHandler() {
@@ -22,7 +22,8 @@ async function testAddItemHandler() {
     await init(testName, promptFn);
     // Find the actual SOT file created by init
     const reqtDir = path.join('.', '.reqt');
-    const files = fs.readdirSync(reqtDir);
+    let files = [];
+    try { files = await fs.readdir(reqtDir); } catch {}
     const reqtFile = files.find(f => f.endsWith(`${testName}.reqt.json`));
     if (!reqtFile) {
         console.error('FAIL: No SOT file found for testName:', testName);
@@ -34,7 +35,7 @@ async function testAddItemHandler() {
     const newItemTitle = 'Unit Test Item';
     process.chdir(path.resolve('.'));
     await addItemHandler(newItemTitle);
-    const data = JSON.parse(fs.readFileSync(reqtFilePath, 'utf-8'));
+    const data = JSON.parse(await fs.readFile(reqtFilePath, 'utf-8'));
     const found = data[data.length - 1] && data[data.length - 1].title === newItemTitle;
     if (found) {
         console.log('PASS: addItemHandler added the new item as the last item');

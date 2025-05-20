@@ -1,0 +1,14 @@
+[
+  {
+    "reqt_ID": "2025-05-20T00:13:55.211Z-9fa44d3a",
+    "hier": 0,
+    "outline": "0",
+    "title": "deletehandlertest",
+    "requirement": "REQUIREMENT",
+    "acceptance": "ACCEPTANCE",
+    "details": "DETAILS",
+    "status": "NEW",
+    "test_exists": false,
+    "test_passed": false
+  }
+]

@@ -22,7 +22,7 @@ export default async function makeSiblingHandler(...args) {
     }
 
     // Promote the item with the specified outline number
-    const updatedData = fhr.promote(data, outlineNumber);
+    const updatedData = await fhr.promote(data, outlineNumber);
     if (!updatedData || updatedData === data) {
         // promote returns unchanged data if promotion is not possible
         console.error(`⚠️  Could not promote item with outline #${outlineNumber}. It may already be at the root or not exist.`);
