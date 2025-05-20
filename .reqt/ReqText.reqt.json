@@ -23,7 +23,7 @@
     "status": "INSTRUCs",
     "test_exists": "false",
     "test_passed": "false",
-    "readme": "undefined"
+    "readme": "README"
   },
   {
     "reqt_ID": "2025-05-20T02:05:38.677Z-b0309245",
@@ -49,7 +49,7 @@
     "status": "INFO",
     "test_exists": "false",
     "test_passed": "false",
-    "readme": "undefined"
+    "readme": "README"
   },
   {
     "reqt_ID": "2025-05-20T00:25:13.130Z-9ba8c130",
@@ -62,7 +62,7 @@
     "status": "NEW",
     "test_exists": "false",
     "test_passed": "false",
-    "readme": "undefined"
+    "readme": "README"
   },
   {
     "reqt_ID": "2025-05-20T00:27:35.249Z-cc998ee6",
@@ -101,7 +101,7 @@
     "status": "NEW",
     "test_exists": "false",
     "test_passed": "false",
-    "readme": "undefined"
+    "readme": "README"
   },
   {
     "reqt_ID": "2025-05-20T00:28:26.979Z-c596438c",
@@ -114,7 +114,7 @@
     "status": "NEW",
     "test_exists": "false",
     "test_passed": "false",
-    "readme": "undefined"
+    "readme": "README"
   },
   {
     "reqt_ID": "2025-05-20T00:29:36.696Z-72699288",
@@ -127,7 +127,7 @@
     "status": "NEW",
     "test_exists": "false",
     "test_passed": "false",
-    "readme": "undefined"
+    "readme": "README"
   },
   {
     "reqt_ID": "2025-05-20T01:26:58.829Z-8481b746",
@@ -140,7 +140,7 @@
     "status": "NEW",
     "test_exists": "false",
     "test_passed": "false",
-    "readme": "undefined"
+    "readme": "README"
   },
   {
     "reqt_ID": "2025-05-20T01:27:52.950Z-47ebf7b2",
@@ -153,7 +153,7 @@
     "status": "NEW",
     "test_exists": "false",
     "test_passed": "false",
-    "readme": "undefined"
+    "readme": "README"
   },
   {
     "reqt_ID": "2025-05-20T01:28:12.893Z-bef84ff2",
@@ -166,7 +166,7 @@
     "status": "NEW",
     "test_exists": "false",
     "test_passed": "false",
-    "readme": "undefined"
+    "readme": "README"
   },
   {
     "reqt_ID": "2025-05-20T01:29:56.349Z-5bca48cb",
@@ -179,7 +179,7 @@
     "status": "NEW",
     "test_exists": "false",
     "test_passed": "false",
-    "readme": "undefined"
+    "readme": "README"
   },
   {
     "reqt_ID": "2025-05-20T01:30:09.693Z-73e490bb",
@@ -192,7 +192,7 @@
     "status": "NEW",
     "test_exists": "false",
     "test_passed": "false",
-    "readme": "undefined"
+    "readme": "README"
   },
   {
     "reqt_ID": "2025-05-20T01:30:28.413Z-10c1f70d",
@@ -205,7 +205,7 @@
     "status": "NEW",
     "test_exists": "false",
     "test_passed": "false",
-    "readme": "undefined"
+    "readme": "README"
   },
   {
     "reqt_ID": "2025-05-20T01:30:37.305Z-fc8adb5d",
@@ -218,7 +218,7 @@
     "status": "NEW",
     "test_exists": "false",
     "test_passed": "false",
-    "readme": "undefined"
+    "readme": "README"
   },
   {
     "reqt_ID": "2025-05-20T01:31:14.743Z-9b80dca9",
@@ -231,7 +231,7 @@
     "status": "NEW",
     "test_exists": "false",
     "test_passed": "false",
-    "readme": "undefined"
+    "readme": "README"
   },
   {
     "reqt_ID": "2025-05-20T00:28:48.594Z-b59141b8",
@@ -244,7 +244,7 @@
     "status": "NEW",
     "test_exists": "false",
     "test_passed": "false",
-    "readme": "undefined"
+    "readme": "README"
   },
   {
     "reqt_ID": "2025-05-20T02:26:37.787Z-dfbd435b",
@@ -257,7 +257,7 @@
     "status": "NEW",
     "test_exists": "false",
     "test_passed": "false",
-    "readme": "undefined"
+    "readme": "README"
   },
   {
     "reqt_ID": "2025-05-20T12:50:41.265Z-da00905f",
@@ -307,7 +307,7 @@
     "acceptance": "ACCEPTANCE",
     "details": "If the readme section in the .reqt.json value is \"exclude\" then the entire item will be excluded from the readme. \n\n Use case: the user wants to have more detailed fileds in the README_AI but not in the regular README it can be excluded. \n\n Example: for reqtext there will be a README section showing all the basic commands, in the README_AI that higher level will be included but there will a lower level item for each individual command so the AI has an easier time separating the commands.",
     "readme": "README",
-    "status": "PASS",
+    "status": "IN DEV",
     "test_exists": true,
     "test_passed": true
   },
