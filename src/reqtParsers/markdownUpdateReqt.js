@@ -20,8 +20,8 @@ export function parseReqtBlocks(md) {
     const [status, test_exists, test_passed] = tableRowMatch ? tableRowMatch.slice(1).map(s => s.trim()) : [undefined, undefined, undefined];
     // Extract fields by comment marker and label
     const getField = (field, label) => {
-      // For all fields, require the label line
-      const regex = new RegExp(`<!-- reqt_${field}_field-->\\s*\\*\\*${label}:\\*\\*\\s*([\\s\\S]*?)(?=<!-- reqt_|<!-- reqt_id:|$)`, 'i');
+      // More robust: allow flexible whitespace and case-insensitive label matching
+      const regex = new RegExp(`<!-- reqt_${field}_field-->\\s*\\*\\*${label.replace(/ /g, '\\s*')}\\s*:\\*\\*\\s*([\\s\\S]*?)(?=<!-- reqt_|<!-- reqt_id:|$)`, 'i');
       const m = block.match(regex);
       return m ? m[1].trim() : undefined;
     };

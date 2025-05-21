@@ -56,7 +56,7 @@ ${hierToMarkdownHeader(reqt.hier, reqt.outline)} ${reqt.outline}: ${reqt.title}
 <!-- Make Content "exclude" to exclude from README generation -->
 
 <!-- reqt_README_AI_field--> 
-**README AI:**
+**README_AI:**
 
 ${reqt.readme_ai}
 
