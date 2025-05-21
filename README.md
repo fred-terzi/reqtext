@@ -8,14 +8,16 @@ Available over npm:
 
 ```bash
 npm install reqtext
+npx reqt --help
 ```
 
 or for global installation:
 ```bash
 npm install -g reqtext
+reqt --help
 ```
 
-> ✅ Both `reqtext` and `reqt` are valid commands. For convenience, `reqt` is the preferred shorthand throughout this guide.
+> ✅ Both `reqtext` and `reqt` are valid commands. For convenience, `reqt` is the preferred shorthand.
 
 ## ReqText Commands
 
@@ -31,7 +33,7 @@ npm install -g reqtext
 | `editor`                     | Launch the interactive terminal editor |
 | `clean`, `-c`                | Ensure all items have a valid reqt_id. |
 
-> Note: The main purpose of `clean` is if an AI coding tool adds an item directly in the .reqt.json, or .reqt.md. Use the README_AI.reqt.json for the AI tool to learn how to properly use the CLI inputs for it to add or modify items.
+> Note: The main purpose of `clean` is if an AI coding tool adds an item directly in the .reqt.json, or .reqt.md. Use the README_AI.reqt.json as context for the AI tool to learn how to properly use the CLI inputs for it to add or modify items.
 
 ### Item Management Commands
 
@@ -48,41 +50,107 @@ npm install -g reqtext
 | `test-passed`, `-tp`          | Mark test as passed for an item           | `reqt test-passed 1.2 true` |
 
 ### Markdown Editing Commands
-| Command | Description | Example |
-|---|---|---|
-| `in-md`, `-imd`               | Import changes from a markdown file back into the .reqt.json source of truth, updating only the long-form fields (requirement, acceptance, details) for each item. Use --keep or -k to keep the markdown file after import. |
-| `out-md`, `-omd`              | Export all requirements to a markdown file, including the long-form fields (requirement, acceptance, details) for each item. |
-| `diff`                        | Show differences between .reqt.json and markdown |`
 
-### README and README_AI Generation
-| Command | Description | Example |
-| --- | --- |--- |
-| `generate-readme`, `-grm`     | Generate README.md from the .reqt.json source of truth |
-| `generate-readme_ai`, `-grmai`| Generate README_AI.reqt.json for AI from the .reqt.json source of truth | `reqt generate-readme_ai` |
-| `init`                        | Initialize a new ReqText project          |
-| `editor`                      | Launch the interactive terminal editor    |
+The Markdown Editing workflow lets you "check out" requirements from `.reqt.json` for easy editing of long-form fields (requirement, acceptance, details) in markdown. This user-friendly format supports previewing the future README, including rendering mermaid diagrams stored in `.reqt.json`.
+
+#### Markdown Editing Workflow
+
+ReqText supports a markdown-based editing workflow for long-form requirement fields. You can export requirements to a markdown file, edit them in your preferred editor, and then import changes back into the `.reqt.json` source of truth. This workflow streamlines bulk editing and review of requirement text.
+
+| Command                | Description                                                      |
+|------------------------|------------------------------------------------------------------|
+| `out-md`, `-omd`       | Export requirements to markdown for editing.                     |
+| `in-md`, `-imd`        | Import changes from markdown back into `.reqt.json`. Use `--keep` or `-k` to retain the markdown file. |
+| `diff`                 | Show differences between `.reqt.json` and the markdown file.     |
+
+This approach ensures requirements remain synchronized and easily editable in both structured and human-friendly formats.
 
 **Example:**
 
+ 1. **A ReqText item stored in the .reqt.json:**
 ```json  
 {
     "reqt_ID": "2025-05-20T19:14:37.669Z-12b36284",
     "hier": 1,
     "outline": "5.3",
     "title": "Example Reqt",
-    "requirement": "REQUIREMENT",
-    "acceptance": "ACCEPTANCE",
-    "details": "DETAILS",
-    "readme": "README",
+    "requirement": "An example must exist for the README generation. It must follow these steps:\n - Create the example in the Tree Editor\n - Write the text in the .reqt.md workflow\n - checked in to the .reqt.json\n - Generated to the README.md and exluded from the README_AI.reqt.json",
+    "acceptance": "The example must be clear and helpful. The example must be approved by Joe.",
+    "details": "For the README there will be a section to show an example of the .reqt.json, .reqt.md and the generated README.md and README_AI.reqt.json.",
+    "readme": "This example demonstrates how a requirement is represented and managed in ReqText, including its appearance in the .reqt.json, .reqt.md, and the generated README files. Use this as a reference for structuring your own requirements and documentation workflow.\n\n\n\n> **A Note from Joe** My workflow is to write all the details in common language, like a prompt, and have AI populate the rest. Then I clean up or change the README section. I did it for this example.",
     "readme_ai": "exclude",
-    "test_exists": "false",
+    "test_exists": "true",
     "test_passed": "false",
-    "status": "undefined"
+    "status": "IN DEV"
   }
 
 ````
+2. **The temporary markdown file created by the out-md command will look like this:**
+
+> This can be saved as a PDF or your choice for a snap shot of the current state of the project.
 
 ```markdown
+-- ReqText ID Comment line - start --
+
+### 5.3: Example Reqt
+
+-- ReqText Table Comment Line--
+| Status | Test Exists | Test Passed |
+|--------|-------------|-------------|
+| IN DEV | true | false |
+-- ReqText Table Comment Line--
+
+-- ReqText Requirement Field--
+**Requirement:**
+
+ An example must exist for the README generation. It must follow these steps:
+ - Create the example in the Tree Editor
+ - Write the text in the .reqt.md workflow
+ - checked in to the .reqt.json
+ - Generated to the README.md and exluded from the README_AI.reqt.json
+
+**Acceptance:**
+
+ The example must be clear and helpful. The example must be approved by Joe.
+
+-- ReqText Details Field--
+**Details:**
+
+ For the README there will be a section to show an example of the .reqt.json, .reqt.md and the generated README.md and README_AI.reqt.json.
+
+-- ReqText README Field--
+**README:**
+
+This example demonstrates how a requirement is represented and managed in ReqText, including its appearance in the .reqt.json, .reqt.md, and the generated README files. Use this as a reference for structuring your own requirements and documentation workflow.
+
+> **A Note from Joe** My workflow is to write all the details in common language, like a prompt, and have AI populate the rest. Then I clean up or change the README section. I did it for this example.
+
+ 
+**README AI:**
+
+exclude
+
+-- Make Content "exclude" to exclude from README AI generation --
+
+-- ReqText ID Comment Line --end--
+```
+> **Note:** The `-- ReqText ID Comment line --` is a comment line that is used for parsing. They include the `reqt_id` and other metadata to help with processing. I couldn't put real lines in the example or they would have been stripped out at generation. I hope you get the idea!
+
+3. **The README.md file generated by the generate-readme command will look like this:**
+---
+### 5.3: Example Reqt
+
+This example demonstrates how a requirement is represented and managed in ReqText, including its appearance in the .reqt.json, .reqt.md, and the generated README files. Use this as a reference for structuring your own requirements and documentation workflow.
+
+> **A Note from Joe** My workflow is to write all the details in common language, like a prompt, and have AI populate the rest. Then I clean up or change the README section. I did it for this example!
+---
+
+
+### README and README_AI Generation
+| Command | Description |
+| --- | --- |
+| `generate-readme`, `-grm`     | Generate README.md from the .reqt.json source of truth |
+| `generate-readme_ai`, `-grmai`| Generate README_AI.reqt.json for AI from the .reqt.json source of truth |
 
 ### init <project name>
 
@@ -169,8 +237,12 @@ README
 
 ### Example Reqt
 
-README
+This example demonstrates how a requirement is represented and managed in ReqText, including its appearance in the .reqt.json, .reqt.md, and the generated README files. Use this as a reference for structuring your own requirements and documentation workflow.
+
+
+
+> **A Note from Joe** My workflow is to write all the details in common language, like a prompt, and have AI populate the rest. Then I clean up or change the README section. I did it for this example.
 
 ---
-Generated by **ReqText v0.1.0-demo.18** on 2025-05-20T20:33:15.683Z
+Generated by **ReqText v0.1.0-demo.18** on 2025-05-21T01:05:13.911Z
 [GitHub](https://github.com/joseph-terzi/reqtext)
