@@ -94,9 +94,6 @@ The terminal editor provides an interactive tree view to create, navigate, and s
 ---
 
 
-
-
-
 **Stored Data** vs **Markdown Generated**
 
 

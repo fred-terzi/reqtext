@@ -16,8 +16,6 @@ import markdownToReqt from './reqtParsers/markdownUpdateReqt.js';
 import { getExistingMarkdownFile } from './utils/getExistingMarkdownFile.js';
 
 import Enquirer from 'enquirer';
-import fs from 'fs/promises';
-import path from 'path';
 
 async function versionCommand() {
   // Get the version from package.json using es modules
