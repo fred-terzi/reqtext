@@ -89,7 +89,7 @@ const commandMap = {
 
   // Test Passed command
   'test-passed': async (...args) => {
-    await testExistsHandler(...args);
+    await testPassedHandler(...args);
   },
 
   // Out MD command
