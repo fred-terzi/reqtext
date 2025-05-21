@@ -11,6 +11,7 @@ import reqtEditor from './reqtEditor.js';
 import cleanHandler from './commands/cleanHandler.js';
 import setStatusHandler from './commands/setStatusHandler.js';
 import testExistsHandler from './commands/testExistsHandler.js';
+import testPassedHandler from './commands/testPassedHandler.js';
 import reqtToMarkdown from './reqtParsers/reqtToMarkdown.mjs';
 import markdownToReqt from './reqtParsers/markdownUpdateReqt.js';
 import { getExistingMarkdownFile } from './utils/getExistingMarkdownFile.js';
