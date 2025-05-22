@@ -120,7 +120,7 @@ exclude
 
 This example demonstrates how a requirement is represented and managed in ReqText.
 
-> **A Note from Joe:** I write all details in common language, like a prompt, and have AI populate the rest. Then I refine the README section.
+> **A Note from Fred:** I write all details in common language, like a prompt, and have AI populate the rest. Then I refine the README section.
 
 ---
 
