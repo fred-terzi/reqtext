@@ -104,7 +104,10 @@ ReqText supports a markdown-based editing workflow that lets you export requirem
 ...
 
 **README:**
-...
+
+This example demonstrates how a requirement is represented and managed in ReqText.
+
+> **A Note from Fred:** I write all details in common language, like a prompt, and have AI populate the rest. Then I refine the README section.
 
 **README AI:**
 exclude
@@ -175,7 +178,7 @@ An interactive tree view to create, navigate, and structure your `.reqt` items.
 | `→` / `←`      | Demote / Promote       |
 | `a`            | Add item after current |
 | `d`            | Delete item            |
-| `e`            | Edit title             |
+| `e`            | Quick Edit short fields|
 | `r`            | Reload data            |
 | `q` / `Ctrl+C` | Quit and clear console |
 
