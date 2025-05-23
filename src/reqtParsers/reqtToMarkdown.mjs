@@ -25,7 +25,10 @@ function hierToMarkdownHeader(hier, outline) {
 function reqtToMarkdownBlock(reqt) {
   return `<!-- reqt_id: ${reqt.reqt_ID} --start-->
 
-${hierToMarkdownHeader(reqt.hier, reqt.outline)} ${reqt.outline}: ${reqt.title}
+${hierToMarkdownHeader(reqt.hier, reqt.outline)} ${reqt.outline}: 
+<!-- reqt_title_field-->
+**Title:**
+ ${reqt.title}
 
 <!-- reqt Table Non-Editable-->
 | Status | Test Exists | Test Passed |

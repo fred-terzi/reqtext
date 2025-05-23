@@ -17,7 +17,7 @@
     "reqt_ID": "2025-05-20T00:24:38.690Z-89ddbdb7",
     "hier": 1,
     "outline": "0.1",
-    "title": "AI INSTRUCTs",
+    "title": "AI INSTRUCT",
     "requirement": "REQUIREMENT",
     "acceptance": "ACCEPTANCE",
     "details": "DETAILS",
@@ -37,8 +37,8 @@
     "acceptance": "ACCEPTANCE",
     "readme": "exclude",
     "readme_ai": "Use reqt -a or reqt -aa to create a new item. \n\n If you create a new item directly in the json, you must run reqt -c to clean the project. \n\n The reqt_id is a unique identifier for each item in the project.",
-    "test_exists": false,
-    "test_passed": false,
+    "test_exists": "false",
+    "test_passed": "false",
     "status": "INSTRUCs"
   },
   {

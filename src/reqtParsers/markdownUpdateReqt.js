@@ -35,7 +35,11 @@ export function parseReqtBlocks(md) {
     const details = stripTrailingComment(getField('Det', 'Details'));
     const readme = stripTrailingComment(getField('README', 'README'));
     const readme_ai = stripTrailingComment(getField('README_AI', 'README_AI'));
+    // Extract the title field (only the first line after the marker)
+    const rawTitle = getField('title', 'Title');
+    const title = rawTitle ? rawTitle.split('\n')[0].trim() : undefined;
     updates[reqt_id] = {
+      title,
       requirement,
       acceptance,
       details,
@@ -84,15 +88,21 @@ export default async function markdownToReqt(mdFilePathArg, keep = false) {
   }
 
   // 5. Update the JSON data with the parsed updates
+  let isFirst = true;
   for (const [reqt_id, fields] of Object.entries(updates)) {
     // Only overwrite fields that are defined in the Markdown
     const filteredFields = Object.fromEntries(
-      Object.entries(fields).filter(([_, v]) => v !== undefined)
+      Object.entries(fields).filter(([k, v]) => {
+        // Prevent changing the title of the first item
+        if (isFirst && k === 'title') return false;
+        return v !== undefined;
+      })
     );
     jsonData[reqt_id] = {
       ...jsonData[reqt_id],
       ...filteredFields,
     };
+    isFirst = false;
   }
 
   // 6. Write the updated JSON back to disk
