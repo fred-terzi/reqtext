@@ -1,7 +1,7 @@
 [
   {
-    "generated_on": "2025-05-21T02:35:37.366Z",
-    "generated_by": "ReqText v0.1.0-demo.18 (https://github.com/joseph-terzi/reqtext)"
+    "generated_on": "2025-05-24T00:09:48.584Z",
+    "generated_by": "ReqText v0.1.0-demo.21 (https://github.com/joseph-terzi/reqtext)"
   },
   {
     "title": "ReqText",
@@ -9,7 +9,7 @@
     "readme_ai": "include"
   },
   {
-    "title": "AI INSTRUCTs",
+    "title": "AI INSTRUCT",
     "readme": "exclude",
     "readme_ai": "ALWAYS follow ReqText instructions."
   },
