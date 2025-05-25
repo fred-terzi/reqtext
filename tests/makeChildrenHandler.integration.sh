@@ -24,7 +24,7 @@ echo "Outline for 'Child Candidate': $OUTLINE"
 
 # 5. Demote the child candidate
 echo "Demoting item..."
-npx reqt make_children "$OUTLINE"
+npx reqt make-children "$OUTLINE"
 
 # 6. Show items after demote
 echo "Items after demote:"
