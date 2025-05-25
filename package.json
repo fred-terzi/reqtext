@@ -1,6 +1,7 @@
 {
   "name": "@terzitech/reqtext",
-  "version": "0.1.0-demo.22",
+  "author": "Fred Terzi",
+  "version": "0.1.0-beta.1",
   "description": "Reqtext is a Git-native, CLI first requirements and documentation framework meant to bring requirement management directly into your workflow. Human -and AI- readable.",
   "main": "index.js",
   "scripts": {
@@ -12,7 +13,6 @@
     "type": "git",
     "url": "git+https://github.com/terzitech/reqtext.git"
   },
-  "author": "Joseph Terzi",
   "license": "PolyForm-Noncommercial-1.0.0",
   "bugs": {
     "url": "https://github.com/terzitech/reqtext/issues"
