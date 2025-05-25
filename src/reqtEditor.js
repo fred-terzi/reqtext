@@ -1,4 +1,4 @@
-import fhr from '@terzitech/flathier';
+import fhr from 'flathier';
 import addAfterHandler from './commands/addAfterHandler.js';
 import enquirerPkg from 'enquirer';
 import { getData, setData } from './services/dataHandler.js';

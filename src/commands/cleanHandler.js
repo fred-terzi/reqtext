@@ -1,6 +1,6 @@
 import { getData, setData } from '../services/dataHandler.js';
 
-import fhr from '@terzitech/flathier';
+import fhr from 'flathier';
 
 /**
  * Uses the flathier library's custom extension and unique ID logic.

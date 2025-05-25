@@ -1,4 +1,4 @@
-import fhr from "@terzitech/flathier";
+import fhr from "flathier";
 import { getData, setData } from '../services/dataHandler.js';
 
 export default async function makeSiblingHandler(...args) {

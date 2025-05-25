@@ -1,4 +1,4 @@
-import fhr from "@terzitech/flathier";
+import fhr from "flathier";
 import { getData, setData } from '../services/dataHandler.js';
 import { getItemTemplate } from '../services/itemTemplateService.js';
 

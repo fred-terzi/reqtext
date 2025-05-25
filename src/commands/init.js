@@ -22,7 +22,7 @@
 import fs from 'fs/promises';
 import enquirer from 'enquirer';
 import path from 'path';
-import fhr from "@terzitech/flathier";
+import fhr from "flathier";
 import { read } from 'fs';
 
 const { prompt } = enquirer;
