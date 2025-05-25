@@ -219,12 +219,20 @@ const keyMap = {
     'k': async (state) => {
         // Move up (demote sibling logic not implemented in CLI, fallback to flathier for now)
         const selectedItem = state.data[state.selectedIndex];
+        // get the reqt_ID of the selected item
+        const reqt_ID = selectedItem ? selectedItem.reqt_ID : null;
         if (!selectedItem) return;
         const updatedData = await fhr.moveUp(state.data, selectedItem.outline);
         if (updatedData && updatedData !== state.data) {
             await setData(updatedData);
             state.data = await loadReqtData();
-            state.selectedIndex = Math.max(0, state.selectedIndex - 1);
+            // Find the new index of the item with the same reqt_ID
+            const newIdx = state.data.findIndex(item => item.reqt_ID === reqt_ID);
+            if (newIdx !== -1) {
+                state.selectedIndex = newIdx;
+            } else {
+                state.selectedIndex = Math.max(0, state.selectedIndex - 1);
+            }
             await renderTree(state.data, state.selectedIndex, true);
         } else {
             await renderTree(state.data, state.selectedIndex, true);
@@ -233,12 +241,20 @@ const keyMap = {
     'j': async (state) => {
         // Move down (demote sibling logic not implemented in CLI, fallback to flathier for now)
         const selectedItem = state.data[state.selectedIndex];
+        // get the reqt_ID of the selected item
+        const reqt_ID = selectedItem ? selectedItem.reqt_ID : null;
         if (!selectedItem) return;
         const updatedData = await fhr.moveDown(state.data, selectedItem.outline);
         if (updatedData && updatedData !== state.data) {
             await setData(updatedData);
             state.data = await loadReqtData();
-            state.selectedIndex = Math.min(state.data.length - 1, state.selectedIndex + 1);
+            // Find the new index of the item with the same reqt_ID
+            const newIdx = state.data.findIndex(item => item.reqt_ID === reqt_ID);
+            if (newIdx !== -1) {
+                state.selectedIndex = newIdx;
+            } else {
+                state.selectedIndex = Math.min(state.data.length - 1, state.selectedIndex + 1);
+            }
             await renderTree(state.data, state.selectedIndex, true);
         } else {
             await renderTree(state.data, state.selectedIndex, true);
