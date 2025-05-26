@@ -6,6 +6,7 @@ import fs from 'fs/promises';
 import enquirer from 'enquirer';
 import path from 'path';
 import fhr from "flathier";
+import { fileURLToPath } from 'url';
 
 const { prompt } = enquirer;
 
@@ -30,8 +31,10 @@ export default async function init(...args) {
     const sotFileName = `${safeTitle}.reqt.json`;
     const sotPath = path.join(reqtDir, sotFileName);
 
-    // Copy README_AI.reqt.json template to .reqt directory (prompt before deleting .reqt)
-    const srcReadmeAI = path.join(cwd, 'README_AI.reqt.json');
+    // Always resolve README_AI.reqt.json from the reqt package root
+    const __filename = fileURLToPath(import.meta.url);
+    const __dirname = path.dirname(__filename);
+    const srcReadmeAI = path.join(__dirname, '../../README_AI.reqt.json');
     const destReadmeAI = path.join(reqtDir, 'README_AI.reqt.json');
     let shouldCopyReadmeAI = true;
     let promptOverwriteReadmeAI = false;
