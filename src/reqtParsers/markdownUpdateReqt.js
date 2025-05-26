@@ -22,7 +22,8 @@ export function parseReqtBlocks(md) {
     // Extract fields by comment marker and label
     const getField = (field, label) => {
       // More robust: allow flexible whitespace and case-insensitive label matching
-      const regex = new RegExp(`<!-- reqt_${field}_field-->\\s*\\*\\*${label.replace(/ /g, '\\s*')}\\s*:\\*\\*\\s*([\\s\\S]*?)(?=<!-- reqt_|<!-- reqt_id:|$)`, 'i');
+      // Stop at the first HTML comment (<!--) after the field label, to avoid capturing tables or other sections
+      const regex = new RegExp(`<!-- reqt_${field}_field-->\\s*\\*\\*${label.replace(/ /g, '\\s*')}\\s*:\\*\\*\\s*([\\s\\S]*?)(?=<!--|$)`, 'i');
       const m = block.match(regex);
       return m ? m[1].trim() : undefined;
     };
