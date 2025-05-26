@@ -43,7 +43,8 @@ export default async function init(...args) {
     const templatePath = path.join(reqtDir, 'itemTemplate.reqt.json');
     // Use all arguments joined as the project title (preserve spaces)
     const projectTitle = args.join(' ');
-    const safeTitle = projectTitle.replace(/[^a-zA-Z0-9-_]/g, '_');
+    // Sanitize project file name: replace spaces with underscores
+    const safeTitle = projectTitle.replace(/ /g, '_');
     const sotFileName = `${safeTitle}.reqt.json`;
     const sotPath = path.join(reqtDir, sotFileName);
 
