@@ -17,7 +17,16 @@ echo "Items before delete:"
 cat .reqt/deletehandlertest.reqt.json | jq '.[] | {title: .title, outline: .outline}'
 
 
-# 5. Delete the item
+# 4. Try to delete the project/root item (should fail)
+echo "Attempting to delete project/root item (outline 0)..."
+if npx reqt -d "0"; then
+  echo "FAIL: Was able to delete the project/root item (outline 0), but should have been blocked."
+  exit 1
+else
+  echo "PASS: Deletion of project/root item (outline 0) was correctly blocked."
+fi
+
+# 5. Delete the added item
 echo "Deleting item..."
 npx reqt -d "1"
 

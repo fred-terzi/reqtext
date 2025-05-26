@@ -20,6 +20,12 @@ export default async function deleteHandler(...args) {
         console.error("❌ Invalid outline number. Must be a non-empty string.");
         process.exit(1);
     }
+    // Block deleting the project/root item (hier: 0 or outline: "0")
+    const itemToDelete = data.find(item => item.outline === outlineNumber);
+    if (itemToDelete && itemToDelete.outline === "0") {
+        console.error("❌ Cannot delete the project/root item (outline 0).");
+        process.exit(1);
+    }
     console.log(`Deleting item with outline ${outlineNumber}...`);
     // Delete the item with the specified outline number
     const updatedData = await fhr.deleteObject(data, outlineNumber);
