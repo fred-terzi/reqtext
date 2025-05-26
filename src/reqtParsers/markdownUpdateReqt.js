@@ -56,9 +56,17 @@ export function parseReqtBlocks(md) {
 export default async function markdownToReqt(mdFilePathArg, keep = false) {
   // Get the .json file path from getCurrentReqtFilePath
   const reqtJsonPath = await getCurrentReqtFilePath();
-  // Convert to .md file path in the project root
-  const mdFileName = path.basename(reqtJsonPath).replace(/\.json$/, '.md');
-  const mdFilePath = mdFilePathArg || path.join(process.cwd(), mdFileName);
+  // Prefer .reqt.md in the project root if it exists
+  const reqtMdPath = path.join(process.cwd(), '.reqt.md');
+  let mdFilePath;
+  try {
+    await fs.access(reqtMdPath);
+    mdFilePath = reqtMdPath;
+  } catch {
+    // Fallback to old logic if .reqt.md does not exist
+    const mdFileName = path.basename(reqtJsonPath).replace(/\.json$/, '.md');
+    mdFilePath = mdFilePathArg || path.join(process.cwd(), mdFileName);
+  }
   // 1. Read the Markdown file
   const md = await fs.readFile(mdFilePath, 'utf-8');
   // 2. Parse the Markdown
