@@ -112,6 +112,20 @@
     "readme_ai": "include"
   },
   {
+    "reqt_ID": "2025-05-26T02:09:00.654Z-e1a8dcf1",
+    "hier": 2,
+    "outline": "2.3.1",
+    "title": "README_AI local copy",
+    "details": "The init function will copy the README_AI.reqt.json from the reqt installation to the .reqt file so that it can be easily found as context by AI no matter where the project is located.",
+    "requirement": "When initializing a new ReqText project using the init command, the CLI must copy the README_AI.reqt.json template from the reqt installation directory into the project's .reqt directory. This ensures that AI tools can always find the README_AI context file locally, regardless of the project's location. If a README_AI.reqt.json already exists in the .reqt directory, the user must be prompted before overwriting it.",
+    "acceptance": "After running reqt init <project name>, the .reqt/README_AI.reqt.json file exists and matches the template from the reqt installation. If the file already exists, the user is prompted before it is overwritten. Automated or manual tests verify that the file is copied correctly, that the prompt appears when appropriate, and that the process completes without errors.",
+    "status": "NEW",
+    "test_exists": "false",
+    "test_passed": "false",
+    "readme": "README",
+    "readme_ai": "exclude"
+  },
+  {
     "reqt_ID": "2025-05-20T00:28:20.116Z-92a81e13",
     "hier": 1,
     "outline": "2.4",
@@ -342,7 +356,7 @@
     "title": "README Exclude",
     "requirement": "REQUIREMENT",
     "acceptance": "ACCEPTANCE",
-    "details": "If the readme section in the .reqt.json value is \"exclude\" then the entire item will be excluded from the readme. \n\n Use case: the user wants to have more detailed fileds in the README_AI but not in the regular README it can be excluded. \n\n Example: for reqtext there will be a README section showing all the basic commands, in the README_AI that higher level will be included but there will a lower level item for each individual command so the AI has an easier time separating the commands.",
+    "details": "If the readme section in the .reqt.json value is \"exclude\" then the entire item will be excluded from the readme. \n\n Use case: the user wants to have more detailed fileds in README_AI but not in the regular README it can be excluded. \n\n Example: for reqtext there will be a README section showing all the basic commands, in the README_AI that higher level will be included but there will a lower level item for each individual command so the AI has an easier time separating the commands.",
     "readme": "exclude",
     "status": "IN DEV",
     "test_exists": "true",

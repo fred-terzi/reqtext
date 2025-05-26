@@ -1,21 +1,4 @@
 /**
- * Initializes a new ReqText project.
- *
- * This function implements the logic described in the Mermaid flowchart:
- *
- *   1. User runs: npx reqt init <project name>
- *   2. Checks if arguments are provided. If not, shows usage and exits. (A -> B -> C)
- *   3. Joins arguments into a project name string. (B -> D)
- *   4. Checks for existing .reqt.json files in the current directory. (D -> E)
- *   5. If files exist, prompts the user to confirm creating/switching to a new file. (E -> F)
- *      - If declined, aborts. (F -> G)
- *      - If confirmed, continues. (F -> H)
- *   6. If no files exist, continues. (E -> H)
- *   7. Calls fhr.init with the project name and type 'reqt'. (H -> I)
- *   8. Handles success or error. (I -> J/K)
- *
- * This ensures only one .reqt.json file per folder and provides user interaction for safe project initialization.
- *
  * @param {...string} args - The project name and any additional arguments.
  * @returns {Promise<void>} Resolves when initialization is complete or aborted.
  */
@@ -23,7 +6,6 @@ import fs from 'fs/promises';
 import enquirer from 'enquirer';
 import path from 'path';
 import fhr from "flathier";
-import { read } from 'fs';
 
 const { prompt } = enquirer;
 
@@ -48,6 +30,35 @@ export default async function init(...args) {
     const sotFileName = `${safeTitle}.reqt.json`;
     const sotPath = path.join(reqtDir, sotFileName);
 
+    // Copy README_AI.reqt.json template to .reqt directory (prompt before deleting .reqt)
+    const srcReadmeAI = path.join(cwd, 'README_AI.reqt.json');
+    const destReadmeAI = path.join(reqtDir, 'README_AI.reqt.json');
+    let shouldCopyReadmeAI = true;
+    let promptOverwriteReadmeAI = false;
+    let srcReadmeAIExists = false;
+    let destReadmeAIExists = false;
+    try {
+        await fs.access(srcReadmeAI);
+        srcReadmeAIExists = true;
+        try {
+            await fs.access(destReadmeAI);
+            destReadmeAIExists = true;
+        } catch {}
+    } catch {
+        srcReadmeAIExists = false;
+    }
+    if (srcReadmeAIExists && destReadmeAIExists) {
+        const response = await promptFn({
+            type: 'confirm',
+            name: 'overwriteReadmeAI',
+            message: 'README_AI.reqt.json already exists in .reqt. Overwrite?',
+            initial: false
+        });
+        promptOverwriteReadmeAI = response.overwriteReadmeAI;
+    } else if (srcReadmeAIExists) {
+        promptOverwriteReadmeAI = true;
+    }
+
     // Check for existing .reqt directory and prompt before overwriting anything inside
     let dirExists = false;
     try {
@@ -65,7 +76,6 @@ export default async function init(...args) {
             console.log('❌ Aborted. No changes made.');
             return;
         } else {
-            // Remove the entire .reqt directory and its contents
             await fs.rm(reqtDir, { recursive: true, force: true });
             await fs.mkdir(reqtDir);
             console.log('✅ Overwrote .reqt directory and all contents.');
@@ -121,6 +131,13 @@ export default async function init(...args) {
     // Write ProjectSOT.reqt.json (array with project item)
     await fs.writeFile(sotPath, JSON.stringify([sotTemplate], null, 2));
     console.log(`✅ Created ${sotFileName}`);
+
+    // After .reqt is created, always copy README_AI.reqt.json if it exists
+    try {
+        await fs.access(srcReadmeAI);
+        await fs.copyFile(srcReadmeAI, destReadmeAI);
+        console.log('✅ Copied README_AI.reqt.json to .reqt');
+    } catch {}
 
     console.log('✅ ReqText project initialized successfully in .reqt');
 }
