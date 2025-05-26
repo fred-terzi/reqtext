@@ -1,4 +1,5 @@
 import { getCurrentReqtFilePath } from '../utils/getCurrentReqtFilePath.js';
+import { getExistingMarkdownFile } from '../utils/getExistingMarkdownFile.js';
 import fs from 'fs/promises';
 import path from 'path';
 
@@ -56,14 +57,13 @@ export function parseReqtBlocks(md) {
 export default async function markdownToReqt(mdFilePathArg, keep = false) {
   // Get the .json file path from getCurrentReqtFilePath
   const reqtJsonPath = await getCurrentReqtFilePath();
-  // Prefer .reqt.md in the project root if it exists
-  const reqtMdPath = path.join(process.cwd(), '.reqt.md');
+  // Prefer <project>.reqt.md in the project root if it exists (via util)
+  const existingMdFile = getExistingMarkdownFile();
   let mdFilePath;
-  try {
-    await fs.access(reqtMdPath);
-    mdFilePath = reqtMdPath;
-  } catch {
-    // Fallback to old logic if .reqt.md does not exist
+  if (existingMdFile) {
+    mdFilePath = existingMdFile;
+  } else {
+    // Fallback to old logic if no project .reqt.md exists
     const mdFileName = path.basename(reqtJsonPath).replace(/\.json$/, '.md');
     mdFilePath = mdFilePathArg || path.join(process.cwd(), mdFileName);
   }

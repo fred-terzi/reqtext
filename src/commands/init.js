@@ -90,7 +90,7 @@ export default async function init(...args) {
 
     // Write config.reqt.json
     const config = {
-        projectTitle: projectTitle,
+        projectTitle: safeTitle,
         sotPath: `./.reqt/${sotFileName}`,
         templatePath: './.reqt/itemTemplate.reqt.json'
     };
