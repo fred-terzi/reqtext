@@ -30,11 +30,10 @@ ${hierToMarkdownHeader(reqt.hier, reqt.outline)} ${reqt.outline}:
 **Title:**
  ${reqt.title}
 
-<!-- reqt Table Non-Editable-->
-| Status | Test Exists | Test Passed |
-|--------|-------------|-------------|
-| ${reqt.status} | ${reqt.test_exists} | ${reqt.test_passed} |
-<!-- reqt Table Non-Editable-->
+ <!-- reqt_Det_field-->
+**Details:**
+
+ ${reqt.details}
 
 <!-- reqt_Req_field-->
 **Requirement:**
@@ -45,11 +44,6 @@ ${hierToMarkdownHeader(reqt.hier, reqt.outline)} ${reqt.outline}:
 **Acceptance:**
 
  ${reqt.acceptance}
-
-<!-- reqt_Det_field-->
-**Details:**
-
- ${reqt.details}
 
 <!-- reqt_README_field-->
 **README:**
@@ -64,6 +58,12 @@ ${hierToMarkdownHeader(reqt.hier, reqt.outline)} ${reqt.outline}:
 ${reqt.readme_ai}
 
 <!-- Make Content "exclude" to exclude from README AI generation -->
+
+<!-- reqt Table Non-Editable-->
+| Status | Test Exists | Test Passed |
+|--------|-------------|-------------|
+| ${reqt.status} | ${reqt.test_exists} | ${reqt.test_passed} |
+<!-- reqt Table Non-Editable-->
 
 <!-- reqt_id: ${reqt.reqt_ID} --end-->`;
 }
