@@ -122,13 +122,9 @@ export default async function init(...args) {
         outline: "0",
         title: safeTitle,
         details: "DETAILS",
-        requirement: "REQUIREMENT",
-        acceptance: "ACCEPTANCE",
         readme: "README",
         status: "NEW",
         readme_ai: "exclude",
-        test_exists: false,
-        test_passed: false
     };
 
     // Write ProjectSOT.reqt.json (array with project item)
