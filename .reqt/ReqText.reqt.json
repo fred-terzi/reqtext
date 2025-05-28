@@ -122,7 +122,7 @@
     "status": "NEW",
     "test_exists": "false",
     "test_passed": "false",
-    "readme": "README",
+    "readme": "exclude",
     "readme_ai": "exclude"
   },
   {
@@ -171,11 +171,11 @@
     "reqt_ID": "2025-05-26T15:04:12.050Z-64977ee8",
     "hier": 2,
     "outline": "2.6.1",
-    "title": "Block Deleteing Project Item",
+    "title": "Block Deleting Project Item",
     "details": "DETAILS",
     "requirement": "REQUIREMENT",
     "acceptance": "ACCEPTANCE",
-    "readme": "README",
+    "readme": "exclude",
     "readme_ai": "exclude",
     "test_exists": "false",
     "test_passed": "false",
