@@ -12,7 +12,7 @@ export default async function generateReadmeAIJson(reqtArray) {
   const version = await getVersion();
   const meta = {
     generated_on: new Date().toISOString(),
-    generated_by: `ReqText v${version} (https://github.com/joseph-terzi/reqtext)`
+    generated_by: `ReqText v${version} (https://github.com/fred-terzi/reqtext)`
   };
   const items = getReadmeAIItems(reqtArray);
   return [meta, ...items];
