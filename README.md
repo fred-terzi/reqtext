@@ -6,6 +6,11 @@
 
 **ReqText** is a CLI & TUI requirements management tool designed to help you easily create, manage and visualize your requirements from the command line. The tool is built on my FlatHier (Short for Flat Hierarchy) library, which creates a manipulates hierarchical data structure in a flat, ordered json. Making it human readable and git ready.
 
+## Contributing
+Please see the [Contributing Guide](CONTRIBUTING.md) for details on how to contribute to ReqText.
+
+> **Note from Fred**: I'm building ReqText based on how I work, but I want to know how you work too! If you have ideas for features or improvements, please try out the tool and open an issue on GitHub. I want to make ReqText the best tool it can be for managing requirements.
+
 ## ReqText Installation
 
 Available over npm:
