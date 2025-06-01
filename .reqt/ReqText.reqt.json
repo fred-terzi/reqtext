@@ -252,9 +252,23 @@
     "readme_ai": "include"
   },
   {
-    "reqt_ID": "2025-05-20T01:30:28.413Z-10c1f70d",
+    "reqt_ID": "2025-05-31T02:36:21.447Z-d1e48396",
     "hier": 1,
     "outline": "2.12",
+    "title": "ReqText Markdown Workflow",
+    "details": "DETAILS",
+    "requirement": "REQUIREMENT",
+    "acceptance": "ACCEPTANCE",
+    "readme": "README",
+    "readme_ai": "exclude",
+    "test_exists": "false",
+    "test_passed": "false",
+    "status": "NEW"
+  },
+  {
+    "reqt_ID": "2025-05-20T01:30:28.413Z-10c1f70d",
+    "hier": 2,
+    "outline": "2.12.1",
     "title": "`out-md` or `-omd`",
     "requirement": "REQUIREMENT",
     "acceptance": "ACCEPTANCE",
@@ -267,8 +281,8 @@
   },
   {
     "reqt_ID": "2025-05-20T01:30:37.305Z-fc8adb5d",
-    "hier": 1,
-    "outline": "2.13",
+    "hier": 2,
+    "outline": "2.12.2",
     "title": "`in-md` or `-imd`: options: `--keep` or `-k`",
     "requirement": "REQUIREMENT",
     "acceptance": "ACCEPTANCE",
@@ -282,7 +296,7 @@
   {
     "reqt_ID": "2025-05-20T01:31:14.743Z-9b80dca9",
     "hier": 1,
-    "outline": "2.14",
+    "outline": "2.13",
     "title": "`clean` or `-c`",
     "requirement": "REQUIREMENT",
     "acceptance": "ACCEPTANCE",
