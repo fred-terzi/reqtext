@@ -13,7 +13,7 @@
     "type": "git",
     "url": "git+https://github.com/terzitech/reqtext.git"
   },
-  "license": "PolyForm-Noncommercial-1.0.0",
+  "license": "BSL-1.0",
   "bugs": {
     "url": "https://github.com/terzitech/reqtext/issues"
   },
