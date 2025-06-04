@@ -103,8 +103,8 @@ async function testInitCreatesAllFiles() {
                 console.error('Project item missing title or reqt_ID');
                 passed = false;
             }
-            if (item.status !== 'NEW') {
-                console.error('Project item status is not NEW');
+            if (item.status !== 'PLANNED') {
+                console.error('Project item status is not PLANNED');
                 passed = false;
             }
         }

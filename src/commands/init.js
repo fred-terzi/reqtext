@@ -74,7 +74,7 @@ export default async function init(...args) {
         description: "DESCRIPTION",
         acceptance: "ACCEPTANCE",
         readme: "README",
-        status: "NEW",
+        status: "PLANNED",
         test_passed: false
     };
     await fs.writeFile(templatePath, JSON.stringify(itemTemplate, null, 2));
@@ -89,7 +89,7 @@ export default async function init(...args) {
         description: "DETAILS",
         acceptance: "ACCEPTANCE",
         readme: "exclude",
-        status: "NEW",
+        status: "PLANNED",
         test_passed: false
     };
 
