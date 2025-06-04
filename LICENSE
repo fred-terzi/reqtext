@@ -1,54 +1,21 @@
-Business Source License 1.1
+MIT License
 
-Licensor: Terzi Tech
-Licensed Work: ReqText
-Additional Terms: None
-Change Date: 2029-06-01
+Copyright (c) 2025 Fred Terzi
 
-Parameters
-----------
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-Licensor: The entity licensing the Work under this License.
-Licensed Work: The software or other work subject to this License.
-Change Date: The date four years after the first publicly available Distribution of a given version of the Licensed Work.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-Terms
------
-
-1. Grant of Copyright License. Subject to the conditions and limitations of this License, Licensor hereby grants You a non-exclusive, worldwide, non-sublicensable, non-transferable copyright license to use, copy, modify, create derivative works, and, subject to Section 2, redistribute the Licensed Work.
-
-2. Redistribution. You may not redistribute the Licensed Work or Derivative Works except under this Section 2.
-
-   a. You may make the Licensed Work, or Derivative Works, available to third parties only for non-production use, such as research, evaluation, and development, provided that you do not use the Licensed Work or Derivative Works for a Commercial Purpose.
-
-   b. You may not use the Licensed Work or Derivative Works for a Commercial Purpose, except as expressly permitted by Licensor.
-
-   c. After the Change Date, the Licensed Work may be used under the terms of the Apache License, Version 2.0.
-
-3. Acceptance. Any use of the Licensed Work indicates acceptance of this License.
-
-4. Trademarks. This License does not grant any right in the trademarks, service marks, or logos of Licensor, except as required for reasonable and customary use in describing the origin of the Licensed Work.
-
-5. Disclaimer of Warranty. THE LICENSED WORK IS PROVIDED "AS IS". LICENSOR DISCLAIMS ALL WARRANTIES AND CONDITIONS, EXPRESS AND IMPLIED, INCLUDING WITHOUT LIMITATION WARRANTIES OR CONDITIONS OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.
-
-6. Limitation of Liability. LICENSOR SHALL NOT BE LIABLE FOR ANY DAMAGES ARISING OUT OF OR IN CONNECTION WITH THE LICENSED WORK, INCLUDING DIRECT, INDIRECT, SPECIAL, INCIDENTAL, OR CONSEQUENTIAL DAMAGES, LOSS OF PROFITS, OR LOSS OF DATA, EVEN IF LICENSOR IS ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
-
-7. Definitions.
-
-   a. "Change Date" means the date specified above, after which the Licensed Work may be used under the terms of the Apache License, Version 2.0.
-
-   b. "Commercial Purpose" means the sale, lease, license, or other commercial use of the Licensed Work or Derivative Works by You.
-
-   c. "Derivative Works" means any work, whether in source or object form, that is based on, derived from, or incorporates all or part of the Licensed Work.
-
-   d. "Licensor" means the entity that offers the Licensed Work under the terms of this License.
-
-   e. "Licensed Work" means the software or other work subject to this License.
-
-   f. "You" means the individual or entity exercising rights under this License.
-
-8. Additional Terms. None.
-
-For more information, see https://mariadb.com/bsl11 and https://github.com/mariadb/bsl.
-
-After the Change Date, this software will be made available under the terms of the Apache License, Version 2.0.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
