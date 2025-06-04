@@ -2,46 +2,37 @@ export default async function help() {
     const helpText = `
 Welcome to ReqText!
 
-Usage: reqtext <command>
+Usage:
+  reqtext <command> [options]
 
-Commands:
-    version, --version, -v   Show version
-    help, --help, -h         Show help
-    init <project name>      Initialize a new ReqText project
-    editor                   Launch the interactive terminal editor
-    add_item, -a             Add an item to the end of the project
-        Usage: reqtext add_item <item_name>
-    add_after, -aa           Add an item after a specified outline number
-        Usage: reqtext add_after <outline_number> <item_name>
-    delete, -d               Delete an item by outline number
-        Usage: reqtext delete <outline_number>
-    make_children, -mc       Demote an item (and its children) 
-        Usage: reqtext make_children <outline_number>
-    make_sibling, -ms        Promote an item (and its children)
-        Usage: reqtext make_sibling <outline_number>
-    edit_title, -et          Edit the title, status, test_exists, or test_passed of an item by outline number
-        Usage: reqtext edit_title <outline_number> <new_title>
-    set_status               Edit the status of an item by outline number
-        Usage: reqtext set_status <outline_number> <new_status>
-    test_exists              Edit the test_exists field of an item by outline number
-        Usage: reqtext test_exists <outline_number> <true/false>
-    test_passed              Edit the test_passed field of an item by outline number
-        Usage: reqtext test_passed <outline_number> <true/false>
-    clean                    Ensure all items have valid reqt_ID
-        Usage: reqtext clean
-    
+Core Commands:
+  init <project_name>       Initialize a new ReqText project
+  editor                    Launch the interactive terminal editor
+  version, -v, --version    Show version
+  help, -h, --help          Show this help message
 
-Terminal Editor Keybindings:
-    ↑/↓        Navigate requirements
-    k          Move selected item up
-    j          Move selected item down
-    →          Demote selected item to child (indent)
-    ←          Promote selected item to sibling (outdent)
-    a          Add a new item after the selected requirement (prompts for title)
-    d          Delete the selected item
-    e          Edit the selected item's title
-    r          Reload data
-    q, Ctrl+C  Quit and clear the console
+Item Management:
+  add-item, -a <item_name>                     Add a new item to the end
+  add-after, -aa <outline_number> <title>      Add an item after a specific outline number
+  delete, -d <outline_number>                  Delete an item by outline number
+  make-children, -mc <outline_number>          Demote item (and children)
+  make-sibling, -ms <outline_number>           Promote item (and children)
+  edit-title, -et <outline_number> <new_title> Edit an item title
+  set-status, -ss <outline_number> <status>    Set status (e.g. open, done)
+  test-passed, -tp <outline_number> <true/false> Mark test_passed status
+
+Data Sync:
+  out-md, -omd                   Export to Markdown (editable format)
+  in-md, -imd [--keep|-k] [file] Import Markdown changes into .reqt.json
+  diff [file]                    Show changes between .reqt.json and Markdown
+  generate-readme, -grm         Create README.md from .reqt.json
+  clean, -c                      Ensure all items have valid reqt_IDs
+
+Interactive Terminal Editor — Keybindings:
+  ↑ / ↓       Navigate items        j / k        Move item down/up
+  → / ←       Demote / Promote      a            Add after selected item
+  e           Edit title            d            Delete item
+  r           Reload file           q / Ctrl+C   Quit editor
     `;
     console.log(helpText.trim());
 }
