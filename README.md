@@ -1,10 +1,11 @@
 # ReqText
 
-[![License: BUSL-1.1](https://img.shields.io/badge/License-BUSL--1.1-blue.svg)](LICENSE)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/license/mit/)
+
 [![npm](https://img.shields.io/npm/v/reqtext?color=blue)](https://www.npmjs.com/package/reqtext)
 
 
-**ReqText** is a CLI & TUI requirements management tool designed to help you easily create, manage and visualize your requirements from the command line. The tool is built on my FlatHier (Short for Flat Hierarchy) library, which creates a manipulates hierarchical data structure in a flat, ordered json. Making it human readable and git ready.
+**ReqText** is a CLI & TUI requirements management tool designed to help you easily create, manage and visualize your requirements from the command line. The tool is built on my FlatHier (Short for Flat Hierarchy) library, which creates and manipulates hierarchical data structure in a flat, ordered json. Making it human readable and git ready.
 
 ## Contributing
 Please see the [Contributing Guide](CONTRIBUTING.md) for details on how to contribute to ReqText.

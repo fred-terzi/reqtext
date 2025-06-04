@@ -6,7 +6,6 @@ import fs from 'fs/promises';
 import enquirer from 'enquirer';
 import path from 'path';
 import fhr from "flathier";
-import { fileURLToPath } from 'url';
 
 const { prompt } = enquirer;
 
@@ -30,37 +29,6 @@ export default async function init(...args) {
     const safeTitle = projectTitle.replace(/ /g, '_');
     const sotFileName = `${safeTitle}.reqt.json`;
     const sotPath = path.join(reqtDir, sotFileName);
-
-    // Always resolve README_AI.reqt.json from the reqt package root
-    const __filename = fileURLToPath(import.meta.url);
-    const __dirname = path.dirname(__filename);
-    const srcReadmeAI = path.join(__dirname, '../../README_AI.reqt.json');
-    const destReadmeAI = path.join(reqtDir, 'README_AI.reqt.json');
-    let shouldCopyReadmeAI = true;
-    let promptOverwriteReadmeAI = false;
-    let srcReadmeAIExists = false;
-    let destReadmeAIExists = false;
-    try {
-        await fs.access(srcReadmeAI);
-        srcReadmeAIExists = true;
-        try {
-            await fs.access(destReadmeAI);
-            destReadmeAIExists = true;
-        } catch {}
-    } catch {
-        srcReadmeAIExists = false;
-    }
-    if (srcReadmeAIExists && destReadmeAIExists) {
-        const response = await promptFn({
-            type: 'confirm',
-            name: 'overwriteReadmeAI',
-            message: 'README_AI.reqt.json already exists in .reqt. Overwrite?',
-            initial: false
-        });
-        promptOverwriteReadmeAI = response.overwriteReadmeAI;
-    } else if (srcReadmeAIExists) {
-        promptOverwriteReadmeAI = true;
-    }
 
     // Check for existing .reqt directory and prompt before overwriting anything inside
     let dirExists = false;
@@ -103,13 +71,10 @@ export default async function init(...args) {
         hier: 0,
         outline: "OUTLINE",
         title: "TITLE",
-        details: "DETAILS",
-        requirement: "REQUIREMENT",
+        description: "DESCRIPTION",
         acceptance: "ACCEPTANCE",
         readme: "README",
         status: "NEW",
-        readme_ai: "exclude",
-        test_exists: false,
         test_passed: false
     };
     await fs.writeFile(templatePath, JSON.stringify(itemTemplate, null, 2));
@@ -121,26 +86,16 @@ export default async function init(...args) {
         hier: 0,
         outline: "0",
         title: safeTitle,
-        details: "DETAILS",
-        requirement: "REQUIREMENT",
+        description: "DETAILS",
         acceptance: "ACCEPTANCE",
         readme: "exclude",
         status: "NEW",
-        readme_ai: "exclude",
-        test_exists: false,
         test_passed: false
     };
 
     // Write ProjectSOT.reqt.json (array with project item)
     await fs.writeFile(sotPath, JSON.stringify([sotTemplate], null, 2));
     console.log(`✅ Created ${sotFileName}`);
-
-    // After .reqt is created, always copy README_AI.reqt.json if it exists
-    try {
-        await fs.access(srcReadmeAI);
-        await fs.copyFile(srcReadmeAI, destReadmeAI);
-        console.log('✅ Copied README_AI.reqt.json to .reqt');
-    } catch {}
 
     console.log('✅ ReqText project initialized successfully in .reqt');
 }

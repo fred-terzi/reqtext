@@ -1,23 +1,23 @@
 {
   "name": "reqtext",
   "author": "Fred Terzi",
-  "version": "0.1.0-beta.13",
+  "version": "0.1.0-beta.20",
   "description": "Reqtext is a Git-native, CLI first requirements and documentation framework meant to bring requirement management directly into your workflow. Human -and AI- readable.",
   "main": "index.js",
   "scripts": {
     "start": "node bin/index.js",
     "clean": "sh tests/clean_reqt.sh",
-    "parser": "node src/reqtParsers/reqtToMarkdown.mjs src/reqtParsers/template.reqt.json"
+    "test": "node tests/testAll.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/terzitech/reqtext.git"
+    "url": "git+https://github.com/fred-terzi/reqtext.git"
   },
-  "license": "BSL-1.0",
+  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/terzitech/reqtext/issues"
+    "url": "https://github.com/fred-terzi/reqtext/issues"
   },
-  "homepage": "https://github.com/terzitech/reqtext#readme",
+  "homepage": "https://github.com/fred-terzi/reqtext#readme",
   "dependencies": {
     "enquirer": "^2.4.1",
     "flathier": "^0.1.0-beta.1"
