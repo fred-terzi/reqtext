@@ -261,13 +261,12 @@ const keyMap = {
         }
     },
     'e': async (state) => {
-        // Item Editor: edit only title, status, test_exists, test_passed for the selected item
+        // Item Editor: edit only title, status, test_passed for the selected item
         const selectedItem = state.data[state.selectedIndex];
         if (!selectedItem) return;
         const editableFields = [
             { key: 'title', label: 'Title', type: 'input' },
             { key: 'status', label: 'Status', type: 'input' },
-            { key: 'test_exists', label: 'Test Exists (true/false)', type: 'boolean' },
             { key: 'test_passed', label: 'Test Passed (true/false)', type: 'boolean' }
         ];
         let quit = false;
@@ -333,7 +332,12 @@ const keyMap = {
             const newValue = await promptField(field);
             if (quit) break;
             if (newValue !== null && newValue !== undefined && newValue !== selectedItem[field.key]) {
-                selectedItem[field.key] = newValue;
+                // Ensure test_passed is always boolean
+                if (field.key === 'test_passed') {
+                    selectedItem[field.key] = Boolean(newValue);
+                } else {
+                    selectedItem[field.key] = newValue;
+                }
                 await setData(state.data);
             }
             fieldIdx++;
