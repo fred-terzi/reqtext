@@ -25,20 +25,12 @@ function hierToMarkdownHeader(hier, outline) {
 function reqtToMarkdownBlock(reqt) {
   return `<!-- reqt_id: ${reqt.reqt_ID} --start-->
 
-${hierToMarkdownHeader(reqt.hier, reqt.outline)} ${reqt.outline}: 
-<!-- reqt_title_field-->
-**Title:**
- ${reqt.title}
+${hierToMarkdownHeader(reqt.hier, reqt.outline)} ${reqt.outline}: ${reqt.title} - ${reqt.status}
 
- <!-- reqt_Det_field-->
-**Details:**
+ <!-- reqt_Desc_field-->
+**Description**
 
- ${reqt.details}
-
-<!-- reqt_Req_field-->
-**Requirement:**
-
- ${reqt.requirement}
+ ${reqt.description}
 
 <!-- reqt_Accept_field-->
 **Acceptance:**
@@ -51,19 +43,6 @@ ${hierToMarkdownHeader(reqt.hier, reqt.outline)} ${reqt.outline}:
  ${reqt.readme}
 
 <!-- Make Content "exclude" to exclude from README generation -->
-
-<!-- reqt_README_AI_field--> 
-**README_AI:**
-
-${reqt.readme_ai}
-
-<!-- Make Content "exclude" to exclude from README AI generation -->
-
-<!-- reqt Table Non-Editable-->
-| Status | Test Exists | Test Passed |
-|--------|-------------|-------------|
-| ${reqt.status} | ${reqt.test_exists} | ${reqt.test_passed} |
-<!-- reqt Table Non-Editable-->
 
 <!-- reqt_id: ${reqt.reqt_ID} --end-->`;
 }

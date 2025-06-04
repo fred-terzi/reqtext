@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node bin/index.js",
     "clean": "sh tests/clean_reqt.sh",
-    "test": "node tests/testAll.js"
+    "test": "sh tests/testAll.sh"
   },
   "repository": {
     "type": "git",

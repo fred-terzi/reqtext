@@ -16,14 +16,11 @@ export function parseReqtBlocks(md) {
   while ((match = blockRegex.exec(md)) !== null) {
     const reqt_id = match[1];
     const block = match[2];
-    // Extract table values (Status, Test Exists, Test Passed) from the markdown table (skip header and separator)
-    const tableRowMatch = block.match(/\| Status \| Test Exists \| Test Passed \|[\r\n]+\|[-| ]+\|[\r\n]+\| ([^|]+) \| ([^|]+) \| ([^|]+) \|/);
-    const [status, test_exists, test_passed] = tableRowMatch ? tableRowMatch.slice(1).map(s => s.trim()) : [undefined, undefined, undefined];
-    // Extract fields by comment marker and label
+    // Extract fields by comment marker and label (new format)
     const getField = (field, label) => {
-      // More robust: allow flexible whitespace and case-insensitive label matching
-      // Stop at the first HTML comment (<!--) after the field label, to avoid capturing tables or other sections
-      const regex = new RegExp(`<!-- reqt_${field}_field-->\\s*\\*\\*${label.replace(/ /g, '\\s*')}\\s*:\\*\\*\\s*([\\s\\S]*?)(?=<!--|$)`, 'i');
+      // Flexible whitespace and case-insensitive label matching
+      // Stop at the first HTML comment (<!--) after the field label
+      const regex = new RegExp(`<!-- reqt_${field}_field-->\\s*\\*\\*${label.replace(/ /g, '\\s*')}\\*\\*\\s*([\\s\\S]*?)(?=<!--|$)`, 'i');
       const m = block.match(regex);
       return m ? m[1].trim() : undefined;
     };
@@ -32,24 +29,22 @@ export function parseReqtBlocks(md) {
       // Remove trailing HTML comments (and any whitespace before/after)
       return val.replace(/\n?<!--.*?-->/gs, '').trim();
     };
-    const requirement = stripTrailingComment(getField('Req', 'Requirement'));
-    const acceptance = stripTrailingComment(getField('Accept', 'Acceptance'));
-    const details = stripTrailingComment(getField('Det', 'Details'));
-    const readme = stripTrailingComment(getField('README', 'README'));
-    const readme_ai = stripTrailingComment(getField('README_AI', 'README_AI'));
-    // Extract the title field (only the first line after the marker)
-    const rawTitle = getField('title', 'Title');
-    const title = rawTitle ? rawTitle.split('\n')[0].trim() : undefined;
+    // Match new field names and labels
+    const description = stripTrailingComment(getField('Desc', 'Description'));
+    const acceptance = stripTrailingComment(getField('Accept', 'Acceptance:'));
+    const readme = stripTrailingComment(getField('README', 'README:'));
+    // Extract the title from the Markdown header line (first non-empty line after block start)
+    let title;
+    // Updated regex to match the new format: outline: title - status
+    const headerMatch = block.match(/^#+\s+\S+\s*:\s*(.*?)\s*-\s*\S+/m);
+    if (headerMatch) {
+      title = headerMatch[1].trim();
+    }
     updates[reqt_id] = {
       title,
-      requirement,
+      description,
       acceptance,
-      details,
-      status,
-      test_exists,
-      test_passed,
       readme,
-      readme_ai,
     };
   }
   return updates;

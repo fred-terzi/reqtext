@@ -29,14 +29,14 @@ export async function checkReqtMdDiff({ data, mdPath } = {}) {
   for (const item of data) {
     const mdItem = mdFields[item.reqt_ID];
     if (!mdItem) continue;
-    for (const field of ['requirement', 'acceptance', 'details', 'readme']) {
+    for (const field of ['description', 'acceptance', 'readme']) {
       const dataVal = (item[field] || '').trim();
       const mdVal = (mdItem[field] || '').trim();
       if (dataVal !== mdVal) {
         foundDiff = true;
-        console.log(`\nDiffs in: ${item.outline} - ${item.title}:`);
+        console.log(`\nDiffs in:\n${item.outline} - ${item.title}:`);
         console.log('============');
-        console.log(`Field: ${field}\n`);
+        console.log(`Field: ${field}`);
         console.log('\n--- DATA ---');
         console.log(dataVal);
         console.log('\n--- MD ---');
@@ -45,9 +45,9 @@ export async function checkReqtMdDiff({ data, mdPath } = {}) {
     }
   }
   if (!foundDiff) {
-    console.log('No diffs found between DATA and Markdown editable fields.');
+    console.log('\nNo diffs found between DATA and Markdown editable fields.');
   } else {
-    console.log('Diffs found. DATA was NOT updated.');
+    console.log('\nDifferences found between DATA and Markdown editable fields.');
   }
   return foundDiff;
 }
