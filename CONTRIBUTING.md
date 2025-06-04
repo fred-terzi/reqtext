@@ -4,7 +4,7 @@ Thank you for your interest in contributing to ReqText!
 
 ## How to Contribute
 
-- **Try the Tool First:** We encourage you to use ReqText for your requirements management needs before submitting feature requests or suggestions. This helps ensure that your feedback is based on real user experience and practical use cases.
+- **Try the Tool First:** I encourage you to use ReqText for your requirements management needs before submitting feature requests or suggestions. This helps ensure that your feedback is based on real user experience and practical use cases.
 
 - **Feature Requests & Improvements:**
   - If you have ideas for new features or ways to improve the user experience, please open an issue on GitHub.
