@@ -8,6 +8,10 @@ Plan your project in Markdown — and let ReqText handle the structure.ReqText t
 > Your Markdown file is the single source of truth.
 > ReqText’s CLI and terminal editor keep it clean, versioned, and always up to date.
 
+<p align="center">
+    <img src="demo.gif" alt="ReqText Demo" width="700"/>
+</p>
+
 **Quick Start:**
 
 Node.js [Download Node.js](https://nodejs.org/en/download/) 
