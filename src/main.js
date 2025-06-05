@@ -148,12 +148,15 @@ const commandMap = {
   'generate-readme': async () => {
     const { getData } = await import('./services/dataHandler.js');
     const { generateReadmeMarkdown } = await import('./services/generateReadmeMarkdown.js');
+    const getReadmeAIItems = (await import('./services/getReadmeAIItems.js')).default;
     const fs = (await import('fs/promises')).default;
     const path = (await import('path')).default;
     let projectTitle = 'ReqText';
     let meta = '';
     try {
-      const items = await getData();
+      let items = await getData();
+      // Exclude items where readme is 'exclude' (case-insensitive, trimmed)
+      items = items.filter(item => !(typeof item.readme === 'string' && item.readme.trim().toLowerCase() === 'exclude'));
       if (items[0] && items[0].title) projectTitle = items[0].title;
       // Optionally, add meta info (date, version, repo link)
       let version = '';
