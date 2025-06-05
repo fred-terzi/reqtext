@@ -25,25 +25,28 @@ function hierToMarkdownHeader(hier, outline) {
 function reqtToMarkdownBlock(reqt) {
   return `<!-- reqt_id: ${reqt.reqt_ID} --start-->
 
-${hierToMarkdownHeader(reqt.hier, reqt.outline)} ${reqt.outline}: ${reqt.title} - ${reqt.status}
+${hierToMarkdownHeader(reqt.hier, reqt.outline)} ${reqt.outline}: ${reqt.title} 
+<!-- reqt_status_field-->
+**Status:**
+${reqt.status}
 
  <!-- reqt_Desc_field-->
 **Description**
 
- ${reqt.description}
+${reqt.description}
 
 <!-- reqt_Accept_field-->
 **Acceptance:**
 
- ${reqt.acceptance}
+${reqt.acceptance}
 
 <!-- reqt_README_field-->
 **README:**
 
- ${reqt.readme}
+${reqt.readme}
 
 <!-- Make Content "exclude" to exclude from README generation -->
-
+---
 <!-- reqt_id: ${reqt.reqt_ID} --end-->`;
 }
 
@@ -68,6 +71,15 @@ export default async function reqtToMarkdown(inputFile) {
   const outPath = `./${safeTitle}.reqt.md`;
   await fs.writeFile(outPath, markdownBlocks, 'utf8');
   console.log(`Markdown saved to ${outPath}`);
+}
+
+/**
+ * Generate Markdown from an array of reqt objects (in-memory, no file IO).
+ * @param {Array<object>} reqts
+ * @returns {string}
+ */
+export async function generateMarkdownFromData(reqts) {
+  return reqts.map(reqtToMarkdownBlock).join('\n\n');
 }
 
 // If this script is run directly as a CLI command, allow aliases for out-md and -omd

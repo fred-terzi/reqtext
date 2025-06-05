@@ -7,6 +7,8 @@ import enquirer from 'enquirer';
 import path from 'path';
 import fhr from "flathier";
 
+import reqtToMarkdown, { generateMarkdownFromData } from '../reqtParsers/reqtToMarkdown.mjs';
+
 const { prompt } = enquirer;
 
 export default async function init(...args) {
@@ -75,7 +77,6 @@ export default async function init(...args) {
         acceptance: "ACCEPTANCE",
         readme: "README",
         status: "PLANNED",
-        test_passed: false
     };
     await fs.writeFile(templatePath, JSON.stringify(itemTemplate, null, 2));
     console.log('✅ Created itemTemplate.reqt.json');
@@ -90,12 +91,18 @@ export default async function init(...args) {
         acceptance: "ACCEPTANCE",
         readme: "exclude",
         status: "PLANNED",
-        test_passed: false
     };
 
     // Write ProjectSOT.reqt.json (array with project item)
     await fs.writeFile(sotPath, JSON.stringify([sotTemplate], null, 2));
     console.log(`✅ Created ${sotFileName}`);
+
+    // Generate and write the initial markdown file
+    const mdFileName = `${safeTitle}.reqt.md`;
+    const mdFilePath = path.join(cwd, mdFileName);
+    const mdContent = await generateMarkdownFromData([sotTemplate]);
+    await fs.writeFile(mdFilePath, mdContent, 'utf-8');
+    console.log(`✅ Created ${mdFileName}`);
 
     console.log('✅ ReqText project initialized successfully in .reqt');
 }

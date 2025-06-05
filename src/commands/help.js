@@ -19,13 +19,10 @@ Item Management:
   make-sibling, -ms <outline_number>           Promote item (and children)
   edit-title, -et <outline_number> <new_title> Edit an item title
   set-status, -ss <outline_number> <status>    Set status (e.g. open, done)
-  test-passed, -tp <outline_number> <true/false> Mark test_passed status
 
-Data Sync:
-  out-md, -omd                   Export to Markdown (editable format)
-  in-md, -imd [--keep|-k] [file] Import Markdown changes into .reqt.json
-  diff [file]                    Show changes between .reqt.json and Markdown
+
   generate-readme, -grm         Create README.md from .reqt.json
+  
   clean, -c                      Ensure all items have valid reqt_IDs
 
 Interactive Terminal Editor — Keybindings:

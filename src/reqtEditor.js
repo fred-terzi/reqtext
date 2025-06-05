@@ -261,13 +261,12 @@ const keyMap = {
         }
     },
     'e': async (state) => {
-        // Item Editor: edit only title, status, test_passed for the selected item
+        // Item Editor: edit only title, status,
         const selectedItem = state.data[state.selectedIndex];
         if (!selectedItem) return;
         const editableFields = [
             { key: 'title', label: 'Title', type: 'input' },
             { key: 'status', label: 'Status', type: 'input' },
-            { key: 'test_passed', label: 'Test Passed (true/false)', type: 'boolean' }
         ];
         let quit = false;
         let fieldIdx = 0;

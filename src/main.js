@@ -10,8 +10,6 @@ import editTitleHandler from './commands/editTitleHandler.js';
 import reqtEditor from './reqtEditor.js';
 import cleanHandler from './commands/cleanHandler.js';
 import setStatusHandler from './commands/setStatusHandler.js';
-import testExistsHandler from './commands/testExistsHandler.js';
-import testPassedHandler from './commands/testPassedHandler.js';
 import reqtToMarkdown from './reqtParsers/reqtToMarkdown.mjs';
 import markdownToReqt from './reqtParsers/markdownUpdateReqt.js';
 import { getExistingMarkdownFile } from './utils/getExistingMarkdownFile.js';
@@ -83,73 +81,68 @@ const commandMap = {
     await setStatusHandler(...args);
   },
 
-  // Test Passed command
-  'test-passed': async (...args) => {
-    await testPassedHandler(...args);
-  },
+  // // Out MD command
+  // 'out-md': async (...args) => {
+  //   const fileToCheck = await getExistingMarkdownFile();
+  //   let shouldWrite = true;
+  //   if (fileToCheck) {
+  //     const { Confirm } = Enquirer;
+  //     const prompt = new Confirm({
+  //       name: 'overwrite',
+  //       message: `The markdown file '${fileToCheck}' already exists. Overwrite?`,
+  //       initial: false
+  //     });
+  //     shouldWrite = await prompt.run();
+  //     if (!shouldWrite) {
+  //       console.log('Aborted: Markdown file was not overwritten.');
+  //       return;
+  //     }
+  //   }
+  //   await reqtToMarkdown(args[0]);
+  // },
 
-  // Out MD command
-  'out-md': async (...args) => {
-    const fileToCheck = await getExistingMarkdownFile();
-    let shouldWrite = true;
-    if (fileToCheck) {
-      const { Confirm } = Enquirer;
-      const prompt = new Confirm({
-        name: 'overwrite',
-        message: `The markdown file '${fileToCheck}' already exists. Overwrite?`,
-        initial: false
-      });
-      shouldWrite = await prompt.run();
-      if (!shouldWrite) {
-        console.log('Aborted: Markdown file was not overwritten.');
-        return;
-      }
-    }
-    await reqtToMarkdown(args[0]);
-  },
+  // // In MD command
+  // 'in-md': async (...args) => {
+  //   // Support: reqt in-md [--keep|-k] [mdFile]
+  //   let keep = false;
+  //   let mdFile = undefined;
+  //   for (const arg of args) {
+  //     if (arg === '--keep' || arg === '-k') keep = true;
+  //     else if (arg.endsWith('.md')) mdFile = arg;
+  //   }
+  //   const fileToCheck = await getExistingMarkdownFile();
+  //   if (!fileToCheck) {
+  //     console.log('No reqt.md file was found to import.');
+  //     return;
+  //   }
+  //   let shouldWrite = true;
+  //   if (fileToCheck) {
+  //     const { Confirm } = Enquirer;
+  //     const prompt = new Confirm({
+  //       name: 'overwrite',
+  //       message: `Check in changes to the SoT? Any conflicts will be overwritten. \n Use 'reqt diff' to check for diffs.`,
+  //       initial: false
+  //     });
+  //     shouldWrite = await prompt.run();
+  //     if (!shouldWrite) {
+  //       console.log('Aborted: reqt.json was not updated.');
+  //       return;
+  //     }
+  //   }
+  //   await markdownToReqt(mdFile, keep);
+  // },
 
-  // In MD command
-  'in-md': async (...args) => {
-    // Support: reqt in-md [--keep|-k] [mdFile]
-    let keep = false;
-    let mdFile = undefined;
-    for (const arg of args) {
-      if (arg === '--keep' || arg === '-k') keep = true;
-      else if (arg.endsWith('.md')) mdFile = arg;
-    }
-    const fileToCheck = await getExistingMarkdownFile();
-    if (!fileToCheck) {
-      console.log('No reqt.md file was found to import.');
-      return;
-    }
-    let shouldWrite = true;
-    if (fileToCheck) {
-      const { Confirm } = Enquirer;
-      const prompt = new Confirm({
-        name: 'overwrite',
-        message: `Check in changes to the SoT? Any conflicts will be overwritten. \n Use 'reqt diff' to check for diffs.`,
-        initial: false
-      });
-      shouldWrite = await prompt.run();
-      if (!shouldWrite) {
-        console.log('Aborted: reqt.json was not updated.');
-        return;
-      }
-    }
-    await markdownToReqt(mdFile, keep);
-  },
-
-  // diff command
-  'diff': async (...args) => {
-    // Import the diff checker
-    const { checkReqtMdDiff } = await import('./services/reqtmdDiff.js');
-    // Use getData from dataHandler.js for SoT
-    const { getData } = await import('./services/dataHandler.js');
-    let data = await getData();
-    // Optionally accept a markdown file path as an argument
-    let mdPath = args.find(arg => arg.endsWith('.md'));
-    await checkReqtMdDiff({ data, mdPath });
-  },
+  // // diff command
+  // 'diff': async (...args) => {
+  //   // Import the diff checker
+  //   const { checkReqtMdDiff } = await import('./services/reqtmdDiff.js');
+  //   // Use getData from dataHandler.js for SoT
+  //   const { getData } = await import('./services/dataHandler.js');
+  //   let data = await getData();
+  //   // Optionally accept a markdown file path as an argument
+  //   let mdPath = args.find(arg => arg.endsWith('.md'));
+  //   await checkReqtMdDiff({ data, mdPath });
+  // },
 
   // Generate README command
   'generate-readme': async () => {
@@ -201,11 +194,6 @@ const aliasMap = {
   '--help': 'help',
   '-h': 'help',
   '-ss': 'set-status',
-  '-tp': 'test-passed',
-  'out-md': 'out-md',
-  'in-md': 'in-md',
-  '-omd': 'out-md',
-  '-imd': 'in-md',
   '-c': 'clean',
   '-grm': 'generate-readme'
 };

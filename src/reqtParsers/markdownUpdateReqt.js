@@ -33,10 +33,12 @@ export function parseReqtBlocks(md) {
     const description = stripTrailingComment(getField('Desc', 'Description'));
     const acceptance = stripTrailingComment(getField('Accept', 'Acceptance:'));
     const readme = stripTrailingComment(getField('README', 'README:'));
+    // Extract the status from the Status field
+    const status = stripTrailingComment(getField('status', 'Status:'));
     // Extract the title from the Markdown header line (first non-empty line after block start)
     let title;
     // Updated regex to match the new format: outline: title - status
-    const headerMatch = block.match(/^#+\s+\S+\s*:\s*(.*?)\s*-\s*\S+/m);
+    const headerMatch = block.match(/^#+\s+\S+\s*:\s*(.*?)\s*$/m);
     if (headerMatch) {
       title = headerMatch[1].trim();
     }
@@ -45,6 +47,7 @@ export function parseReqtBlocks(md) {
       description,
       acceptance,
       readme,
+      status,
     };
   }
   return updates;
@@ -129,4 +132,40 @@ export default async function markdownToReqt(mdFilePathArg, keep = false) {
       if (err.code !== 'ENOENT') throw err;
     }
   }
+}
+
+/**
+ * Read a Markdown file and return an array of requirement objects.
+ * @param {string} mdFilePath
+ * @param {string} [jsonFilePath] - Optional: for merging missing fields
+ * @returns {Promise<Array<object>>}
+ */
+export async function getReqtsFromMarkdown(mdFilePath, jsonFilePath) {
+  const md = await fs.readFile(mdFilePath, 'utf-8');
+  const updates = parseReqtBlocks(md);
+
+  let jsonData = {};
+  if (jsonFilePath) {
+    try {
+      const jsonRaw = await fs.readFile(jsonFilePath, 'utf-8');
+      const parsed = JSON.parse(jsonRaw);
+      if (Array.isArray(parsed)) {
+        for (const item of parsed) {
+          if (item.reqt_ID) jsonData[item.reqt_ID] = item;
+        }
+      } else {
+        jsonData = parsed;
+      }
+    } catch (err) {
+      // ignore if file not found
+    }
+  }
+
+  // Merge updates with jsonData, or just use updates if no jsonData
+  const result = [];
+  for (const [reqt_id, fields] of Object.entries(updates)) {
+    const base = jsonData[reqt_id] || {};
+    result.push({ ...base, ...fields, reqt_ID: reqt_id });
+  }
+  return result;
 }

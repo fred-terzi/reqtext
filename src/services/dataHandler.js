@@ -1,5 +1,7 @@
 import fs from 'fs/promises';
 import path from 'path';
+import { getReqtsFromMarkdown } from '../reqtParsers/markdownUpdateReqt.js';
+import { generateMarkdownFromData } from '../reqtParsers/reqtToMarkdown.mjs';
 
 
 // Helper to get the SoT file path from config
@@ -17,7 +19,7 @@ async function getSoTPath() {
     return path.resolve(process.cwd(), config.sotPath);
 }
 
-// Get the data from the SoT JSON and return it in memory
+// Get the data from the Markdown (master), update JSON, and return in memory
 export async function getData() {
     let sotPath;
     try {
@@ -28,19 +30,42 @@ export async function getData() {
         }
         throw err;
     }
+    // Derive markdown file path from SoT path, but always put .md in project root
+    const projectRoot = path.dirname(path.dirname(sotPath)); // one level up from .reqt
+    const mdFileName = path.basename(sotPath).replace(/\.json$/, '.md');
+    const mdFilePath = path.join(projectRoot, mdFileName);
+    let data;
     try {
-        const data = JSON.parse(await fs.readFile(sotPath, 'utf8'));
+        data = await getReqtsFromMarkdown(mdFilePath, sotPath);
+        // Overwrite JSON with parsed data from markdown
+        await fs.writeFile(sotPath, JSON.stringify(data, null, 2), 'utf8');
         return data;
     } catch (err) {
-        if (err.code === 'ENOENT') {
-            throw new Error('NO_SOT_FILE');
+        // Fallback to JSON if markdown missing
+        try {
+            const jsonData = JSON.parse(await fs.readFile(sotPath, 'utf8'));
+            return jsonData;
+        } catch (jsonErr) {
+            if (jsonErr.code === 'ENOENT') {
+                throw new Error('NO_SOT_FILE');
+            }
+            throw jsonErr;
         }
-        throw err;
     }
 }
 
-// Receive new data (array) and update the SoT JSON
+// Receive new data (array) and update both the SoT JSON and Markdown
 export async function setData(newData) {
     const sotPath = await getSoTPath();
     await fs.writeFile(sotPath, JSON.stringify(newData, null, 2), 'utf8');
+    // Derive markdown file path from SoT path, but always put .md in project root
+    const projectRoot = path.dirname(path.dirname(sotPath));
+    const mdFileName = path.basename(sotPath).replace(/\.json$/, '.md');
+    const mdFilePath = path.join(projectRoot, mdFileName);
+    let mdContent = generateMarkdownFromData(newData);
+    // If generateMarkdownFromData returns a Promise, await it
+    if (mdContent instanceof Promise) {
+        mdContent = await mdContent;
+    }
+    await fs.writeFile(mdFilePath, mdContent, 'utf8');
 }
