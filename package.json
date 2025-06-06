@@ -1,7 +1,7 @@
 {
   "name": "reqtext",
   "author": "Fred Terzi",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Reqtext is a Git-native, CLI first requirements and documentation framework meant to bring requirement management directly into your workflow. Human -and AI- readable.",
   "main": "index.js",
   "scripts": {
